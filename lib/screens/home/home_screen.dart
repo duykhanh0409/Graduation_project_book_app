@@ -27,13 +27,15 @@ class _HomePageState extends State<HomePage> {
   var listTitle = ['Entire homes', 'Rooms', 'Motel', 'Motel'];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: ListView(children: [
-      TitleBar(),
-      KeywordSearch(),
-      ExploreNearby(listimg: listimg),
-      LiveAnywhere(listImage: listImage, listTitle: listTitle),
-      BecomeHost()
-    ]));
+    return SafeArea(
+      child: Scaffold(
+          body: ListView(children: [
+        TitleBar(),
+        KeywordSearch(),
+        ExploreNearby(listimg: listimg),
+        LiveAnywhere(listImage: listImage, listTitle: listTitle),
+        BecomeHost()
+      ])),
+    );
   }
 }

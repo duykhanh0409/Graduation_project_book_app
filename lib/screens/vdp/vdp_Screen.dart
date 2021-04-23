@@ -205,18 +205,20 @@ class _VdpScreensState extends State<VdpScreens> {
                           ],
                         ),
                       ),
-                      Text('Accommodation'),
+                      SizedBox(height: 15,),
+                      Text('Accommodation',style: TextStyle(color: Color(0xFF012169),fontSize: 15,fontWeight: FontWeight.bold)),
+                      SizedBox(height: 10,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Column(
-                            children: [Icon(Icons.fit_screen), Text('70m')],
+                            children: [Icon(Icons.fit_screen,size: 40,color: Color(0xFF012169),), Text('70m')],
                           ),
                           Column(
-                            children: [Icon(Icons.bedtime_sharp), Text('70m')],
+                            children: [Icon(Icons.bedtime_sharp,size: 40,color: Color(0xFF012169),), Text('70m')],
                           ),
                           Column(
-                            children: [Icon(Icons.bathtub), Text('70m')],
+                            children: [Icon(Icons.bathtub,size: 40,color: Color(0xFF012169),), Text('70m')],
                           )
                         ],
                       )

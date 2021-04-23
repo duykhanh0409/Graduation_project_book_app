@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project_book_app/screens/home/home_screen.dart';
+import 'package:graduation_project_book_app/screens/navigation_screen.dart';
+import 'package:graduation_project_book_app/screens/search/item_card.dart';
 import 'package:graduation_project_book_app/screens/vdp/vdp_Screen.dart';
 
 void main() {
@@ -24,6 +26,6 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.blue,
         ),
-        home: VdpScreens());
+        home: HomePage2());
   }
 }
