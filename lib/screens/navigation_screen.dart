@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project_book_app/screens/fliter/fliter_screen.dart';
 import 'package:graduation_project_book_app/screens/home/home_screen.dart';
+import 'package:graduation_project_book_app/screens/profile/profile_screen.dart';
 import 'package:graduation_project_book_app/screens/search/search_screen.dart';
 import 'package:graduation_project_book_app/screens/vdp/vdp_Screen.dart';
 
-class HomePage2 extends StatefulWidget {
+class NavigationScreen extends StatefulWidget {
   @override
-  _HomePage2State createState() => _HomePage2State();
+  _NavigationScreenState createState() => _NavigationScreenState();
 }
 
-class _HomePage2State extends State<HomePage2> {
+class _NavigationScreenState extends State<NavigationScreen> {
   int _selectedItem = 0;
   List<Widget> screens = [
     HomePage(),
-    VdpScreens(),
     SearchScreen(),
-    Center(child: Text("Settings")),
+    // Container(
+    //   child: Center(
+    //     child: Text('Save'),
+    //   ),
+    // ),
+    FliterScreen(),
+    ProfileScreen()
   ];
 
   @override
@@ -22,7 +29,7 @@ class _HomePage2State extends State<HomePage2> {
     return Scaffold(
       bottomNavigationBar: CustomBottomNavigationBar(
         iconList: [
-          Icons.home,
+          Icons.home_outlined,
           Icons.search,
           Icons.favorite_border,
           Icons.settings,
@@ -35,10 +42,8 @@ class _HomePage2State extends State<HomePage2> {
         defaultSelectedIndex: 1,
       ),
       body: Center(
-        child: SafeArea(
-          child: Center(
-            child: screens[_selectedItem],
-          ),
+        child: Center(
+          child: screens[_selectedItem],
         ),
       ),
     );
@@ -83,7 +88,17 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
     }
 
     return Container(
-      color: Color(0xFF012169),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.3),
+            //spreadRadius: 1,
+            blurRadius: 3,
+            offset: Offset(1, 0), // changes position of shadow
+          ),
+        ],
+      ),
       child: Row(
         children: _navBarItemList,
       ),
@@ -104,7 +119,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
           decoration: index == _selectedIndex
               ? BoxDecoration(
                   border: Border(
-                    bottom: BorderSide(width: 5, color: Color(0xFFE85B00)),
+                    bottom: BorderSide(width: 2, color: Color(0xFFE85B00)),
                   ),
 
                   // color: index == _selectedItemIndex ? Colors.green : Colors.white,
@@ -116,13 +131,19 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
             children: [
               Icon(
                 icon,
-                color: index == _selectedIndex ? Colors.white : Colors.grey,
+                color: index == _selectedIndex
+                    ? Color(0xFFE85B00)
+                    : Colors.black.withOpacity(0.5),
               ),
               Text(
                 title,
                 style: TextStyle(
-                  color: index == _selectedIndex ? Colors.white : Colors.grey,
-                ),
+                    color: index == _selectedIndex
+                        ? Colors.black
+                        : Colors.black.withOpacity(0.5),
+                    fontWeight: index == _selectedIndex
+                        ? FontWeight.w600
+                        : FontWeight.w600),
               ),
             ],
           )),

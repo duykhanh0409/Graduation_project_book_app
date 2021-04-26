@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:graduation_project_book_app/screens/home/become_host.dart';
 import 'package:graduation_project_book_app/screens/home/explore_nearby.dart';
 import 'package:graduation_project_book_app/screens/home/keyword_search.dart';
@@ -27,15 +28,21 @@ class _HomePageState extends State<HomePage> {
   var listTitle = ['Entire homes', 'Rooms', 'Motel', 'Motel'];
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-          body: ListView(children: [
-        TitleBar(),
+    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    //   statusBarColor: Colors.transparent,
+    //   systemNavigationBarIconBrightness: Brightness.dark,
+    //   statusBarIconBrightness: Brightness.dark,
+    //   //statusBarBrightness: Brightness.dark,
+    // ));
+
+    return Scaffold(
+      body: ListView(children: [
+        //TitleBar(),
         KeywordSearch(),
         ExploreNearby(listimg: listimg),
         LiveAnywhere(listImage: listImage, listTitle: listTitle),
         BecomeHost()
-      ])),
+      ]),
     );
   }
 }

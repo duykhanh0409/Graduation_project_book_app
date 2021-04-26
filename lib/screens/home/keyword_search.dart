@@ -4,25 +4,34 @@ import 'package:flutter/material.dart';
 class KeywordSearch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var heightBg = MediaQuery.of(context).size.height * 0.5;
+    var heightBg = MediaQuery.of(context).size.height * 0.63;
     return Column(children: [
       Container(
         height: heightBg,
         width: double.infinity,
-        color: Color(0xFF012169),
+        padding: EdgeInsets.only(top: 30),
+        //color: Color(0xFF012169),
+        decoration: BoxDecoration(
+            image: DecorationImage(
+          image: AssetImage('assets/images/bg1.png'),
+          fit: BoxFit.cover,
+        )),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
               'What are you looking for?',
-              style: TextStyle(color: Colors.white, fontSize: 25,fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold),
             ),
             Container(
               alignment: Alignment.center,
               height: 55,
               width: MediaQuery.of(context).size.width,
-              margin: EdgeInsets.fromLTRB(30, 20, 30, 20),
+              margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
               padding: EdgeInsets.only(
                 left: 15,
                 right: 5,
@@ -57,13 +66,19 @@ class KeywordSearch extends StatelessWidget {
                 ],
               ),
             ),
-            Text('Start with Explore Nearby,Live anywhere, style room',style:TextStyle(color: Colors.white,fontSize: 12),),
-            Text('All rooms',style: TextStyle(color:  Color(0xFFE85B00)),)
+            // Text(
+            //   'Start with Explore Nearby,Live anywhere, style room',
+            //   style: TextStyle(color: Colors.white, fontSize: 12),
+            // ),
+            // Text(
+            //   'All rooms',
+            //   style: TextStyle(color: Color(0xFFE85B00)),
+            // )
           ],
         ),
       ),
       Container(
-        height: 5,
+        height: 2,
         color: Color(0xFFE85B00),
       )
     ]);

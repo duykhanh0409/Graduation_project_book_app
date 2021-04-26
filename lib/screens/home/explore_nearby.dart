@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:graduation_project_book_app/screens/vdp/vdp_Screen.dart';
 
 class ExploreNearby extends StatelessWidget {
   const ExploreNearby({
@@ -18,7 +20,10 @@ class ExploreNearby extends StatelessWidget {
         padding: EdgeInsets.fromLTRB(20, 0, 15, 28),
         child: Text(
           'Explore nearby',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Color(0xFF012169)),
+          style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF012169)),
         ),
       ),
       Container(
@@ -36,33 +41,41 @@ class ExploreNearby extends StatelessWidget {
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(10.0),
-                                child: Image.asset(
-                                  listimg[index],
-                                  height: 70,
-                                  width: 70,
-                                  fit: BoxFit.cover,
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return VdpScreens();
+                              }));
+                            },
+                            child: Row(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  child: Image.asset(
+                                    listimg[index],
+                                    height: 70,
+                                    width: 70,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 10),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      'Ho Chi Minh',
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500,
-                                          height: 1.5),
-                                    ),
-                                    Text('1.5 hour drive')
-                                  ],
-                                ),
-                              )
-                            ],
+                                Padding(
+                                  padding: EdgeInsets.only(left: 10),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        'Ho Chi Minh',
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500,
+                                            height: 1.5),
+                                      ),
+                                      Text('1.5 hour drive')
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                           SizedBox(
                             height: 10,

@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation_project_book_app/screens/vdp/vdp_detail.dart';
+import 'package:graduation_project_book_app/screens/vdp/vdp_image_carousel.dart';
 
 class VdpScreens extends StatefulWidget {
   @override
@@ -10,221 +12,64 @@ class _VdpScreensState extends State<VdpScreens> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Column(
+      body: SingleChildScrollView(
+        child: Stack(
           children: [
-            Flexible(
-              flex: 1,
-              child: Stack(
+            Container(
+              height: MediaQuery.of(context).size.height,
+              child: Column(
                 children: [
+                  VdpImageCarousel(),
                   Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage("assets/images/item1.jpg"),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                    height: 2,
+                    color: Color(0xFFE85B00),
                   ),
-                  Positioned(
-                    top: 70,
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            height: 40,
-                            width: 40,
-                            padding: EdgeInsets.only(left: 12),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Color(0xFF181212).withOpacity(0.41)),
-                            child: Icon(
-                              Icons.arrow_back_ios,
-                              color: Colors.white,
-                            ),
-                          ),
-                          Container(
-                            height: 40,
-                            width: 40,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.white),
-                            child: Icon(
-                              Icons.favorite_border_outlined,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                  VdpDetail(),
+                  Container(
+                    height: 100,
+                    color: Colors.white,
                   )
                 ],
               ),
             ),
-            Container(
-              height: 5,
-              color: Color(0xFFE85B00),
+            Positioned(
+              bottom: 0,
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: 50,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3),
+                      spreadRadius: .1,
+                      blurRadius: 2,
+                      offset: Offset(0, -1), // changes position of shadow
+                    ),
+                  ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text('1.500.000'),
+                    ElevatedButton(
+                        child: Text("Buy now".toUpperCase(),
+                            style: TextStyle(fontSize: 14)),
+                        style: ButtonStyle(
+                            foregroundColor:
+                                MaterialStateProperty.all<Color>(Colors.white),
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.red),
+                            shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(7),
+                                    side: BorderSide(color: Colors.red)))),
+                        onPressed: () => null)
+                  ],
+                ),
+              ),
             ),
-            Flexible(
-                flex: 1,
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  height: MediaQuery.of(context).size.height,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                height: 40,
-                                width: 40,
-                                margin:
-                                    EdgeInsets.only(top: 5, right: 5, left: 5),
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                      image:
-                                          AssetImage('assets/images/khanh.jpg'),
-                                      fit: BoxFit.cover,
-                                    )),
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Verify Host',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12),
-                                  ),
-                                  Text(
-                                    'khanh Host',
-                                    style: TextStyle(fontSize: 12),
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Text(
-                                '1.500.000 VND',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              Text('Per month')
-                            ],
-                          ),
-                          Container(
-                            height: 40,
-                            width: 60,
-                            decoration: BoxDecoration(
-                                color: (Color(0xFF71DFD3)),
-                                borderRadius: BorderRadius.circular(25)),
-                            child: Icon(Icons.message),
-                          )
-                        ],
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 7, bottom: 5),
-                        child: Text(
-                          'Information',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF012169),
-                          ),
-                        ),
-                      ),
-                      Text(
-                        'Housed in a three-storied semi-detached apartment our homestay is well managed and has been a leading  homestay choice for many local and.',
-                        textAlign: TextAlign.start,
-                        style: TextStyle(color: Color(0xFF6D4E4E)),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 10),
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        height: 80,
-                        decoration: BoxDecoration(
-                          border: Border(
-                              top: BorderSide(
-                                  color: Color(0xFFE4D9D9), width: 1),
-                              bottom: BorderSide(
-                                  color: Color(0xFFE4D9D9), width: 1)),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              child: Row(
-                                children: [
-                                  Container(
-                                    height: 50,
-                                    width: 50,
-                                    padding: EdgeInsets.only(top: 13),
-                                    margin: EdgeInsets.only(right: 13),
-                                    decoration: BoxDecoration(
-                                        color: Color(0xFF012169),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: Text(
-                                      '8.9',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Very Good',
-                                        style: TextStyle(
-                                            color: Color(0xFF012169),
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 17),
-                                      ),
-                                      Text(
-                                        '234 reviews',
-                                        style:
-                                            TextStyle(color: Color(0xFF464E46)),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                            Icon(Icons.navigate_next)
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 15,),
-                      Text('Accommodation',style: TextStyle(color: Color(0xFF012169),fontSize: 15,fontWeight: FontWeight.bold)),
-                      SizedBox(height: 10,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Column(
-                            children: [Icon(Icons.fit_screen,size: 40,color: Color(0xFF012169),), Text('70m')],
-                          ),
-                          Column(
-                            children: [Icon(Icons.bedtime_sharp,size: 40,color: Color(0xFF012169),), Text('70m')],
-                          ),
-                          Column(
-                            children: [Icon(Icons.bathtub,size: 40,color: Color(0xFF012169),), Text('70m')],
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                )),
           ],
         ),
       ),
