@@ -8,8 +8,8 @@ class VdpImageCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      flex: 1,
+    return Container(
+      height:MediaQuery.of(context).size.height/2 ,
       child: Stack(
         children: [
           Container(
@@ -34,8 +34,7 @@ class VdpImageCarousel extends StatelessWidget {
                     padding: EdgeInsets.only(left: 12),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color:
-                            Colors.white),
+                        color: Colors.white),
                     child: Icon(
                       Icons.arrow_back_ios,
                       color: Colors.black,

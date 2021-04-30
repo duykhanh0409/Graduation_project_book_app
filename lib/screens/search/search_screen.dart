@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation_project_book_app/screens/fliter/fliter_screen.dart';
 import 'package:graduation_project_book_app/screens/search/item_card.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -20,15 +21,19 @@ class _SearchScreenState extends State<SearchScreen> {
             child: Stack(
               children: [
                 Container(
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  color: Colors.blue,
-                  child:FlatButton(onPressed: (){print('khanh');}, child: Text('map'))
-                ),
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    color: Colors.blue,
+                    child: FlatButton(
+                        onPressed: () {
+                          print('khanh');
+                        },
+                        child: Text('map'))),
                 Container(
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
-                  child: DraggableScrollableSheet( //bottomsheet
+                  child: DraggableScrollableSheet(
+                    //bottomsheet
                     maxChildSize: 1,
                     minChildSize: 0.1,
                     initialChildSize: .5,
@@ -36,10 +41,11 @@ class _SearchScreenState extends State<SearchScreen> {
                         ScrollController scrollController) {
                       return Container(
                         padding: EdgeInsets.only(top: 50),
-                       decoration: BoxDecoration(
-                         color: Colors.white,
-                         borderRadius: BorderRadius.only(topLeft: Radius.circular(25),topRight:Radius.circular(25) )
-                       ),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(25),
+                                topRight: Radius.circular(25))),
                         child: ListView.builder(
                           controller: scrollController,
                           itemCount: 25,
@@ -59,75 +65,81 @@ class _SearchScreenState extends State<SearchScreen> {
 
   AppBar appBar(BuildContext context) {
     return AppBar(
-          backgroundColor: Colors.white,
-          bottom: isShow ? search(context) : null,
-          flexibleSpace: Container(
-            width: MediaQuery.of(context).size.width,
-            color: Colors.white,
-            child: Container(
-                height: double.infinity,
-                width: 300,
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                margin: isShow
-                    ? null
-                    : EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(isShow ? 0 : 16),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.3),
-                      blurRadius: 3,
-                      offset: Offset(1, 0),
-                    ),
-                  ],
+      backgroundColor: Colors.white,
+      bottom: isShow ? search(context) : null,
+      flexibleSpace: Container(
+        width: MediaQuery.of(context).size.width,
+        color: Colors.white,
+        child: Container(
+            height: double.infinity,
+            width: 300,
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            margin: isShow
+                ? null
+                : EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(isShow ? 0 : 16),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.3),
+                  blurRadius: 3,
+                  offset: Offset(1, 0),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: isShow
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                              GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      isShow ? isShow = false : isShow = true;
-                                    });
-                                  },
-                                  child: Icon(Icons.close)),
-                              Text('Edit your search',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .subtitle1
-                                      .copyWith(fontSize: 18)),
-                              Icon(Icons.tune)
-                            ])
-                      : Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            GestureDetector(
+              ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: isShow
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                          GestureDetector(
                               onTap: () {
                                 setState(() {
                                   isShow ? isShow = false : isShow = true;
                                 });
                               },
-                              child: Row(
-                                children: [
-                                  Icon(isShow
-                                      ? Icons.close
-                                      : Icons.arrow_back),
-                                  Text('Ho chi minh')
-                                ],
-                              ),
-                            ),
-                            Icon(Icons.tune),
-                          ],
+                              child: Icon(Icons.close)),
+                          Text('Edit your search',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle1
+                                  .copyWith(fontSize: 18)),
+                          GestureDetector(
+                           onTap: () {
+                             print('fliter screen');
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return FliterScreen();
+                              }));
+                            },
+                            child: Icon(Icons.tune))
+                        ])
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              isShow ? isShow = false : isShow = true;
+                            });
+                          },
+                          child: Row(
+                            children: [
+                              Icon(isShow ? Icons.close : Icons.arrow_back),
+                              Text('Ho chi minh')
+                            ],
+                          ),
                         ),
-                )),
-          ),
-        );
+                        Icon(Icons.tune),
+                      ],
+                    ),
+            )),
+      ),
+    );
   }
 
   PreferredSize search(BuildContext context) {
