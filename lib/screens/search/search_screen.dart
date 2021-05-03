@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project_book_app/screens/fliter/fliter_screen.dart';
 import 'package:graduation_project_book_app/screens/search/item_card.dart';
+import 'package:graduation_project_book_app/widgets/google_map.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -20,15 +21,13 @@ class _SearchScreenState extends State<SearchScreen> {
           body: SingleChildScrollView(
             child: Stack(
               children: [
-                Container(
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    color: Colors.blue,
-                    child: FlatButton(
-                        onPressed: () {
-                          print('khanh');
-                        },
-                        child: Text('map'))),
+                GestureDetector(
+                  child: Container(
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                      color: Colors.blue,
+                      child: MapScreen()),
+                ),
                 Container(
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
@@ -108,14 +107,14 @@ class _SearchScreenState extends State<SearchScreen> {
                                   .subtitle1
                                   .copyWith(fontSize: 18)),
                           GestureDetector(
-                           onTap: () {
-                             print('fliter screen');
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return FliterScreen();
-                              }));
-                            },
-                            child: Icon(Icons.tune))
+                              onTap: () {
+                                print('fliter screen');
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return FliterScreen();
+                                }));
+                              },
+                              child: Icon(Icons.tune))
                         ])
                   : Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -223,3 +222,5 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 }
+
+

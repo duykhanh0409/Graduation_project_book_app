@@ -95,10 +95,79 @@ class _FliterScreenState extends State<FliterScreen> {
                       });
                     },
                   ),
+                  Divider(
+                    thickness: 1,
+                    color: Colors.grey.withOpacity(0.3),
+                    height: 20,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text('Rooms and beds',
+                      style:
+                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                  FliterFacility(
+                    title: 'Beds',
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  FliterFacility(
+                    title: 'Bedrooms',
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  FliterFacility(
+                    title: 'Bathrooms',
+                  )
                 ],
               ),
             ),
           )),
+    );
+  }
+}
+
+class FliterFacility extends StatelessWidget {
+  final String title;
+  const FliterFacility({
+    Key key,
+    this.title,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(title,style: TextStyle(fontSize: 16,fontWeight: FontWeight.w300),),
+        Row(
+          children: [
+            Container(
+              height: 35,
+              width: 35,
+              margin: EdgeInsets.only(right: 10),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.grey)),
+              child: Text('-'),
+            ),
+            Text('0'),
+            Container(
+              height: 35,
+              width: 35,
+              margin: EdgeInsets.only(left: 10),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.grey)),
+              child: Text('+'),
+            ),
+          ],
+        )
+      ],
     );
   }
 }
