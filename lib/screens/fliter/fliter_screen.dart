@@ -149,9 +149,9 @@ class _FliterScreenState extends State<FliterScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Text('1.500.000'),
+                      Text('Clear all'),
                       ElevatedButton(
-                          child: Text("Reservation".toUpperCase(),
+                          child: Text("30+place".toUpperCase(),
                               style: TextStyle(fontSize: 14)),
                           style: ButtonStyle(
                               foregroundColor: MaterialStateProperty.all<Color>(
