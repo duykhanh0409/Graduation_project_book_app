@@ -10,48 +10,26 @@ class VdpDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-    
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  Container(
-                    height: 40,
-                    width: 40,
-                    margin: EdgeInsets.only(top: 5, right: 5, left: 5),
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: AssetImage('assets/images/khanh.jpg'),
-                          fit: BoxFit.cover,
-                        )),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Verify Host',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
-                      ),
-                      Text(
-                        'khanh Host',
-                        style: TextStyle(fontSize: 12),
-                      )
-                    ],
-                  )
-                ],
-              ),
+              Container(
+                  width: 160,
+                  child: Text(
+                    '58/2 Thao Dien, Quan 2',
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1
+                        .copyWith(fontSize: 18, fontWeight: FontWeight.bold),
+                  )),
               Column(
                 children: [
                   Text(
                     '1.500.000 VND',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 16),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                   Text('Per month')
                 ],
@@ -122,7 +100,35 @@ class VdpDetail extends StatelessWidget {
                     )
                   ],
                 ),
-                Icon(Icons.navigate_next)
+                Row(
+                  children: [
+                    Container(
+                      height: 40,
+                      width: 40,
+                      margin: EdgeInsets.only(top: 5, right: 5, left: 5),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            image: AssetImage('assets/images/khanh.jpg'),
+                            fit: BoxFit.cover,
+                          )),
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Verify Host',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                        Text(
+                          'khanh Host',
+                          style: TextStyle(fontSize: 12),
+                        )
+                      ],
+                    )
+                  ],
+                ),
               ],
             ),
           ),

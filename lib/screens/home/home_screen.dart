@@ -28,13 +28,6 @@ class _HomePageState extends State<HomePage> {
   var listTitle = ['Entire homes', 'Rooms', 'Motel', 'Motel'];
   @override
   Widget build(BuildContext context) {
-    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    //   statusBarColor: Colors.transparent,
-    //   systemNavigationBarIconBrightness: Brightness.dark,
-    //   statusBarIconBrightness: Brightness.dark,
-    //   //statusBarBrightness: Brightness.dark,
-    // ));
-
     return Scaffold(
       body: ListView(children: [
         //TitleBar(),

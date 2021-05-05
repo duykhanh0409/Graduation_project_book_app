@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:graduation_project_book_app/screens/fliter/fliter_screen.dart';
 import 'package:graduation_project_book_app/screens/search/item_card.dart';
 import 'package:graduation_project_book_app/widgets/google_map.dart';
 
@@ -18,52 +17,51 @@ class _SearchScreenState extends State<SearchScreen> {
     return SafeArea(
       child: Scaffold(
           appBar: appBar(context),
-          body: SingleChildScrollView(
-            child: Stack(
-              children: [
-                GestureDetector(
-                  child: Container(
-                      height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width,
-                      color: Colors.blue,
-                      child: MapScreen()),
+          body: Stack(
+            children: [
+              GestureDetector(
+                child: Container(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    color: Colors.blue,
+                    child: MapScreen()),
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: DraggableScrollableSheet(
+                  //bottomsheet
+                  maxChildSize: 1,
+                  minChildSize: 0.1,
+                  initialChildSize: .5,
+                  builder: (BuildContext context,
+                      ScrollController scrollController) {
+                    return Container(
+                      padding: EdgeInsets.only(top: 50),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(25),
+                              topRight: Radius.circular(25))),
+                      child: ListView.builder(
+                        controller: scrollController,
+                        itemCount: 25,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ItemCard();
+                        },
+                      ),
+                    );
+                  },
                 ),
-                Container(
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  child: DraggableScrollableSheet(
-                    //bottomsheet
-                    maxChildSize: 1,
-                    minChildSize: 0.1,
-                    initialChildSize: .5,
-                    builder: (BuildContext context,
-                        ScrollController scrollController) {
-                      return Container(
-                        padding: EdgeInsets.only(top: 50),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(25),
-                                topRight: Radius.circular(25))),
-                        child: ListView.builder(
-                          controller: scrollController,
-                          itemCount: 25,
-                          itemBuilder: (BuildContext context, int index) {
-                            return ItemCard();
-                          },
-                        ),
-                      );
-                    },
-                  ),
-                )
-              ],
-            ),
+              )
+            ],
           )),
     );
   }
 
   AppBar appBar(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       backgroundColor: Colors.white,
       bottom: isShow ? search(context) : null,
       flexibleSpace: Container(
@@ -99,6 +97,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 setState(() {
                                   isShow ? isShow = false : isShow = true;
                                 });
+                                print('khanh');
                               },
                               child: Icon(Icons.close)),
                           Text('Edit your search',
@@ -109,10 +108,9 @@ class _SearchScreenState extends State<SearchScreen> {
                           GestureDetector(
                               onTap: () {
                                 print('fliter screen');
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) {
-                                  return FliterScreen();
-                                }));
+                                Navigator.of(context)
+                                    .pushNamed('/fliterScreen');
+                                print('khanh');
                               },
                               child: Icon(Icons.tune))
                         ])
@@ -133,7 +131,13 @@ class _SearchScreenState extends State<SearchScreen> {
                             ],
                           ),
                         ),
-                        Icon(Icons.tune),
+                        GestureDetector(
+                            onTap: () {
+                              print('fliter screen');
+                              Navigator.of(context).pushNamed('/fliterScreen');
+                              print('khanh');
+                            },
+                            child: Icon(Icons.tune))
                       ],
                     ),
             )),
@@ -222,5 +226,3 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 }
-
-

@@ -63,7 +63,11 @@ class BecomeHost extends StatelessWidget {
                         onPressed: () {
                           print('khanh');
                         },
-                        child: Text('Learn More'))
+                        child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pushNamed('/host');
+                            },
+                            child: Text('Learn More')))
                   ],
                 ),
               )),

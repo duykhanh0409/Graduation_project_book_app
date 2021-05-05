@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:graduation_project_book_app/screens/signUp/signup.dart';
 
-class LoginScreen extends StatefulWidget {
+class SignUpScreen extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _SignUpScreenState createState() => _SignUpScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController emailController = new TextEditingController();
   TextEditingController passController = new TextEditingController();
   var emailInval = false;
@@ -48,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             SizedBox(
-              height: 80,
+              height: 30,
             ),
             Padding(
               padding: EdgeInsets.all(20),
@@ -56,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "Login",
+                    "Sign Up",
                     style: TextStyle(color: Colors.white, fontSize: 40),
                   ),
                   SizedBox(
@@ -69,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
               ),
             ),
-            SizedBox(height: 20),
+             SizedBox(height: 20),
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
@@ -83,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       children: <Widget>[
                         SizedBox(
-                          height: 60,
+                          height: 20,
                         ),
                         Container(
                           decoration: BoxDecoration(
@@ -118,6 +117,34 @@ class _LoginScreenState extends State<LoginScreen> {
                                         bottom: BorderSide(
                                             color: Colors.grey[200]))),
                                 child: TextField(
+                                  controller: emailController,
+                                  decoration: InputDecoration(
+                                      hintText: "Email or Phone number",
+                                      hintStyle: TextStyle(color: Colors.grey),
+                                      border: InputBorder.none),
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            color: Colors.grey[200]))),
+                                child: TextField(
+                                  controller: emailController,
+                                  decoration: InputDecoration(
+                                      hintText: "Email or Phone number",
+                                      hintStyle: TextStyle(color: Colors.grey),
+                                      border: InputBorder.none),
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            color: Colors.grey[200]))),
+                                child: TextField(
                                   controller: passController,
                                   decoration: InputDecoration(
                                       hintText: "Password",
@@ -129,14 +156,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: 40,
+                          height: 20,
                         ),
-                        Text(
-                          "Forgot Password?",
-                          style: TextStyle(color: Colors.grey),
-                        ),
+                        // Text(
+                        //   "Forgot Password?",
+                        //   style: TextStyle(color: Colors.grey),
+                        // ),
                         SizedBox(
-                          height: 30,
+                          height: 40,
                         ),
                         GestureDetector(
                           onTap: onClickButtonLogin,
@@ -148,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 color: Colors.orange[900]),
                             child: Center(
                               child: Text(
-                                "Login",
+                                "Sign Up",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
@@ -157,23 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: 20,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SignUpScreen()),
-                            );
-                          },
-                          child: Text(
-                            "You don't have account? Sign up",
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
+                          height: 30,
                         ),
                         Text(
                           "Continue with social media",

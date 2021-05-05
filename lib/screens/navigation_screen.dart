@@ -15,12 +15,11 @@ class _NavigationScreenState extends State<NavigationScreen> {
   List<Widget> screens = [
     HomePage(),
     SearchScreen(),
-    // Container(
-    //   child: Center(
-    //     child: Text('Save'),
-    //   ),
-    // ),
-    FliterScreen(),
+    Container(
+      child: Center(
+        child: Text('Save'),
+      ),
+    ),
     ProfileScreen()
   ];
 
