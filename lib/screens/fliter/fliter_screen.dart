@@ -44,45 +44,18 @@ class _FliterScreenState extends State<FliterScreen> {
                       SizedBox(
                         height: 20,
                       ),
-                      FilterItem(
-                        title: 'WIFI',
-                        subtitle: '',
-                      ),
-                      FilterItem(
-                        title: 'KITCHEN',
-                        subtitle: '',
-                      ),
+                      DynamicallyCheckbox(),
                       SizedBox(
                         height: 7,
                       ),
-                      Text(
-                        'Type of place',
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle1
-                            .copyWith(fontWeight: FontWeight.w800),
-                      ),
+                      Text('Prices',
+                          style: TextStyle(
+                              fontSize: 22, fontWeight: FontWeight.bold)),
                       SizedBox(
                         height: 7,
                       ),
-                      FilterItem(
-                        title: 'Entire Place',
-                        subtitle: 'Have a place to yourself',
-                      ),
                       SizedBox(
                         height: 7,
-                      ),
-                      FilterItem(
-                        title: 'Private Room',
-                        subtitle:
-                            'Have your own room and share some common spaces',
-                      ),
-                      SizedBox(
-                        height: 7,
-                      ),
-                      FilterItem(
-                        title: 'Shared Room',
-                        subtitle: 'Stay in a shared space, like a common room',
                       ),
                       RangeSlider(
                         values: _currentRangeValues,
@@ -125,7 +98,9 @@ class _FliterScreenState extends State<FliterScreen> {
                       FliterFacility(
                         title: 'Bathrooms',
                       ),
-                      SizedBox(height: 100,)
+                      SizedBox(
+                        height: 100,
+                      )
                     ],
                   ),
                 ),
@@ -216,6 +191,58 @@ class FliterFacility extends StatelessWidget {
           ],
         )
       ],
+    );
+  }
+}
+
+class DynamicallyCheckbox extends StatefulWidget {
+  final String subtitle;
+
+  const DynamicallyCheckbox({Key key, this.subtitle}) : super(key: key);
+  @override
+  DynamicallyCheckboxState createState() => new DynamicallyCheckboxState();
+}
+
+class DynamicallyCheckboxState extends State {
+  Map<String, bool> List = {
+    'Wifi': false,
+    'Ketchen': false,
+    'Entire Place': false,
+    'Private Room': false,
+    'Shared Room': false,
+  };
+
+  var holder_1 = [];
+
+  getItems() {
+    List.forEach((key, value) {
+      if (value == true) {
+        holder_1.add(key);
+      }
+    });
+    print(holder_1);
+    holder_1.clear();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 300,
+      child: ListView(
+        children: List.keys.map((String key) {
+          return new CheckboxListTile(
+            title: new Text(key),
+            value: List[key],
+            activeColor: Colors.deepPurple[400],
+            checkColor: Colors.white,
+            onChanged: (bool value) {
+              setState(() {
+                List[key] = value;
+              });
+            },
+          );
+        }).toList(),
+      ),
     );
   }
 }

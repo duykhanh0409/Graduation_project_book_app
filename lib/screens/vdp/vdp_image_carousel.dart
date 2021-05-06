@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation_project_book_app/styles/colors.dart';
 
 class VdpImageCarousel extends StatefulWidget {
   const VdpImageCarousel({
@@ -12,14 +13,15 @@ class VdpImageCarousel extends StatefulWidget {
 }
 
 class _VdpImageCarouselState extends State<VdpImageCarousel> {
+  int _current = 0;
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height / 2;
-    int _current = 0;
+
     List img = [
+      'assets/images/item2.jpg',
       'assets/images/item1.jpg',
-      'assets/images/item1.jpg',
-      'assets/images/item1.jpg'
+      'assets/images/item3.jpg'
     ];
     return Stack(
       children: [
@@ -27,7 +29,9 @@ class _VdpImageCarouselState extends State<VdpImageCarousel> {
           options: CarouselOptions(
             height: height,
             viewportFraction: 1,
-            onPageChanged: (index, CarouselPageChangedReason reason) {
+            onPageChanged: (index, reason) {
+              // print(index);
+              print(_current);
               setState(() {
                 _current = index;
               });
@@ -40,30 +44,33 @@ class _VdpImageCarouselState extends State<VdpImageCarousel> {
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: AssetImage('assets/images/item1.jpg'),
-                            fit: BoxFit.cover)));
+                            image: AssetImage(i), fit: BoxFit.cover)));
               },
             );
           }).toList(),
         ),
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.center,
-        //   children: map<Widget>(
-        //     img,
-        //     (index, url) {
-        //       return Container(
-        //         width: 8.0,
-        //         height: 8.0,
-        //         margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
-        //         decoration: BoxDecoration(
-        //             shape: BoxShape.circle,
-        //             color: _current == index
-        //                 ? Color.fromRGBO(0, 0, 0, 0.9)
-        //                 : Color.fromRGBO(0, 0, 0, 0.4)),
-        //       );
-        //     },
-        //   ),
-        // ),
+        Positioned(
+          bottom: 20,
+          left: MediaQuery.of(context).size.width/2-25,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              for (var index = 0; index < img.length; index++)
+                Container(
+                  alignment: Alignment.center,
+                  width: 10,
+                  height: 10,
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 2, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: _current == index ? Colors.white : Colors.grey,
+                    shape: BoxShape.circle,
+                  ),
+                )
+            ],
+          ),
+        ), // this was the part the I had to add
+
         Positioned(
           top: 70,
           child: Container(
