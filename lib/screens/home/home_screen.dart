@@ -18,6 +18,10 @@ class _HomePageState extends State<HomePage> {
     'assets/images/img6.jpg',
     'assets/images/img7.jpg',
     'assets/images/img8.jpg',
+    'assets/images/img7.jpg',
+    'assets/images/img8.jpg',
+    'assets/images/img7.jpg',
+    'assets/images/img8.jpg',
   ];
   var listImage = [
     'assets/images/item1.jpg',
@@ -28,6 +32,12 @@ class _HomePageState extends State<HomePage> {
   var listTitle = ['Entire homes', 'Rooms', 'Motel', 'Motel'];
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      systemNavigationBarIconBrightness: Brightness.dark,
+      statusBarIconBrightness: Brightness.dark,
+      statusBarBrightness: Brightness.dark,
+    ));
     return Scaffold(
       body: ListView(children: [
         //TitleBar(),

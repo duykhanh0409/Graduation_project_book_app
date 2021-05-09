@@ -53,43 +53,46 @@ class _HostScreenState extends State<HostScreen> {
           Positioned(
             bottom: 0,
             child: Container(
-              height: height,
-              width: width,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  border: Border(
-                      top: BorderSide(
-                          width: 1, color: Colors.grey.withOpacity(0.4)))),
-              child: GestureDetector(
-                onTap: (){  Navigator.of(context).pushNamed('/hostRoomListing');},
+                height: height,
+                width: width,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    border: Border(
+                        top: BorderSide(
+                            width: 1, color: Colors.grey.withOpacity(0.4)))),
                 child: Container(
+                  width: MediaQuery.of(context).size.width/1.2,
                   height: 50,
-                  width: widthButton,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      color: Colors.pink,
-                      borderRadius: BorderRadius.circular(6)),
-                  child: Text('Get Started',
-                      style: Theme.of(context).textTheme.subtitle1.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 2)),
-                ),
-              ),
-            ),
+                  child: ElevatedButton(
+                      child: Text('Get Started',
+                          style: Theme.of(context).textTheme.subtitle1.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 2)),
+                      style: ButtonStyle(
+                          foregroundColor:
+                              MaterialStateProperty.all<Color>(Colors.white),
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.pink),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(7),
+                                      side: BorderSide(color: Colors.red)))),
+                      onPressed: () => Navigator.of(context).pushNamed('/hostRoomListing')),
+                )),
           )
         ],
       ),
     );
   }
 }
+
 class MyButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-       
-      },
+      onTap: () {},
       child: Container(
         padding: EdgeInsets.all(12.0),
         child: Text('Flat Button'),

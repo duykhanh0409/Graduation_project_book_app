@@ -51,7 +51,7 @@ class _VdpImageCarouselState extends State<VdpImageCarousel> {
         ),
         Positioned(
           bottom: 20,
-          left: MediaQuery.of(context).size.width/2-25,
+          left: MediaQuery.of(context).size.width / 2 - 25,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -79,16 +79,19 @@ class _VdpImageCarouselState extends State<VdpImageCarousel> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  height: 40,
-                  width: 40,
-                  padding: EdgeInsets.only(left: 12),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white),
-                  child: Icon(
-                    Icons.arrow_back_ios,
-                    color: Colors.black,
+                GestureDetector(
+                  onTap: () => Navigator.of(context).pushNamed('/home'),
+                  child: Container(
+                    height: 40,
+                    width: 40,
+                    padding: EdgeInsets.only(left: 12),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white),
+                    child: Icon(
+                      Icons.arrow_back_ios,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
                 Container(

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class FliterScreen extends StatefulWidget {
   @override
@@ -7,145 +8,153 @@ class FliterScreen extends StatefulWidget {
 }
 
 class _FliterScreenState extends State<FliterScreen> {
-  RangeValues _currentRangeValues = const RangeValues(40, 80);
+  RangeValues _currentRangeValues = const RangeValues(20, 100);
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-          extendBodyBehindAppBar: true,
-          extendBody: true,
-          body: Stack(
-            children: [
-              SingleChildScrollView(
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Icon(Icons.close),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Text(
-                        'Popular filter',
-                        style: TextStyle(
-                            fontSize: 22, fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        'These are some of the filters looking accommodation in Ho Chi Minh city use most often',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      DynamicallyCheckbox(),
-                      SizedBox(
-                        height: 7,
-                      ),
-                      Text('Prices',
-                          style: TextStyle(
-                              fontSize: 22, fontWeight: FontWeight.bold)),
-                      SizedBox(
-                        height: 7,
-                      ),
-                      SizedBox(
-                        height: 7,
-                      ),
-                      RangeSlider(
-                        values: _currentRangeValues,
-                        min: 0,
-                        max: 100,
-                        divisions: 5,
-                        labels: RangeLabels(
-                          _currentRangeValues.start.round().toString(),
-                          _currentRangeValues.end.round().toString(),
-                        ),
-                        onChanged: (RangeValues values) {
-                          setState(() {
-                            _currentRangeValues = values;
-                          });
-                        },
-                      ),
-                      Divider(
-                        thickness: 1,
-                        color: Colors.grey.withOpacity(0.3),
-                        height: 20,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text('Rooms and beds',
-                          style: TextStyle(
-                              fontSize: 22, fontWeight: FontWeight.bold)),
-                      FliterFacility(
-                        title: 'Beds',
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      FliterFacility(
-                        title: 'Bedrooms',
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      FliterFacility(
-                        title: 'Bathrooms',
-                      ),
-                      SizedBox(
-                        height: 100,
-                      )
-                    ],
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      systemNavigationBarIconBrightness: Brightness.light,
+      statusBarIconBrightness: Brightness.light,
+      //statusBarBrightness: Brightness.dark,
+    ));
+    return Scaffold(
+        // extendBodyBehindAppBar: true,
+        // extendBody: true,
+        body: SafeArea(
+      child: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 20,
                   ),
-                ),
+                  Icon(Icons.close),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Text(
+                    'Popular filter',
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'These are some of the filters looking accommodation in Ho Chi Minh city use most often',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  DynamicallyCheckbox(),
+                  SizedBox(
+                    height: 7,
+                  ),
+                  Text('Prices',
+                      style:
+                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                  SizedBox(
+                    height: 7,
+                  ),
+                  SizedBox(
+                    height: 7,
+                  ),
+                  RangeSlider(
+                    values: _currentRangeValues,
+                    min: 0,
+                    max: 100,
+                    divisions: 20,
+                    labels: RangeLabels(
+                      _currentRangeValues.start.round().toString(),
+                      _currentRangeValues.end.round().toString(),
+                    ),
+                    onChanged: (RangeValues values) {
+                      setState(() {
+                        _currentRangeValues = values;
+                      });
+                    },
+                  ),
+                  Divider(
+                    thickness: 1,
+                    color: Colors.grey.withOpacity(0.3),
+                    height: 20,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text('Rooms and beds',
+                      style:
+                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                  FliterFacility(
+                    title: 'Beds',
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  FliterFacility(
+                    title: 'Bedrooms',
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  FliterFacility(
+                    title: 'Bathrooms',
+                  ),
+                  SizedBox(
+                    height: 100,
+                  )
+                ],
               ),
-              Positioned(
-                bottom: 0,
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.3),
-                        spreadRadius: .1,
-                        blurRadius: 2,
-                        offset: Offset(0, -1), // changes position of shadow
-                      ),
-                    ],
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: 50,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.3),
+                    spreadRadius: .1,
+                    blurRadius: 2,
+                    offset: Offset(0, -1), // changes position of shadow
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text('Clear all'),
-                      ElevatedButton(
-                          child: Text("30+place".toUpperCase(),
-                              style: TextStyle(fontSize: 14)),
-                          style: ButtonStyle(
-                              foregroundColor: MaterialStateProperty.all<Color>(
-                                  Colors.white),
-                              backgroundColor:
-                                  MaterialStateProperty.all<Color>(Colors.red),
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(7),
-                                      side: BorderSide(color: Colors.red)))),
-                          onPressed: () => null)
-                    ],
-                  ),
-                ),
+                ],
               ),
-            ],
-          )),
-    );
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text('Clear all'),
+                  Container(
+                    width: 180,
+                    child: ElevatedButton(
+                        child: Text("30+place".toUpperCase(),
+                            style: TextStyle(fontSize: 14)),
+                        style: ButtonStyle(
+                            foregroundColor:
+                                MaterialStateProperty.all<Color>(Colors.white),
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.red),
+                            shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(7),
+                                    side: BorderSide(color: Colors.red)))),
+                        onPressed: () => null),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    ));
   }
 }
 
@@ -165,30 +174,37 @@ class FliterFacility extends StatelessWidget {
           title,
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
         ),
-        Row(
-          children: [
-            Container(
-              height: 35,
-              width: 35,
-              margin: EdgeInsets.only(right: 10),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.grey)),
-              child: Text('-'),
-            ),
-            Text('0'),
-            Container(
-              height: 35,
-              width: 35,
-              margin: EdgeInsets.only(left: 10),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.grey)),
-              child: Text('+'),
-            ),
-          ],
+        Container(
+          width: MediaQuery.of(context).size.width / 2,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+             
+              MaterialButton(
+                onPressed: () {},
+                //color: Colors.white,
+                textColor: Colors.black,
+                child: Container(
+                  alignment: Alignment.center,
+                  child: Text('-')
+                ),
+                padding: EdgeInsets.all(6),
+                shape: CircleBorder(side: BorderSide(width: 1,color: Colors.grey))
+              ),
+              Text('0'),
+              MaterialButton(
+                onPressed: () {},
+                //color: Colors.white,
+                textColor: Colors.black,
+                child: Container(
+                  alignment: Alignment.center,
+                  child: Text('+')
+                ),
+                padding: EdgeInsets.all(6),
+                shape: CircleBorder(side: BorderSide(width: 1,color: Colors.grey))
+              ),
+            ],
+          ),
         )
       ],
     );

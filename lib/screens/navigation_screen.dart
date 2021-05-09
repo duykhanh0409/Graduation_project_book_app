@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project_book_app/screens/fliter/fliter_screen.dart';
 import 'package:graduation_project_book_app/screens/home/home_screen.dart';
 import 'package:graduation_project_book_app/screens/profile/profile_screen.dart';
+import 'package:graduation_project_book_app/screens/save/save_room.dart';
 import 'package:graduation_project_book_app/screens/search/search_screen.dart';
 import 'package:graduation_project_book_app/screens/vdp/vdp_Screen.dart';
 
@@ -15,11 +16,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
   List<Widget> screens = [
     HomePage(),
     SearchScreen(),
-    Container(
-      child: Center(
-        child: Text('Save'),
-      ),
-    ),
+    SaveRoom(),
     ProfileScreen()
   ];
 
@@ -38,7 +35,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
             _selectedItem = val;
           });
         },
-        defaultSelectedIndex: 1,
+        defaultSelectedIndex: 0,
       ),
       body: Center(
         child: Center(

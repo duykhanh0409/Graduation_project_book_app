@@ -55,19 +55,23 @@ class BecomeHost extends StatelessWidget {
                     SizedBox(
                       height: 15,
                     ),
-                    FlatButton(
-                        color: Colors.white,
-                        textColor: Colors.black,
-                        shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(10.0)),
-                        onPressed: () {
-                          print('khanh');
-                        },
-                        child: GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).pushNamed('/host');
-                            },
-                            child: Text('Learn More')))
+                    Container(
+                    width: 180,
+                    child: ElevatedButton(
+                        child: Text('Learn More'.toUpperCase(),
+                            style: TextStyle(fontSize: 14)),
+                        style: ButtonStyle(
+                            foregroundColor:
+                                MaterialStateProperty.all<Color>(Colors.white),
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.red),
+                            shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(7),
+                                    side: BorderSide(color: Colors.red)))),
+                        onPressed: () =>  Navigator.of(context).pushNamed('/host')),
+                  )
                   ],
                 ),
               )),

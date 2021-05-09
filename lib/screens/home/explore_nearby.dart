@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation_project_book_app/constants/near_location.dart';
 import 'package:graduation_project_book_app/screens/vdp/vdp_Screen.dart';
 
 class ExploreNearby extends StatelessWidget {
@@ -12,12 +13,15 @@ class ExploreNearby extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<String> widgetList = ['A', 'B', 'C', 'A', 'B', 'C', 'A', 'B', 'C'];
+    final controller = ScrollController();
+
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       SizedBox(
         height: 30,
       ),
       Padding(
-        padding: EdgeInsets.fromLTRB(20, 0, 15, 28),
+        padding: EdgeInsets.fromLTRB(20, 0, 15, 0),
         child: Text(
           'Explore nearby',
           style: TextStyle(
@@ -27,89 +31,65 @@ class ExploreNearby extends StatelessWidget {
         ),
       ),
       Container(
-          width: MediaQuery.of(context).size.width,
-          height: 190,
-          padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-          child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 3,
-              itemBuilder: (context, index) {
-                return Container(
-                    margin: EdgeInsets.only(
-                      right: 50,
+          //color: Colors.red,
+          //  width: MediaQuery.of(context).size.width,
+          height: 230,
+          //padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+          child: GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 0.55,
+              mainAxisSpacing: 0,
+              crossAxisSpacing: 0,
+            ),
+            scrollDirection: Axis.horizontal,
+            padding: EdgeInsets.zero,
+            itemCount: listimg.length,
+            controller: controller,
+            itemBuilder: (context, index) {
+              return FlatButton(
+                // padding: EdgeInsets.only(right: 60, left: 5),
+               // highlightColor: Colors.grey[50].withOpacity(0.3),
+
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return VdpScreens();
+                  }));
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10.0),
+                      child: Image.asset(
+                        listimg[index],
+                        height: 70,
+                        width: 70,
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                    Padding(
+                      padding: EdgeInsets.only(left: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return VdpScreens();
-                              }));
-                            },
-                            child: Row(
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  child: Image.asset(
-                                    listimg[index],
-                                    height: 70,
-                                    width: 70,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(left: 10),
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        'Ho Chi Minh',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w500,
-                                            height: 1.5),
-                                      ),
-                                      Text('1.5 hour drive')
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
+                          Text(
+                            'Ho Chi Minh',
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                height: 1.5),
                           ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(10.0),
-                                child: Image.asset(
-                                  listimg[index + 1],
-                                  height: 70,
-                                  width: 70,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 10),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      'Ho Chi Minh',
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500,
-                                          height: 1.5),
-                                    ),
-                                    Text('1.5 hour drive')
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ]));
-              })),
+                          Text('1.5 hour drive')
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              );
+            },
+          )),
     ]);
   }
 }

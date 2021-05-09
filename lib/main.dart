@@ -11,6 +11,7 @@ import 'package:graduation_project_book_app/screens/navigation_screen.dart';
 import 'package:graduation_project_book_app/screens/search/search_screen.dart';
 import 'package:graduation_project_book_app/screens/signIn/signin.dart';
 import 'package:graduation_project_book_app/screens/signUp/signup.dart';
+import 'package:graduation_project_book_app/widgets/search_inbox.dart';
 
 void main() {
   runApp(MyApp());
@@ -46,10 +47,9 @@ class MyApp extends StatelessWidget {
         '/createNewRoom': (BuildContext context) => CreateNewRoom(),
         '/roomType': (BuildContext context) => RoomType(),
         '/fliterScreen': (BuildContext context) => FliterScreen(),
-        'signUp': (BuildContext context) => SignUpScreen()
+        'signUp': (BuildContext context) => SignUpScreen(),
+        'seachInbox': (BuildContext context) => SearchInbox()
       },
     );
   }
 }
-
-

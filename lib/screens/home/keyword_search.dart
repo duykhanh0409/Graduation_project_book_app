@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation_project_book_app/widgets/search_inbox.dart';
 
 class KeywordSearch extends StatelessWidget {
   @override
@@ -13,7 +14,7 @@ class KeywordSearch extends StatelessWidget {
         //color: Color(0xFF012169),
         decoration: BoxDecoration(
             image: DecorationImage(
-          image: AssetImage('assets/images/bg1.png'),
+          image: AssetImage('assets/images/bghome.jpg'),
           fit: BoxFit.cover,
         )),
         child: Column(
@@ -27,53 +28,55 @@ class KeywordSearch extends StatelessWidget {
                   fontSize: 25,
                   fontWeight: FontWeight.bold),
             ),
+            SizedBox(
+              height: 15,
+            ),
             Container(
-              alignment: Alignment.center,
-              height: 55,
-              width: MediaQuery.of(context).size.width,
-              margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
-              padding: EdgeInsets.only(
-                left: 15,
-                right: 5,
-              ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(35),
+              margin: EdgeInsets.symmetric(horizontal: 30),
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(16)),
+              child: FlatButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SearchInbox()),
+                  );
+                },
+                shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                        color: Colors.white, width: 1, style: BorderStyle.solid),
+                    borderRadius: BorderRadius.circular(20)),
                 color: Colors.white,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    height: 45,
-                    width: MediaQuery.of(context).size.width / 1.8,
-                    child: TextField(
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Search by area,style room'),
-                      style: TextStyle(
-                          color: Colors.black.withOpacity(0.5),
-                          fontSize: 17,
-                          letterSpacing: 0.8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      height: 45,
+                      width: MediaQuery.of(context).size.width / 1.8,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Search by area,style room',
+                        style: TextStyle(
+                            color: Colors.black.withOpacity(0.5),
+                            fontSize: 15,
+                            letterSpacing: 0.8),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
-                  ),
-                  Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                        color: Color(0xFFE85B00), shape: BoxShape.circle),
-                    child: Icon(Icons.search),
-                  )
-                ],
+                    Container(
+                      height: 40,
+                      width: 40,
+                      decoration: BoxDecoration(
+                          color: Color(0xFFE85B00), shape: BoxShape.circle),
+                      child: Icon(
+                        Icons.search,
+                        color: Colors.white,
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
-            // Text(
-            //   'Start with Explore Nearby,Live anywhere, style room',
-            //   style: TextStyle(color: Colors.white, fontSize: 12),
-            // ),
-            // Text(
-            //   'All rooms',
-            //   style: TextStyle(color: Color(0xFFE85B00)),
-            // )
           ],
         ),
       ),

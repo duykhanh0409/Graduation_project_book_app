@@ -35,10 +35,10 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
             Container(
               // cái mới làm nè
-              margin: EdgeInsets.only(top: 30, left: 20, right: 20),
+              margin: EdgeInsets.only(top: 40, left: 20, right: 20),
               padding: EdgeInsets.only(left: 10, right: 10, top: 5),
               alignment: isShow ? Alignment.topCenter : Alignment.center,
-              height: isShow ? 100 : 40,
+              height: isShow ? 100 : 50,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
                 color: Colors.white,
@@ -138,7 +138,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 builder:
                     (BuildContext context, ScrollController scrollController) {
                   return Container(
-                    padding: EdgeInsets.only(top: 50),
+                   // padding: EdgeInsets.only(top: 30),
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
@@ -146,9 +146,9 @@ class _SearchScreenState extends State<SearchScreen> {
                             topRight: Radius.circular(25))),
                     child: ListView.builder(
                       controller: scrollController,
-                      itemCount: 25,
+                      itemCount: 5+1,
                       itemBuilder: (BuildContext context, int index) {
-                        return ItemCard();
+                        return index==0?Container(child:Icon(Icons.more_horiz_outlined),):ItemCard();
                       },
                     ),
                   );
