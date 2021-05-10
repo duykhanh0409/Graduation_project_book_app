@@ -32,7 +32,11 @@ class _FliterScreenState extends State<FliterScreen> {
                   SizedBox(
                     height: 20,
                   ),
-                  Icon(Icons.close),
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Icon(Icons.close)),
                   SizedBox(
                     height: 30,
                   ),
@@ -179,30 +183,25 @@ class FliterFacility extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-             
               MaterialButton(
-                onPressed: () {},
-                //color: Colors.white,
-                textColor: Colors.black,
-                child: Container(
-                  alignment: Alignment.center,
-                  child: Text('-')
-                ),
-                padding: EdgeInsets.all(6),
-                shape: CircleBorder(side: BorderSide(width: 1,color: Colors.grey))
-              ),
+                  onPressed: () {},
+                  //color: Colors.white,
+                  textColor: Colors.black,
+                  child:
+                      Container(alignment: Alignment.center, child: Text('-')),
+                  padding: EdgeInsets.all(6),
+                  shape: CircleBorder(
+                      side: BorderSide(width: 1, color: Colors.grey))),
               Text('0'),
               MaterialButton(
-                onPressed: () {},
-                //color: Colors.white,
-                textColor: Colors.black,
-                child: Container(
-                  alignment: Alignment.center,
-                  child: Text('+')
-                ),
-                padding: EdgeInsets.all(6),
-                shape: CircleBorder(side: BorderSide(width: 1,color: Colors.grey))
-              ),
+                  onPressed: () {},
+                  //color: Colors.white,
+                  textColor: Colors.black,
+                  child:
+                      Container(alignment: Alignment.center, child: Text('+')),
+                  padding: EdgeInsets.all(6),
+                  shape: CircleBorder(
+                      side: BorderSide(width: 1, color: Colors.grey))),
             ],
           ),
         )

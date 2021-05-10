@@ -45,7 +45,6 @@ class MyApp extends StatelessWidget {
         '/host': (BuildContext context) => HostScreen(),
         '/hostRoomListing': (BuildContext context) => HostRoomListing(),
         '/createNewRoom': (BuildContext context) => CreateNewRoom(),
-        '/roomType': (BuildContext context) => RoomType(),
         '/fliterScreen': (BuildContext context) => FliterScreen(),
         'signUp': (BuildContext context) => SignUpScreen(),
         'seachInbox': (BuildContext context) => SearchInbox()

@@ -14,23 +14,24 @@ class _LoginScreenState extends State<LoginScreen> {
   var passInval = false;
 
   void onClickButtonLogin() {
-    setState(() {
-      if (emailController.text.length < 6 ||
-          !emailController.text.contains('@')) {
-        emailInval = true;
-      } else {
-        emailInval = false;
-      }
-      if (passController.text.length < 6) {
-        passInval = true;
-      } else {
-        passInval = false;
-      }
+    // setState(() {
+    //   if (emailController.text.length < 6 ||
+    // !emailController.text.contains('@')) {
+    //     emailInval = true;
+    //   } else {
+    //     emailInval = false;
+    //   }
+    //   if (passController.text.length < 6) {
+    //     passInval = true;
+    //   } else {
+    //     passInval = false;
+    //   }
 
-      if (!emailInval && !passInval) {
-        Navigator.of(context).pushNamed('/home');
-      }
-    });
+    //   if (!emailInval && !passInval) {
+    //     Navigator.of(context).pushNamed('/home');
+    //   }
+    // });
+    Navigator.of(context).pushNamed('/home');
   }
 
   @override

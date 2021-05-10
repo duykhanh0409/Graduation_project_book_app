@@ -63,10 +63,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('ACCOUNT SETTINGS',
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline6
-                            .copyWith(color: Colors.grey, fontSize: 18)),
+                        style: Theme.of(context).textTheme.headline6.copyWith(
+                            color: Colors.black.withOpacity(0.8),
+                            fontSize: 20)),
+                    SizedBox(
+                      height: 3,
+                    ),
                     ProfileInfor(
                       infor: 'Personal information',
                       icon: Icons.person_outline,
@@ -83,9 +85,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       infor: 'Learn about user',
                       icon: Icons.home_outlined,
                     ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text('ABOUT HOST',
+                        style: Theme.of(context).textTheme.headline6.copyWith(
+                            color: Colors.black.withOpacity(0.8),
+                            fontSize: 20)),
+                    ProfileInfor(
+                        infor: 'Host Schedule', icon: Icons.list_alt_outlined),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text('LEGAL',
+                        style: Theme.of(context).textTheme.headline6.copyWith(
+                            color: Colors.black.withOpacity(0.8),
+                            fontSize: 20)),
+                    ProfileInfor(
+                        infor: 'Terms of Service',
+                        icon: Icons.list_alt_outlined),
+                   ProfileInfor(
+                     infor: 'Log out',
+                     icon: null,
+                   )
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -105,20 +130,29 @@ class ProfileInfor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            infor,
-            style: Theme.of(context)
-                .textTheme
-                .subtitle1
-                .copyWith(fontWeight: FontWeight.w300, color: Colors.black),
-          ),
-          Icon(icon)
-        ],
+    return FlatButton(
+      onPressed: () {
+        print('khanh');
+      },
+      padding: EdgeInsets.zero,
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 14),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              infor,
+              style: Theme.of(context).textTheme.subtitle1.copyWith(
+                  //fontWeight: FontWeight.w300,
+                  color: Colors.black,
+                  fontSize: 19),
+            ),
+            Icon(
+              icon,
+              color: Colors.grey,
+            )
+          ],
+        ),
       ),
     );
   }

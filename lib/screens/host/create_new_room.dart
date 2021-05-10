@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:graduation_project_book_app/screens/host/widget/facility_type.dart';
+import 'package:graduation_project_book_app/screens/host/widget/room_type.dart';
 
 class CreateNewRoom extends StatefulWidget {
   @override
@@ -36,7 +38,27 @@ class _CreateNewRoomState extends State<CreateNewRoom> {
           ),
           PropertyRoom(
             propertyName: 'Property Room Type',
-            navigatorName: 'roomType',
+            navigatorName: RoomType(),
+          ),
+          PropertyRoom(
+            propertyName: 'Address',
+            navigatorName: RoomType(),
+          ),
+          PropertyRoom(
+            propertyName: 'Photos',
+            navigatorName: RoomType(),
+          ),
+          PropertyRoom(
+            propertyName: 'Description',
+            navigatorName: RoomType(),
+          ),
+          PropertyRoom(
+            propertyName: 'Facility',
+            navigatorName: FacilityType(),
+          ),
+          PropertyRoom(
+            propertyName: 'Price',
+            navigatorName: RoomType(),
           ),
         ],
       ),
@@ -46,7 +68,7 @@ class _CreateNewRoomState extends State<CreateNewRoom> {
 
 class PropertyRoom extends StatelessWidget {
   final String propertyName;
-  final String navigatorName;
+  final Widget navigatorName;
   const PropertyRoom({
     Key key,
     this.propertyName,
@@ -55,10 +77,14 @@ class PropertyRoom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context).pushNamed('/roomType');
+    return FlatButton(
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => navigatorName),
+        );
       },
+      padding: EdgeInsets.zero,
       child: Container(
         alignment: Alignment.centerLeft,
         margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
