@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project_book_app/styles/colors.dart';
 
 class VdpImageCarousel extends StatefulWidget {
+  final List<Image> listImg;
   const VdpImageCarousel({
     Key key,
+    this.listImg,
   }) : super(key: key);
 
   @override
@@ -80,7 +82,7 @@ class _VdpImageCarouselState extends State<VdpImageCarousel> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GestureDetector(
-                  onTap: () => Navigator.of(context).pushNamed('/home'),
+                  onTap: () => Navigator.of(context).pop(),
                   child: Container(
                     height: 40,
                     width: 40,

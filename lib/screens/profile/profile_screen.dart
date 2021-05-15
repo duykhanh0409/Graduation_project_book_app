@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_project_book_app/bloc/vdpBloc/vdb_bloc.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -9,6 +11,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
+   
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
@@ -52,7 +55,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ],
                 ),
               ),
-              Divider(thickness: 1, color: Colors.grey.withOpacity(0.3)),
+              Divider(thickness: 1, color: Colors.grey.withOpacity(0.4)),
               Container(
                 padding: EdgeInsets.only(
                   left: 20,
@@ -104,10 +107,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ProfileInfor(
                         infor: 'Terms of Service',
                         icon: Icons.list_alt_outlined),
-                   ProfileInfor(
-                     infor: 'Log out',
-                     icon: null,
-                   )
+                    ProfileInfor(
+                      infor: 'Log out',
+                      icon: null,
+                    )
                   ],
                 ),
               ),

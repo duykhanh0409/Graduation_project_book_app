@@ -54,6 +54,7 @@ class AtcColors {
   static const Color secondaryVariant = const Color(0xFFE24900);
   static const Color dividerLightColor = const Color(0xFFE1E4ED);
   static const Color mainColor= const Color(0xFFE85B00);
+  // static const Color borderMainColor=const Color(0xFFFAFAFA).withOpacity(0.4);
 
   static const Color fabForegroundColor =
       const Color.fromRGBO(255, 255, 255, 0.74);

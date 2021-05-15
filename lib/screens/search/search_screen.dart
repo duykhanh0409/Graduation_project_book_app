@@ -1,7 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_project_book_app/bloc/searchBloc/search_bloc.dart';
+import 'package:graduation_project_book_app/bloc/searchBloc/search_event.dart';
+import 'package:graduation_project_book_app/bloc/searchBloc/search_state.dart';
+import 'package:graduation_project_book_app/bloc/vdpBloc/vdb_bloc.dart';
+import 'package:graduation_project_book_app/bloc/vdpBloc/vdp_event.dart';
+import 'package:graduation_project_book_app/bloc/vdpBloc/vdp_state.dart';
 import 'package:graduation_project_book_app/screens/search/item_card.dart';
+import 'package:graduation_project_book_app/screens/vdp/vdp_Screen.dart';
 import 'package:graduation_project_book_app/widgets/google_map.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -20,6 +28,7 @@ class _SearchScreenState extends State<SearchScreen> {
       statusBarIconBrightness: Brightness.dark,
       //statusBarBrightness: Brightness.dark,
     ));
+    SearchBloc _searchBloc;
     return Scaffold(
         // appBar: appBar(context),
         extendBodyBehindAppBar: true,
@@ -128,35 +137,66 @@ class _SearchScreenState extends State<SearchScreen> {
                     ),
             ),
             Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: DraggableScrollableSheet(
-                //bottomsheet
-                maxChildSize: 1,
-                minChildSize: 0.1,
-                initialChildSize: .5,
-                builder:
-                    (BuildContext context, ScrollController scrollController) {
-                  return Container(
-                   // padding: EdgeInsets.only(top: 30),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(25),
-                            topRight: Radius.circular(25))),
-                    child: ListView.builder(
-                      controller: scrollController,
-                      itemCount: 5+1,
-                      itemBuilder: (BuildContext context, int index) {
-                        return index==0?Container(child:Icon(Icons.more_horiz_outlined),):ItemCard();
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: BlocBuilder<SearchBloc, SearchState>(
+                    builder: (context, state) {
+                  if (state is SearchInitalState) {
+                    _searchBloc = BlocProvider.of(context);
+
+                    _searchBloc.add(FetchData());
+                  }
+                  if (state is SearchLoadingState) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CircularProgressIndicator(),
+                        ],
+                      ),
+                    );
+                  }
+                  if (state is SearchLoadedState) {
+                    print('đây đâu rùi');
+                    return DraggableScrollableSheet(
+                      //bottomsheet
+                      maxChildSize: 1,
+                      minChildSize: 0.1,
+                      initialChildSize: .5,
+                      builder: (BuildContext context,
+                          ScrollController scrollController) {
+                        return Container(
+                          // padding: EdgeInsets.only(top: 30),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(25),
+                                  topRight: Radius.circular(25))),
+                          child: ListView.builder(
+                            controller: scrollController,
+                            itemCount: state.listItem.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              //print(state.vdpItem[index].type);
+                              return FlatButton(
+                                onPressed: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return VdpScreens();
+                                  }));
+                                },
+                                child: ItemCard(
+                                  item: state.listItem[index],
+                                ),
+                              );
+                            },
+                          ),
+                        );
                       },
-                    ),
-                  );
-                },
-              ),
-            ),
+                    );
+                  }
+                  return Container();
+                }))
           ],
         ));
   }
 }
-

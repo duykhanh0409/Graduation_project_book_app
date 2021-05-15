@@ -6,6 +6,7 @@ import 'package:graduation_project_book_app/screens/home/explore_nearby.dart';
 import 'package:graduation_project_book_app/screens/home/keyword_search.dart';
 import 'package:graduation_project_book_app/screens/home/live_anywhere.dart';
 import 'package:graduation_project_book_app/screens/home/title_bar.dart';
+import 'package:graduation_project_book_app/services/vdp_services.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -38,6 +39,8 @@ class _HomePageState extends State<HomePage> {
       statusBarIconBrightness: Brightness.dark,
       statusBarBrightness: Brightness.dark,
     ));
+    // Vdpservice vdpservice=new Vdpservice();
+    // vdpservice.fetchVdp();
     return Scaffold(
       body: ListView(children: [
         //TitleBar(),
