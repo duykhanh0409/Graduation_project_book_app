@@ -1,135 +1,134 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_project_book_app/bloc/vdpBloc/vdb_bloc.dart';
-import 'package:graduation_project_book_app/bloc/vdpBloc/vdp_event.dart';
-import 'package:graduation_project_book_app/bloc/vdpBloc/vdp_state.dart';
+import 'package:graduation_project_book_app/models/vdp.dart';
 import 'package:graduation_project_book_app/screens/vdp/vdp_detail.dart';
 import 'package:graduation_project_book_app/screens/vdp/vdp_image_carousel.dart';
-import 'package:graduation_project_book_app/services/vdp_services.dart';
 import 'package:graduation_project_book_app/widgets/google_map.dart';
+import 'package:geocoder/geocoder.dart';
 
 class VdpScreens extends StatefulWidget {
+  final VdpItem item;
+  const VdpScreens({
+    Key key,
+    this.item,
+  }) : super(key: key);
   @override
   _VdpScreensState createState() => _VdpScreensState();
 }
 
 class _VdpScreensState extends State<VdpScreens> {
-  VdpBloc _vdpBloc;
-
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<VdpBloc, VdpState>(builder: (context, state) {
-      if (state is VdpinitialState) {
-        _vdpBloc = BlocProvider.of(context);
-        _vdpBloc.add(FetchEvent());
-      }
-      if (state is VdpLoadingState) {
-        return Scaffold(body: Center(child: CircularProgressIndicator()));
-      }
-      if (state is VdpLoadedState) {
-        print(state.vdpItem[0].id);
-        return Scaffold(
-          body: Stack(
-            children: [
-              SingleChildScrollView(
-                child: Container(
-                  // height: MediaQuery.of(context).size.height,
-                  child: Column(
-                    children: [
-                      VdpImageCarousel(),
-                      Container(
-                        height: 2,
-                        color: Color(0xFFE85B00),
-                      ),
-                      VdpDetail(),
-                      Divider(
-                        thickness: 1,
-                        color: Color(0xFFE4D9D9),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Location',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle1
-                                  .copyWith(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              '58/2 Thao Dien, Quan 2',
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                              height: 240,
-                              child: MapScreen(),
-                            ),
-                          ],
+    var item = widget.item;
+
+    return Scaffold(
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Container(
+              // height: MediaQuery.of(context).size.height,
+              child: Column(
+                children: [
+                  VdpImageCarousel(
+                    item: item,
+                  ),
+                  Container(
+                    height: 2,
+                    color: Color(0xFFE85B00),
+                  ),
+                  VdpDetail(
+                    item: item,
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Location',
+                          style: Theme.of(context).textTheme.subtitle1.copyWith(
+                              fontSize: 15, fontWeight: FontWeight.bold),
                         ),
-                      ),
-                      SizedBox(
-                        height: 80,
-                      ),
-                    ],
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          '58/2 Thao Dien, Quan 2',
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          height: 240,
+                          child: MapScreen(),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
+                  SizedBox(
+                    height: 80,
+                  ),
+                ],
               ),
-              Positioned(
-                bottom: 0,
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.3),
-                        spreadRadius: .1,
-                        blurRadius: 2,
-                        offset: Offset(0, -1), // changes position of shadow
-                      ),
-                    ],
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: 50,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.3),
+                    spreadRadius: .1,
+                    blurRadius: 2,
+                    offset: Offset(0, -1), // changes position of shadow
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text('1.500.000'),
-                      ElevatedButton(
-                          child: Text("Reservation".toUpperCase(),
-                              style: TextStyle(fontSize: 14)),
-                          style: ButtonStyle(
-                              foregroundColor: MaterialStateProperty.all<Color>(
-                                  Colors.white),
-                              backgroundColor:
-                                  MaterialStateProperty.all<Color>(Colors.red),
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
+                ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ElevatedButton(
+                      child: Row(
+                        children: [
+                          Icon(Icons.phone_iphone_outlined),
+                          Text(' 0814358398')
+                        ],
+                      ),
+                      style: ButtonStyle(
+                          foregroundColor:
+                              MaterialStateProperty.all<Color>(Colors.white),
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.red),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(7),
                                       side: BorderSide(color: Colors.red)))),
-                          onPressed: () => null)
-                    ],
-                  ),
-                ),
+                      onPressed: () => null),
+                  ElevatedButton(
+                      child: Text("Reservation".toUpperCase(),
+                          style: TextStyle(fontSize: 14)),
+                      style: ButtonStyle(
+                          foregroundColor:
+                              MaterialStateProperty.all<Color>(Colors.white),
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.red),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(7),
+                                      side: BorderSide(color: Colors.red)))),
+                      onPressed: () => null)
+                ],
               ),
-            ],
+            ),
           ),
-        );
-      }
-      return Container();
-    });
+        ],
+      ),
+    );
   }
 }

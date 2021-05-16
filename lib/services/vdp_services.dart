@@ -4,9 +4,9 @@ import 'package:graduation_project_book_app/models/vdp.dart';
 import 'package:http/http.dart' as http;
 
 class Vdpservice {
-  Future<List<VdpItem>> fetchVdp() async {
+  Future<List<VdpItem>> fetchVdp(var id) async {
     List<VdpItem> list = [];
-    String url = 'https://book-room-app.herokuapp.com/api/read';
+    String url = 'https://book-room-app.herokuapp.com/api/read/$id';
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       for (int i = 0; i < json.decode(response.body).length; i++) {

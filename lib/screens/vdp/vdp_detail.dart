@@ -1,13 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/image.dart' as Images;
+import 'package:graduation_project_book_app/models/vdp.dart';
 
 class VdpDetail extends StatelessWidget {
+  final VdpItem item;
   const VdpDetail({
     Key key,
+    this.item,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var itemTitle = item.address;
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
       child: Column(
@@ -19,7 +24,7 @@ class VdpDetail extends StatelessWidget {
               Container(
                   width: 160,
                   child: Text(
-                    '58/2 Thao Dien, Quan 2',
+                    '${itemTitle.addressNumber},${itemTitle.ward},district ${itemTitle.district},${itemTitle.city}',
                     style: Theme.of(context)
                         .textTheme
                         .subtitle1
@@ -28,7 +33,7 @@ class VdpDetail extends StatelessWidget {
               Column(
                 children: [
                   Text(
-                    '1.500.000 VND',
+                    '${item.price.room} VDN',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                   Text('Per month')
@@ -48,7 +53,7 @@ class VdpDetail extends StatelessWidget {
             ),
           ),
           Text(
-            'Housed in a three-storied semi-detached apartment our homestay is well managed and has been a leading  homestay choice for many local and.',
+            item.discription,
             textAlign: TextAlign.start,
             style: TextStyle(color: Color(0xFF6D4E4E)),
           ),
@@ -93,7 +98,7 @@ class VdpDetail extends StatelessWidget {
                               fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                         Text(
-                          '234 reviews',
+                          '${item.reviews.length} reviews',
                           style: TextStyle(color: Color(0xFF464E46)),
                         )
                       ],
@@ -135,48 +140,129 @@ class VdpDetail extends StatelessWidget {
           SizedBox(
             height: 15,
           ),
-          Text('Accommodation',
+          Text('Facility Detail',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           SizedBox(
             height: 10,
           ),
-          Row(
+          Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Column(
+              DescriptionDetail(
+                icon: Icons.home_outlined,
+                title: item.type,
+                total: '1',
+                subtitle:
+                    'Căn hộ cung cấp không gian đầy đủ cho việc sinh hoạt',
+              ),
+              DescriptionDetail(
+                icon: Icons.wifi,
+                title: 'Wifi',
+                total: item.facility.wife != Null ? 'Yes' : 'No',
+                subtitle: 'Cung cấp Wifi cho người thuê sử dụng',
+              ),
+              DescriptionDetail(
+                icon: Icons.bathtub,
+                title: 'Bath',
+                total: item.facility.bath != Null
+                    ? '${item.facility.bath}'
+                    : 'N/A',
+                subtitle: 'Cung cấp phòng tắm cho người thuê',
+              ),
+              DescriptionDetail(
+                icon: Icons.archive_sharp,
+                title: 'Acreage',
+                total: '${item.facility.square}',
+                subtitle: 'Diện tích sàn',
+              ),
+              DescriptionDetail(
+                icon: Icons.account_balance,
+                title: 'mezzanine',
+                total: item.facility.bath != Null
+                    ? '${item.facility.mezzanine}'
+                    : 'N/A',
+                subtitle: 'Gác cho người thuê',
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Divider(
+            thickness: 1,
+            color: Color(0xFFE4D9D9),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'More Detail',
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle1
+                    .copyWith(fontSize: 15, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Icon(
-                    Icons.fit_screen,
-                    size: 40,
-                    color: Color(0xFF012169),
-                  ),
-                  Text('70m')
+                  Text('Giá Điện:',
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                  Text('${item.price.electricity} VND/kg')
                 ],
               ),
-              Column(
-                children: [
-                  Icon(
-                    Icons.bedtime_sharp,
-                    size: 40,
-                    color: Color(0xFF012169),
-                  ),
-                  Text('70m')
-                ],
+              SizedBox(
+                height: 6,
               ),
-              Column(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Icon(
-                    Icons.bathtub,
-                    size: 40,
-                    color: Color(0xFF012169),
-                  ),
-                  Text('70m')
+                  Text('Giá Nước:',
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                  Text('${item.price.water} VND/M3')
                 ],
               )
             ],
           )
         ],
       ),
+    );
+  }
+}
+
+class DescriptionDetail extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final String total;
+  final IconData icon;
+  const DescriptionDetail(
+      {Key key, this.title, this.subtitle, this.total, this.icon})
+      : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+      leading: title == 'Acreage'
+          ? Container(
+              width: 25,
+              height: 25,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/images/area.png'),
+                  fit: BoxFit.cover,
+                ),
+              ))
+          : Icon(
+              icon,
+              size: 30,
+              color: Color(0xFF000000),
+            ),
+      title: Text('${title.toUpperCase()}: ${total}'),
+      subtitle: Text(subtitle),
     );
   }
 }

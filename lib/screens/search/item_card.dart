@@ -20,21 +20,22 @@ class _ItemCardState extends State<ItemCard> {
   @override
   Widget build(BuildContext context) {
     var imageItem = widget.item.image;
+    var itemTitle = widget.item.address;
     return Container(
-      height: 280,
+     // height: 300,
       margin: EdgeInsets.fromLTRB(
           10, 10, 10, 10), //remmeber when merge searchScreen
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         color: Colors.white,
-        // boxShadow: [
-        //   BoxShadow(
-        //     color: Colors.grey.withOpacity(0.1),
-        //     spreadRadius: 0.3,
-        //     blurRadius: 0.5,
-        //     offset: Offset(0.5, 0.5), // changes position of shadow
-        //   ),
-        // ],
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.1),
+            spreadRadius: 0.3,
+            blurRadius: 0.5,
+            offset: Offset(0.5, 0.5), // changes position of shadow
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,7 +118,7 @@ class _ItemCardState extends State<ItemCard> {
               )),
           Container(
               child: Padding(
-            padding: EdgeInsets.only(left: 20),
+            padding: EdgeInsets.only(left: 20,bottom: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -134,7 +135,8 @@ class _ItemCardState extends State<ItemCard> {
                 ),
                 RichText(
                   text: TextSpan(
-                    text: widget.item.price.room,//dùng number fortmat mà chưa dùng đc '${NumberFormat('#,###').format(widget.listingPrice)}'
+                    text: widget.item.price
+                        .room, //dùng number fortmat mà chưa dùng đc '${NumberFormat('#,###').format(widget.listingPrice)}'
                     style: TextStyle(
                         fontWeight: FontWeight.bold, color: Colors.black),
                     children: <TextSpan>[
@@ -149,7 +151,7 @@ class _ItemCardState extends State<ItemCard> {
                   height: 2,
                 ),
                 Text(
-                  '53/2 Thao Dien, Quan 2, HCM',
+                  '${itemTitle.addressNumber},${itemTitle.ward},district ${itemTitle.district},${itemTitle.city}',
                   style: TextStyle(
                     fontSize: 15,
                     color: Color(0xFF4C3B3B),

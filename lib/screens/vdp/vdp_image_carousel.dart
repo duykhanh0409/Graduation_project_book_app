@@ -1,13 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation_project_book_app/models/vdp.dart';
 import 'package:graduation_project_book_app/styles/colors.dart';
 
 class VdpImageCarousel extends StatefulWidget {
-  final List<Image> listImg;
+  final VdpItem item;
   const VdpImageCarousel({
     Key key,
-    this.listImg,
+    this.item,
   }) : super(key: key);
 
   @override
@@ -16,15 +17,12 @@ class VdpImageCarousel extends StatefulWidget {
 
 class _VdpImageCarouselState extends State<VdpImageCarousel> {
   int _current = 0;
+
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height / 2;
+    var imageItem = widget.item.image;
 
-    List img = [
-      'assets/images/item2.jpg',
-      'assets/images/item1.jpg',
-      'assets/images/item3.jpg'
-    ];
     return Stack(
       children: [
         CarouselSlider(
@@ -39,14 +37,17 @@ class _VdpImageCarouselState extends State<VdpImageCarousel> {
               });
             },
           ),
-          items: img.map((i) {
+          items: imageItem.map((i) {
             return Builder(
               builder: (BuildContext context) {
                 return Container(
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage(i), fit: BoxFit.cover)));
+                      image: DecorationImage(
+                        image: NetworkImage(i.img),
+                        fit: BoxFit.cover,
+                      ),
+                    ));
               },
             );
           }).toList(),
@@ -57,7 +58,7 @@ class _VdpImageCarouselState extends State<VdpImageCarousel> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              for (var index = 0; index < img.length; index++)
+              for (var index = 0; index < imageItem.length; index++)
                 Container(
                   alignment: Alignment.center,
                   width: 10,

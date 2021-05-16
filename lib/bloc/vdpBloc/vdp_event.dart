@@ -7,9 +7,9 @@ abstract class VdpEvent extends Equatable {
 }
 
 class FetchEvent extends VdpEvent {
-  // final String id;
+  final String id;
 
-  // FetchEvent({this.id});
+  FetchEvent({this.id});
   @override
   // TODO: implement props
   List<Object> get props => [];

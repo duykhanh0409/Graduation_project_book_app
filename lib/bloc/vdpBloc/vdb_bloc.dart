@@ -14,10 +14,10 @@ class VdpBloc extends Bloc<VdpEvent, VdpState> {
     List<VdpItem> vdpItem;
     switch (event.runtimeType) {
       case FetchEvent:
-        //FetchEvent fetchEvent = event;
+        FetchEvent fetchEvent = event;
         yield VdpLoadingState();
         try {
-          vdpItem = await vdpservice.fetchVdp();
+          vdpItem = await vdpservice.fetchVdp(fetchEvent.id);
           if (vdpItem != null) {
             yield VdpLoadedState(vdpItem: vdpItem); //state này chứa data rùi nè
           }
