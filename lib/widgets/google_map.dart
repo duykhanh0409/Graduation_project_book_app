@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoder/geocoder.dart';
+import 'package:geocoding/geocoding.dart';
+
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:graduation_project_book_app/models/vdp.dart';
 
@@ -18,7 +19,9 @@ class _MapScreenState extends State<MapScreen> {
   GoogleMapController _googleMapController;
   Marker _origin;
   Marker _destination;
-  Coordinates coordinator;
+  Location test1;
+  Set<Marker> _markers = {};
+  //Coordinates coordinator;
   @override
   void dispose() {
     _googleMapController.dispose();
@@ -29,12 +32,10 @@ class _MapScreenState extends State<MapScreen> {
     var itemTitle = widget.item.first.address;
     final query =
         '${itemTitle.addressNumber},${itemTitle.ward},quận ${itemTitle.district},${itemTitle.city}';
-    var addresses = await Geocoder.local.findAddressesFromQuery(query);
-    var first = addresses.first;
-    print(
-        " gia tri dau tien 22${first.featureName} : gia tri thu22 2${first.coordinates}");
+    List<Location> locations = await locationFromAddress(query);
+    print(" gia tri dau tien ${locations}");
     setState(() {
-      coordinator = first.coordinates;
+      test1 = locations[0];
     });
   }
 
@@ -45,29 +46,31 @@ class _MapScreenState extends State<MapScreen> {
     getCurrentLocation();
   }
 
+  void _onMapCreated(GoogleMapController controller) {
+    setState(() {
+      _markers.add(
+        Marker(
+          markerId: MarkerId('khanh'),
+          position: LatLng(test1.latitude, test1.longitude),
+          infoWindow: InfoWindow(title: 'khanh'),
+          icon: BitmapDescriptor.defaultMarkerWithHue(
+            BitmapDescriptor.hueViolet,
+          ),
+        ),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     print('-----------------------------------------------------------------');
     return Scaffold(
       body: GoogleMap(
-        myLocationButtonEnabled: true,
-        zoomControlsEnabled: true,
-        initialCameraPosition: _cameraPosition,
-        onMapCreated: (controler) => _googleMapController = controler,
-        markers: {
-          Marker(
-            markerId: MarkerId('khanh'),
-            position: LatLng(coordinator.latitude, coordinator.longitude),
-            infoWindow: InfoWindow(title: 'khanh'),
-            icon: BitmapDescriptor.defaultMarkerWithHue(
-              BitmapDescriptor.hueViolet,
-            ),
-          ),
-          gramercyMarker,
-          bernardinMarker,
-          blueMarker
-        },
-      ),
+          myLocationButtonEnabled: true,
+          zoomControlsEnabled: true,
+          initialCameraPosition: _cameraPosition,
+          onMapCreated: _onMapCreated,
+          markers: Set<Marker>.of(_markers)),
     );
   }
 }

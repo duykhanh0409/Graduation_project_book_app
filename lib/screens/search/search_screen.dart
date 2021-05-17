@@ -2,13 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geocoder/geocoder.dart';
+import 'package:geocoding/geocoding.dart';
+
 import 'package:graduation_project_book_app/bloc/searchBloc/search_bloc.dart';
 import 'package:graduation_project_book_app/bloc/searchBloc/search_event.dart';
 import 'package:graduation_project_book_app/bloc/searchBloc/search_state.dart';
-import 'package:graduation_project_book_app/bloc/vdpBloc/vdb_bloc.dart';
-import 'package:graduation_project_book_app/bloc/vdpBloc/vdp_event.dart';
-import 'package:graduation_project_book_app/bloc/vdpBloc/vdp_state.dart';
 import 'package:graduation_project_book_app/screens/search/item_card.dart';
 import 'package:graduation_project_book_app/screens/vdp/vdp_Screen.dart';
 import 'package:graduation_project_book_app/widgets/google_map.dart';
@@ -30,13 +28,10 @@ class _SearchScreenState extends State<SearchScreen> {
     getCurrentLocation();
   }
 
-  @override
   getCurrentLocation() async {
     final query = "1600 Amphiteatre Parkway, Mountain View";
-    var addresses = await Geocoder.local.findAddressesFromQuery(query);
-    var first = addresses.first;
-    print(
-        " gia tri dau tien ${first.featureName} : gia tri${first.coordinates}");
+    List<Location> locations = await locationFromAddress(query);
+    print(" gia tri dau tien ${locations}");
   }
 
   Widget build(BuildContext context) {

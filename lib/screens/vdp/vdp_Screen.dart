@@ -4,7 +4,7 @@ import 'package:graduation_project_book_app/models/vdp.dart';
 import 'package:graduation_project_book_app/screens/vdp/vdp_detail.dart';
 import 'package:graduation_project_book_app/screens/vdp/vdp_image_carousel.dart';
 import 'package:graduation_project_book_app/widgets/google_map.dart';
-import 'package:geocoder/geocoder.dart';
+
 
 class VdpScreens extends StatefulWidget {
   final VdpItem item;
