@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_geocoder/geocoder.dart';
 import 'package:geocoding/geocoding.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -17,10 +18,10 @@ class _MapScreenState extends State<MapScreen> {
   static const _cameraPosition =
       CameraPosition(target: LatLng(10.849690, 106.773916), zoom: 11.5);
   GoogleMapController _googleMapController;
-  Marker _origin;
-  Marker _destination;
-  Location test1;
-  Set<Marker> _markers = {};
+
+  // List<LatLng> locations;
+  List<Marker> _markers = [];
+  List<Coordinates> coordinators;
   //Coordinates coordinator;
   @override
   void dispose() {
@@ -29,14 +30,19 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   getCurrentLocation() async {
-    var itemTitle = widget.item.first.address;
-    final query =
-        '${itemTitle.addressNumber},${itemTitle.ward},quận ${itemTitle.district},${itemTitle.city}';
-    List<Location> locations = await locationFromAddress(query);
-    print(" gia tri dau tien ${locations}");
-    setState(() {
-      test1 = locations[0];
-    });
+    // hàm này sai setState chỉ đang lấy đc 1 thằng cuối
+
+    for (var i = 0; i < widget?.item?.length; i++) {
+      var itemTitle = widget?.item[i]?.address;
+      final query =
+          '${itemTitle?.addressNumber},${itemTitle?.ward},quận ${itemTitle?.district},${itemTitle?.city}' ??
+              '111 Lê văn Chí,Linh Chiểu,Thủ Đức, thành phố hồ chí minh';
+      print('${query}------------địa chỉ--------');
+      var addresses = await Geocoder.local.findAddressesFromQuery(query);
+      setState(() {
+        coordinators.add(addresses[i].coordinates);
+      });
+    }
   }
 
   @override
@@ -46,57 +52,39 @@ class _MapScreenState extends State<MapScreen> {
     getCurrentLocation();
   }
 
+  List<LatLng> test = [
+    LatLng(10.857702, 106.777149),
+    LatLng(10.846741, 106.778264)
+  ];
   void _onMapCreated(GoogleMapController controller) {
-    setState(() {
-      _markers.add(
-        Marker(
-          markerId: MarkerId('khanh'),
-          position: LatLng(test1.latitude, test1.longitude),
-          infoWindow: InfoWindow(title: 'khanh'),
-          icon: BitmapDescriptor.defaultMarkerWithHue(
-            BitmapDescriptor.hueViolet,
+    for (var i = 0; i < widget?.item?.length; i++) {
+      setState(() {
+        _markers.add(
+          Marker(
+            markerId: MarkerId('${i}'),
+            position: LatLng(test[i]?.latitude, test[i]?.longitude),
+            infoWindow: InfoWindow(title: 'khanh'),
+            icon: BitmapDescriptor.defaultMarkerWithHue(
+              BitmapDescriptor.hueViolet,
+            ),
           ),
-        ),
-      );
-    });
+          // MapMarker()
+        );
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    print('-----------------------------------------------------------------');
+   // print('${coordinators[0].latitude}---------------giá trị');
     return Scaffold(
       body: GoogleMap(
           myLocationButtonEnabled: true,
           zoomControlsEnabled: true,
           initialCameraPosition: _cameraPosition,
           onMapCreated: _onMapCreated,
-          markers: Set<Marker>.of(_markers)),
+          markers: Set.from(_markers)),
     );
   }
 }
 
-Marker gramercyMarker = Marker(
-  markerId: MarkerId('gramercy'),
-  position: LatLng(10.845694, 106.758342),
-  infoWindow: InfoWindow(title: 'Gramercy Tavern'),
-  icon: BitmapDescriptor.defaultMarkerWithHue(
-    BitmapDescriptor.hueViolet,
-  ),
-);
-
-Marker bernardinMarker = Marker(
-  markerId: MarkerId('bernardin'),
-  position: LatLng(10.85059, 106.77188),
-  infoWindow: InfoWindow(title: 'Le Bernardin'),
-  icon: BitmapDescriptor.defaultMarkerWithHue(
-    BitmapDescriptor.hueViolet,
-  ),
-);
-Marker blueMarker = Marker(
-  markerId: MarkerId('bluehill'),
-  position: LatLng(10.846664613902156, 106.77834887046636),
-  infoWindow: InfoWindow(title: 'Blue Hill'),
-  icon: BitmapDescriptor.defaultMarkerWithHue(
-    BitmapDescriptor.hueViolet,
-  ),
-);

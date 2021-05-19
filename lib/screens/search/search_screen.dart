@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_geocoder/geocoder.dart';
 import 'package:geocoding/geocoding.dart';
 
 import 'package:graduation_project_book_app/bloc/searchBloc/search_bloc.dart';
@@ -25,14 +26,18 @@ class _SearchScreenState extends State<SearchScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getCurrentLocation();
+    // getCurrentLocation();
   }
 
-  getCurrentLocation() async {
-    final query = "1600 Amphiteatre Parkway, Mountain View";
-    List<Location> locations = await locationFromAddress(query);
-    print(" gia tri dau tien ${locations}");
-  }
+  // getCurrentLocation() async {
+  //   final query = "1600 Amphiteatre Parkway, Mountain View";
+  //   var addresses = await Geocoder.local.findAddressesFromQuery(query);
+  //   print("${addresses[0].} giá thị thử ngidssddddddddddd");
+  //   var first = addresses.first;
+  //   print("${first.featureName} : ${first.coordinates}");
+  // }
+  // Latitude: 10.8519273,
+//I/flutter ( 6785):       Longitude: 106.807943,
 
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(

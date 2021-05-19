@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project_book_app/models/vdp.dart';
 import 'package:graduation_project_book_app/screens/vdp/vdp_detail.dart';
 import 'package:graduation_project_book_app/screens/vdp/vdp_image_carousel.dart';
+import 'package:graduation_project_book_app/widgets/google_Map_item.dart';
 import 'package:graduation_project_book_app/widgets/google_map.dart';
-
 
 class VdpScreens extends StatefulWidget {
   final VdpItem item;
@@ -58,9 +58,19 @@ class _VdpScreensState extends State<VdpScreens> {
                         SizedBox(
                           height: 10,
                         ),
-                        Container(
-                          height: 240,
-                          child: MapScreen(),
+                        FlatButton(
+                          onPressed: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return MapItem(item: item);
+                            }));
+                          },
+                          child: Container(
+                            height: 240,
+                            child: MapItem(
+                              item: item,
+                            ),
+                          ),
                         ),
                       ],
                     ),

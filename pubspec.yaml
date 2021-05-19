@@ -35,6 +35,9 @@ dependencies:
   flutter_bloc: ^7.0.0
   equatable: ^2.0.0
   geocoding: ^2.0.0
+  flutter_geocoder: ^0.2.2-nullsafety
+  geolocator: ^7.0.3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
