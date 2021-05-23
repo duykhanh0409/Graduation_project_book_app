@@ -16,6 +16,7 @@ class _SearchScreenState extends State<SearchScreen> {
   String longitu = "";
   bool isShow = false;
   bool isLoading = true;
+  bool isCheckEntireRoom = false;
 
   @override
   void initState() {
@@ -59,155 +60,282 @@ class _SearchScreenState extends State<SearchScreen> {
     ));
     var techMobile = TechMobile.of(context);
     print(isLoading);
-    return Scaffold(
-        extendBodyBehindAppBar: true,
-        extendBody: true,
-        body: Stack(
-          children: [
-            GestureDetector(
-              child: Container(
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  color: Colors.blue,
-                  child: MapScreen(
-                    item: techMobile?.vdpList,
-                  )),
+    return techMobile.vdpList == null
+        ? Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
             ),
-            Container(
-              // cái mới làm nè
-              margin: EdgeInsets.only(top: 40, left: 20, right: 20),
-              padding: EdgeInsets.only(left: 10, right: 10, top: 5),
-              alignment: isShow ? Alignment.topCenter : Alignment.center,
-              height: isShow ? 100 : 50,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.3),
-                    blurRadius: 3,
-                    offset: Offset(1, 0),
+          )
+        : Scaffold(
+            extendBodyBehindAppBar: true,
+            extendBody: true,
+            body: Stack(
+              children: [
+                GestureDetector(
+                  child: Container(
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                      color: Colors.blue,
+                      child: MapScreen(
+                        item: techMobile?.vdpList,
+                      )),
+                ),
+                Container(
+                  // cái mới làm nè
+                  margin: EdgeInsets.only(top: 40, left: 20, right: 20),
+                  padding: EdgeInsets.only(left: 10, right: 10, top: 5),
+                  alignment: isShow ? Alignment.topCenter : Alignment.center,
+                  height: isShow ? 100 : 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.3),
+                        blurRadius: 3,
+                        offset: Offset(1, 0),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              child: isShow
-                  ? Column(
-                      children: [
-                        Row(
+                  child: isShow
+                      ? Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        isShow ? isShow = false : isShow = true;
+                                      });
+                                    },
+                                    child: Icon(Icons.close)),
+                                Text(
+                                  'Ho chi minh',
+                                ),
+                                GestureDetector(
+                                    onTap: () {
+                                      showModalBottomSheet<void>(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return Container(
+                                            height: 600,
+                                            color: Colors.amber,
+                                            child: Center(
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: <Widget>[
+                                                  const Text(
+                                                      'Modal BottomSheet'),
+                                                  ElevatedButton(
+                                                    child: const Text(
+                                                        'Close BottomSheet'),
+                                                    onPressed: () =>
+                                                        Navigator.pop(context),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    },
+                                    child: Icon(Icons.tune))
+                              ],
+                            ),
+                            Container(
+                              margin:
+                                  EdgeInsets.only(top: 10, right: 10, left: 10),
+                              height: 40,
+                              width: MediaQuery.of(context).size.width,
+                              alignment: Alignment.centerLeft,
+                              padding: EdgeInsets.only(left: 20),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                      width: 1,
+                                      color: Colors.grey.withOpacity(0.4))),
+                              child: Row(
+                                children: [
+                                  Icon(Icons.search),
+                                  Text(
+                                    'Ho Chi Minh',
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        )
+                      : Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    isShow ? isShow = false : isShow = true;
-                                  });
-                                },
-                                child: Icon(Icons.close)),
-                            Text(
-                              'Ho chi minh',
+                              onTap: () {
+                                setState(() {
+                                  isShow ? isShow = false : isShow = true;
+                                });
+                              },
+                              child: Row(
+                                children: [
+                                  Icon(Icons.arrow_back),
+                                  Text(
+                                    'Ho chi minh',
+                                  )
+                                ],
+                              ),
                             ),
                             GestureDetector(
                                 onTap: () {
-                                  print('fliter screen');
-                                  Navigator.of(context)
-                                      .pushNamed('/fliterScreen');
-                                  print('khanh');
+                                  showModalBottomSheet<void>(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return Container(
+                                        height:
+                                            MediaQuery.of(context).size.height,
+                                        // color: Colors.amber,
+                                        child: Center(
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: <Widget>[
+                                              SingleChildScrollView(
+                                                child: Container(
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 15),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      SizedBox(
+                                                        height: 20,
+                                                      ),
+                                                      GestureDetector(
+                                                          onTap: () {
+                                                            Navigator.pop(
+                                                                context);
+                                                          },
+                                                          child: Icon(
+                                                              Icons.close)),
+                                                      SizedBox(
+                                                        height: 30,
+                                                      ),
+                                                      Text(
+                                                        'Popular filter',
+                                                        style: TextStyle(
+                                                            fontSize: 22,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 20,
+                                                      ),
+                                                      Text(
+                                                        'These are some of the filters looking accommodation in Ho Chi Minh city use most often',
+                                                        style: TextStyle(
+                                                            fontSize: 18),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 20,
+                                                      ),
+                                                      //checkbox here
+                                                      //DynamicallyCheckbox(),
+                                                      CheckboxListTile(
+                                                        title: new Text(
+                                                            'Entire Home'),
+                                                        value:
+                                                            isCheckEntireRoom,
+                                                        activeColor: Colors
+                                                            .deepPurple[400],
+                                                        checkColor:
+                                                            Colors.white,
+                                                        onChanged:
+                                                            (bool value) {
+                                                          setState(() {
+                                                            isCheckEntireRoom =
+                                                                !isCheckEntireRoom;
+                                                          });
+                                                          techMobile
+                                                              .onFilterEntireRoom(
+                                                                  'Entire Home');
+                                                        },
+                                                      ),
+                                                      SizedBox(
+                                                        height: 7,
+                                                      ),
+                                                      Text('Prices',
+                                                          style: TextStyle(
+                                                              fontSize: 22,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
+                                                      SizedBox(
+                                                        height: 7,
+                                                      ),
+                                                      SizedBox(
+                                                        height: 7,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
                                 },
                                 child: Icon(Icons.tune))
                           ],
                         ),
-                        Container(
-                          margin: EdgeInsets.only(top: 10, right: 10, left: 10),
-                          height: 40,
-                          width: MediaQuery.of(context).size.width,
-                          alignment: Alignment.centerLeft,
-                          padding: EdgeInsets.only(left: 20),
+                ),
+                Container(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    child: DraggableScrollableSheet(
+                      //bottomsheet
+                      maxChildSize: 1,
+                      minChildSize: 0.1,
+                      initialChildSize: .5,
+                      builder: (BuildContext context,
+                          ScrollController scrollController) {
+                        return Container(
+                          // padding: EdgeInsets.only(top: 30),
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(
-                                  width: 1,
-                                  color: Colors.grey.withOpacity(0.4))),
-                          child: Row(
-                            children: [
-                              Icon(Icons.search),
-                              Text(
-                                'Ho Chi Minh',
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    )
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isShow ? isShow = false : isShow = true;
-                            });
-                          },
-                          child: Row(
-                            children: [
-                              Icon(Icons.arrow_back),
-                              Text(
-                                'Ho chi minh',
-                              )
-                            ],
-                          ),
-                        ),
-                        GestureDetector(
-                            onTap: () {
-                              print('fliter screen');
-                              Navigator.of(context).pushNamed('/fliterScreen');
-                              print('khanh');
-                            },
-                            child: Icon(Icons.tune))
-                      ],
-                    ),
-            ),
-            Container(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                child: DraggableScrollableSheet(
-                  //bottomsheet
-                  maxChildSize: 1,
-                  minChildSize: 0.1,
-                  initialChildSize: .5,
-                  builder: (BuildContext context,
-                      ScrollController scrollController) {
-                    return Container(
-                      // padding: EdgeInsets.only(top: 30),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(25),
-                              topRight: Radius.circular(25))),
-                      child: ListView.builder(
-                        controller: scrollController,
-                        itemCount: techMobile.vdpList?.length ?? 0,
-                        itemBuilder: (BuildContext context, int index) {
-                          //print(state.vdpItem[index].type);
-                          return FlatButton(
-                            onPressed: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return VdpScreens(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(25),
+                                  topRight: Radius.circular(25))),
+                          child: ListView.builder(
+                            controller: scrollController,
+                            itemCount: techMobile.vdpList?.length ?? 0,
+                            itemBuilder: (BuildContext context, int index) {
+                              //print(state.vdpItem[index].type);
+                              return FlatButton(
+                                onPressed: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return VdpScreens(
+                                      item: techMobile?.vdpList[index] ?? {},
+                                    );
+                                  }));
+                                },
+                                child: ItemCard(
                                   item: techMobile?.vdpList[index] ?? {},
-                                );
-                              }));
+                                ),
+                              );
                             },
-                            child: ItemCard(
-                              item: techMobile?.vdpList[index] ?? {},
-                            ),
-                          );
-                        },
-                      ),
-                    );
-                  },
-                ))
-          ],
-        ));
+                          ),
+                        );
+                      },
+                    ))
+              ],
+            ));
   }
 }

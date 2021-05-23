@@ -21,7 +21,7 @@ class _VdpImageCarouselState extends State<VdpImageCarousel> {
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height / 2;
-    var imageItem = widget.item.image;
+    var imageItem = widget.item.image.url;
 
     return Stack(
       children: [
@@ -44,7 +44,7 @@ class _VdpImageCarouselState extends State<VdpImageCarousel> {
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: NetworkImage(i.img),
+                        image: NetworkImage(i),
                         fit: BoxFit.cover,
                       ),
                     ));

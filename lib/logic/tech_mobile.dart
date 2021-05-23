@@ -32,6 +32,17 @@ class TechMobileState extends State<TechMobile> {
     return result;
   }
 
+  void onFilterEntireRoom(var title) {
+    //print("${title} gia tri gif day");
+    var newVdpList = vdpList
+        .where((element) =>
+            element.type.toUpperCase().contains(title.toUpperCase()))
+        .toList();
+    setState(() {
+      vdpList = newVdpList;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return TechMobileInherited(data: this, child: widget.child);

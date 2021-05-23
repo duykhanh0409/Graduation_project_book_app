@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:graduation_project_book_app/logic/tech_mobile.dart';
 
 class FliterScreen extends StatefulWidget {
   @override
@@ -9,6 +10,7 @@ class FliterScreen extends StatefulWidget {
 
 class _FliterScreenState extends State<FliterScreen> {
   RangeValues _currentRangeValues = const RangeValues(20, 100);
+  bool isCheckEntireRoom = false;
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -17,6 +19,8 @@ class _FliterScreenState extends State<FliterScreen> {
       statusBarIconBrightness: Brightness.light,
       //statusBarBrightness: Brightness.dark,
     ));
+    var techMobile = TechMobile.of(context);
+
     return Scaffold(
         // extendBodyBehindAppBar: true,
         // extendBody: true,
@@ -54,7 +58,20 @@ class _FliterScreenState extends State<FliterScreen> {
                   SizedBox(
                     height: 20,
                   ),
-                  DynamicallyCheckbox(),
+                  //checkbox here
+                  //DynamicallyCheckbox(),
+                  CheckboxListTile(
+                    title: new Text('Entire Home'),
+                    value: isCheckEntireRoom,
+                    activeColor: Colors.deepPurple[400],
+                    checkColor: Colors.white,
+                    onChanged: (bool value) {
+                      setState(() {
+                        isCheckEntireRoom = !isCheckEntireRoom;
+                      });
+                      techMobile.onFilterEntireRoom('Entire Home');
+                    },
+                  ),
                   SizedBox(
                     height: 7,
                   ),
@@ -138,7 +155,8 @@ class _FliterScreenState extends State<FliterScreen> {
                   Container(
                     width: 180,
                     child: ElevatedButton(
-                        child: Text("30+place".toUpperCase(),
+                        child: Text(
+                            "${techMobile.vdpList?.length ?? 0}".toUpperCase(),
                             style: TextStyle(fontSize: 14)),
                         style: ButtonStyle(
                             foregroundColor:
@@ -210,6 +228,16 @@ class FliterFacility extends StatelessWidget {
   }
 }
 
+class MyClass {
+  String title;
+  bool value;
+  MyClass(this.title, this.value);
+  @override
+  String toString() {
+    return 'MyClass{title: $title, value: $value}';
+  }
+}
+
 class DynamicallyCheckbox extends StatefulWidget {
   final String subtitle;
 
@@ -220,11 +248,8 @@ class DynamicallyCheckbox extends StatefulWidget {
 
 class DynamicallyCheckboxState extends State {
   Map<String, bool> List = {
-    'Wifi': false,
-    'Ketchen': false,
-    'Entire Place': false,
+    'Entire Room': false,
     'Private Room': false,
-    'Shared Room': false,
   };
 
   var holder_1 = [];
@@ -235,12 +260,14 @@ class DynamicallyCheckboxState extends State {
         holder_1.add(key);
       }
     });
+
     print(holder_1);
     holder_1.clear();
   }
 
   @override
   Widget build(BuildContext context) {
+    var techMobile = TechMobile.of(context);
     return Container(
       height: 300,
       child: ListView(
@@ -253,6 +280,11 @@ class DynamicallyCheckboxState extends State {
             onChanged: (bool value) {
               setState(() {
                 List[key] = value;
+                List.forEach((key, value) {
+                  if (value) {
+                    techMobile.onFilterEntireRoom(List[value]);
+                  }
+                });
               });
             },
           );

@@ -6,7 +6,6 @@ import 'package:graduation_project_book_app/models/vdp.dart';
 import 'package:graduation_project_book_app/screens/vdp/vdp_detail.dart';
 import 'package:graduation_project_book_app/screens/vdp/vdp_image_carousel.dart';
 import 'package:graduation_project_book_app/widgets/google_Map_item.dart';
-import 'package:graduation_project_book_app/widgets/google_map.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class VdpScreens extends StatefulWidget {
@@ -142,25 +141,128 @@ class _VdpScreensState extends State<VdpScreens> {
                       onPressed: () =>
                           launch(('tel://${userHost?.phoneNumber}'))),
                   ElevatedButton(
-                      child: Text("Reservation".toUpperCase(),
-                          style: TextStyle(fontSize: 14)),
-                      style: ButtonStyle(
-                          foregroundColor:
-                              MaterialStateProperty.all<Color>(Colors.white),
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.red),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(7),
-                                      side: BorderSide(color: Colors.red)))),
-                      onPressed: () => null)
+                    child: Text("Reservation".toUpperCase(),
+                        style: TextStyle(fontSize: 14)),
+                    style: ButtonStyle(
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.red),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(7),
+                                    side: BorderSide(color: Colors.red)))),
+                    onPressed: () {
+                      buildShowGeneralDialog(context);
+                    },
+                  )
                 ],
               ),
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Future<Object> buildShowGeneralDialog(BuildContext context) {
+    return showGeneralDialog(
+      barrierLabel: "Label",
+      barrierDismissible: true,
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionDuration: Duration(milliseconds: 700),
+      context: context,
+      pageBuilder: (context, anim1, anim2) {
+        return Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            height: 350,
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(bottom: 100, left: 12, right: 12),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: Scaffold(
+              body: SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.only(top: 20),
+                  child: Column(
+                    children: [
+                      Text('Đặt Lịch Hẹn',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20),
+                          textAlign: TextAlign.center),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Container(
+                        height: 60,
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        padding: EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                                width: 1,
+                                color: Colors.black.withOpacity(0.6))),
+                        child: TextField(
+                          decoration: InputDecoration(
+                              hintText: "Full Name",
+                              hintStyle: TextStyle(color: Colors.grey),
+                              border: InputBorder.none),
+                        ),
+                      ),
+                      Container(
+                        height: 60,
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                                width: 1,
+                                color: Colors.black.withOpacity(0.6))),
+                        child: TextField(
+                          decoration: InputDecoration(
+                              hintText: "Email or Phone number",
+                              hintStyle: TextStyle(color: Colors.grey),
+                              border: InputBorder.none),
+                        ),
+                      ),
+                      Container(
+                        height: 60,
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                                width: 1,
+                                color: Colors.black.withOpacity(0.6))),
+                        child: TextField(
+                          decoration: InputDecoration(
+                              hintText: "Ngày hẹn",
+                              hintStyle: TextStyle(color: Colors.grey),
+                              border: InputBorder.none),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+      transitionBuilder: (context, anim1, anim2, child) {
+        return SlideTransition(
+          position:
+              Tween(begin: Offset(0, 1), end: Offset(0, 0)).animate(anim1),
+          child: child,
+        );
+      },
     );
   }
 }

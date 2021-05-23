@@ -1,109 +1,115 @@
+// To parse this JSON data, do
+//
+//     final vdpItem = vdpItemFromJson(jsonString);
+
 import 'dart:convert';
+
+List<VdpItem> vdpItemFromJson(String str) =>
+    List<VdpItem>.from(json.decode(str).map((x) => VdpItem.fromJson(x)));
+
+String vdpItemToJson(List<VdpItem> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class VdpItem {
   VdpItem({
-    this.image,
     this.type,
-    this.host,
-    this.discription,
-    this.price,
-    this.reviews,
     this.facility,
+    this.reviews,
+    this.price,
+    this.image,
     this.address,
-    this.id,
+    this.discription,
+    this.host,
   });
 
-  List<Image> image;
   String type;
-  Host host;
-  String discription;
-  Price price;
-  List<Review> reviews;
   Facility facility;
+  List<Review> reviews;
+  Price price;
+  Image image;
   Address address;
-  String id;
+  String discription;
+  Host host;
 
   factory VdpItem.fromJson(Map<String, dynamic> json) => VdpItem(
-        image: List<Image>.from(json["image"].map((x) => Image.fromJson(x))),
         type: json["type"],
-        host: Host.fromJson(json["host"]),
-        discription: json["discription"],
-        price: Price.fromJson(json["price"]),
+        facility: Facility.fromJson(json["facility"]),
         reviews:
             List<Review>.from(json["reviews"].map((x) => Review.fromJson(x))),
-        facility: Facility.fromJson(json["facility"]),
+        price: Price.fromJson(json["price"]),
+        image: Image.fromJson(json["image"]),
         address: Address.fromJson(json["address"]),
-        id: json["id"],
+        discription: json["discription"],
+        host: Host.fromJson(json["host"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "image": List<dynamic>.from(image.map((x) => x.toJson())),
         "type": type,
-        "host": host.toJson(),
-        "discription": discription,
-        "price": price.toJson(),
-        "reviews": List<dynamic>.from(reviews.map((x) => x.toJson())),
         "facility": facility.toJson(),
+        "reviews": List<dynamic>.from(reviews.map((x) => x.toJson())),
+        "price": price.toJson(),
+        "image": image.toJson(),
         "address": address.toJson(),
-        "id": id,
+        "discription": discription,
+        "host": host.toJson(),
       };
 }
 
 class Address {
   Address({
-    this.addressNumber,
-    this.district,
-    this.ward,
     this.city,
+    this.district,
+    this.addressNumber,
+    this.ward,
   });
 
-  String addressNumber;
-  String district;
-  String ward;
   String city;
+  String district;
+  String addressNumber;
+  String ward;
 
   factory Address.fromJson(Map<String, dynamic> json) => Address(
-        addressNumber: json["addressNumber"],
-        district: json["district"],
-        ward: json["ward"],
         city: json["city"],
+        district: json["district"],
+        addressNumber: json["addressNumber"],
+        ward: json["ward"],
       );
 
   Map<String, dynamic> toJson() => {
-        "addressNumber": addressNumber,
-        "district": district,
-        "ward": ward,
         "city": city,
+        "district": district,
+        "addressNumber": addressNumber,
+        "ward": ward,
       };
 }
 
 class Facility {
   Facility({
-    this.mezzanine,
     this.bath,
     this.square,
+    this.mezzanine,
     this.bedroom,
     this.wife,
   });
 
-  String mezzanine;
   String bath;
   String square;
+  String mezzanine;
   String bedroom;
   String wife;
 
   factory Facility.fromJson(Map<String, dynamic> json) => Facility(
-        mezzanine: json["mezzanine"],
         bath: json["bath"],
         square: json["square"],
+        mezzanine: json["mezzanine"],
         bedroom: json["bedroom"],
         wife: json["wife"],
       );
 
   Map<String, dynamic> toJson() => {
-        "mezzanine": mezzanine,
         "bath": bath,
         "square": square,
+        "mezzanine": mezzanine,
         "bedroom": bedroom,
         "wife": wife,
       };
@@ -128,20 +134,20 @@ class Host {
 class Image {
   Image({
     this.alt,
-    this.img,
+    this.url,
   });
 
   String alt;
-  String img;
+  List<String> url;
 
   factory Image.fromJson(Map<String, dynamic> json) => Image(
         alt: json["alt"],
-        img: json["img"],
+        url: List<String>.from(json["url"].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
         "alt": alt,
-        "img": img,
+        "url": List<dynamic>.from(url.map((x) => x)),
       };
 }
 

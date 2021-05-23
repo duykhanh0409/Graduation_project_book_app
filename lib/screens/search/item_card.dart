@@ -19,10 +19,10 @@ class _ItemCardState extends State<ItemCard> {
 
   @override
   Widget build(BuildContext context) {
-    var imageItem = widget.item.image;
+    var imageItem = widget.item.image.url;
     var itemTitle = widget.item.address;
     return Container(
-     // height: 300,
+      // height: 300,
       margin: EdgeInsets.fromLTRB(
           10, 10, 10, 10), //remmeber when merge searchScreen
       decoration: BoxDecoration(
@@ -67,7 +67,7 @@ class _ItemCardState extends State<ItemCard> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(16)),
                               image: DecorationImage(
-                                image: NetworkImage(i.img),
+                                image: NetworkImage(i),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -118,7 +118,7 @@ class _ItemCardState extends State<ItemCard> {
               )),
           Container(
               child: Padding(
-            padding: EdgeInsets.only(left: 20,bottom: 20),
+            padding: EdgeInsets.only(left: 20, bottom: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
