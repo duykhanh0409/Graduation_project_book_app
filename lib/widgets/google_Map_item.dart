@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_geocoder/geocoder.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:graduation_project_book_app/models/vdp.dart';
 
@@ -27,7 +25,7 @@ class _MapItemState extends State<MapItem> {
   //Coordinates coordinator;
   @override
   void dispose() {
-    _googleMapController.dispose();
+   // _googleMapController.dispose();
     super.dispose();
   }
 
@@ -50,13 +48,10 @@ class _MapItemState extends State<MapItem> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getCurrentLocation();
+     getCurrentLocation();
   }
 
-  // List<LatLng> test = [
-  //   LatLng(coordinators.latitude, coordinators.longitude),
-  //   LatLng(myLocation.latitude,myLocation.longitude)
-  // ];
+  
   @override
   Widget build(BuildContext context) {
     //print('${myLocation?.latitude}---------------giá trị');
@@ -66,33 +61,34 @@ class _MapItemState extends State<MapItem> {
       zoomControlsEnabled: true,
       initialCameraPosition: _cameraPosition,
       onMapCreated: (controler) => _googleMapController = controler,
-      polylines: {
-        Polyline(
-            polylineId: PolylineId('Overview'),
-            color: Colors.red,
-            width: 5,
-            points: [
-              LatLng(coordinators?.latitude, coordinators?.longitude),
-              LatLng(myLocation?.latitude, myLocation?.longitude)
-            ])
-      },
+      // polylines: {
+      //   Polyline(
+      //       polylineId: PolylineId('Overview'),
+      //       color: Colors.red,
+      //       width: 5,
+      //       points: [
+      //         LatLng(coordinators?.latitude, coordinators?.longitude),
+      //         LatLng(myLocation?.latitude, myLocation?.longitude)
+      //       ])
+      // },
       markers: {
         Marker(
           markerId: MarkerId('khanh'),
-          position: LatLng(coordinators?.latitude??10.8773221, coordinators?.longitude),
+          position: LatLng(
+              coordinators?.latitude ?? 10.8773221, coordinators?.longitude),
           infoWindow: InfoWindow(title: 'khanh'),
           icon: BitmapDescriptor.defaultMarkerWithHue(
             BitmapDescriptor.hueViolet,
           ),
         ),
-         Marker(
-          markerId: MarkerId('My Location'),
-          position: LatLng(myLocation?.latitude??10.8773221, myLocation?.longitude),
-          infoWindow: InfoWindow(title: 'khanh'),
-          icon: BitmapDescriptor.defaultMarkerWithHue(
-            BitmapDescriptor.hueViolet,
-          ),
-        ),
+        //  Marker(
+        //   markerId: MarkerId('My Location'),
+        //   position: LatLng(myLocation?.latitude??10.8773221, myLocation?.longitude),
+        //   infoWindow: InfoWindow(title: 'khanh'),
+        //   icon: BitmapDescriptor.defaultMarkerWithHue(
+        //     BitmapDescriptor.hueViolet,
+        //   ),
+        // ),
       },
     ));
   }

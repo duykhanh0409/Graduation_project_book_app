@@ -1,10 +1,10 @@
 import 'dart:convert';
-
+import 'package:graduation_project_book_app/models/user.dart';
 import 'package:graduation_project_book_app/models/vdp.dart';
 import 'package:http/http.dart' as http;
 
-class SearchService {
-  Future<List<VdpItem>> fetchData() async {
+class Api {
+  static Future<List<VdpItem>> fetchData() async {
     List<VdpItem> list = [];
     String url = 'https://book-room-app.herokuapp.com/product/api/read';
     var response = await http.get(Uri.parse(url));
@@ -16,6 +16,17 @@ class SearchService {
       return list;
     } else {
       throw Exception(" Lỗi khi load Json");
+    }
+  }
+
+  static Future<User> getUser(var id) async {
+    String url = 'https://book-room-app.herokuapp.com/user/api/read/$id';
+    var response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      var result = User.fromJson(json.decode(response.body));
+      return result;
+    } else {
+      print('loi');
     }
   }
 }

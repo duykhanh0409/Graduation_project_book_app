@@ -1,18 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/image.dart' as Images;
+import 'package:graduation_project_book_app/logic/api.dart';
+import 'package:graduation_project_book_app/models/user.dart';
 import 'package:graduation_project_book_app/models/vdp.dart';
 
-class VdpDetail extends StatelessWidget {
+class VdpDetail extends StatefulWidget {
   final VdpItem item;
+  final User userHost;
   const VdpDetail({
     Key key,
     this.item,
+    this.userHost,
   }) : super(key: key);
 
   @override
+  _VdpDetailState createState() => _VdpDetailState();
+}
+
+class _VdpDetailState extends State<VdpDetail> {
+  @override
   Widget build(BuildContext context) {
-    var itemTitle = item.address;
+    var itemTitle = widget.item.address;
+    // print(userHost?.username);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
       child: Column(
@@ -33,7 +43,7 @@ class VdpDetail extends StatelessWidget {
               Column(
                 children: [
                   Text(
-                    '${item.price.room} VDN',
+                    '${widget.item.price.room} VDN',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                   Text('Per month')
@@ -53,7 +63,7 @@ class VdpDetail extends StatelessWidget {
             ),
           ),
           Text(
-            item.discription,
+            widget.item.discription,
             textAlign: TextAlign.start,
             style: TextStyle(color: Color(0xFF6D4E4E)),
           ),
@@ -98,7 +108,7 @@ class VdpDetail extends StatelessWidget {
                               fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                         Text(
-                          '${item.reviews.length} reviews',
+                          '${widget.item.reviews.length} reviews',
                           style: TextStyle(color: Color(0xFF464E46)),
                         )
                       ],
@@ -114,12 +124,16 @@ class VdpDetail extends StatelessWidget {
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
-                            image: AssetImage('assets/images/khanh.jpg'),
+                            image: widget.userHost?.avatar != null
+                                ? NetworkImage(widget.userHost?.avatar)
+                                : NetworkImage(
+                                    'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png'),
                             fit: BoxFit.cover,
                           )),
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'Verify Host',
@@ -127,7 +141,9 @@ class VdpDetail extends StatelessWidget {
                               fontWeight: FontWeight.bold, fontSize: 16),
                         ),
                         Text(
-                          'khanh Host',
+                          widget.userHost?.username != null
+                              ? "${widget.userHost?.username} Host"
+                              : "N/A Host",
                           style: TextStyle(fontSize: 12),
                         )
                       ],
@@ -150,7 +166,7 @@ class VdpDetail extends StatelessWidget {
             children: [
               DescriptionDetail(
                 icon: Icons.home_outlined,
-                title: item.type,
+                title: widget.item.type,
                 total: '1',
                 subtitle:
                     'Căn hộ cung cấp không gian đầy đủ cho việc sinh hoạt',
@@ -158,28 +174,28 @@ class VdpDetail extends StatelessWidget {
               DescriptionDetail(
                 icon: Icons.wifi,
                 title: 'Wifi',
-                total: item.facility.wife != Null ? 'Yes' : 'No',
+                total: widget.item.facility.wife != Null ? 'Yes' : 'No',
                 subtitle: 'Cung cấp Wifi cho người thuê sử dụng',
               ),
               DescriptionDetail(
                 icon: Icons.bathtub,
                 title: 'Bath',
-                total: item.facility.bath != Null
-                    ? '${item.facility.bath}'
+                total: widget.item.facility.bath != Null
+                    ? '${widget.item.facility.bath}'
                     : 'N/A',
                 subtitle: 'Cung cấp phòng tắm cho người thuê',
               ),
               DescriptionDetail(
                 icon: Icons.archive_sharp,
                 title: 'Acreage',
-                total: '${item.facility.square}',
+                total: '${widget.item.facility.square}',
                 subtitle: 'Diện tích sàn',
               ),
               DescriptionDetail(
                 icon: Icons.account_balance,
                 title: 'mezzanine',
-                total: item.facility.bath != Null
-                    ? '${item.facility.mezzanine}'
+                total: widget.item.facility.bath != Null
+                    ? '${widget.item.facility.mezzanine}'
                     : 'N/A',
                 subtitle: 'Gác cho người thuê',
               ),
@@ -211,7 +227,7 @@ class VdpDetail extends StatelessWidget {
                   Text('Giá Điện:',
                       style:
                           TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-                  Text('${item.price.electricity} VND/kg')
+                  Text('${widget.item.price.electricity} VND/kg')
                 ],
               ),
               SizedBox(
@@ -223,7 +239,7 @@ class VdpDetail extends StatelessWidget {
                   Text('Giá Nước:',
                       style:
                           TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-                  Text('${item.price.water} VND/M3')
+                  Text('${widget.item.price.water} VND/M3')
                 ],
               )
             ],

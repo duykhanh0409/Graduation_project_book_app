@@ -31,10 +31,7 @@ class ExploreNearby extends StatelessWidget {
         ),
       ),
       Container(
-          //color: Colors.red,
-          //  width: MediaQuery.of(context).size.width,
           height: 230,
-          //padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
           child: GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
@@ -48,9 +45,6 @@ class ExploreNearby extends StatelessWidget {
             controller: controller,
             itemBuilder: (context, index) {
               return FlatButton(
-                // padding: EdgeInsets.only(right: 60, left: 5),
-               // highlightColor: Colors.grey[50].withOpacity(0.3),
-
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return VdpScreens();

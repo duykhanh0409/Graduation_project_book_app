@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation_project_book_app/logic/api.dart';
+import 'package:graduation_project_book_app/models/user.dart';
 import 'package:graduation_project_book_app/models/vdp.dart';
 import 'package:graduation_project_book_app/screens/vdp/vdp_detail.dart';
 import 'package:graduation_project_book_app/screens/vdp/vdp_image_carousel.dart';
 import 'package:graduation_project_book_app/widgets/google_Map_item.dart';
 import 'package:graduation_project_book_app/widgets/google_map.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class VdpScreens extends StatefulWidget {
   final VdpItem item;
@@ -17,6 +20,23 @@ class VdpScreens extends StatefulWidget {
 }
 
 class _VdpScreensState extends State<VdpScreens> {
+  User userHost;
+  Future<User> getData() async {
+    var result = await Api.getUser(widget.item.host?.hostId);
+    if (result != null)
+      setState(() {
+        userHost = result;
+      });
+    //return result;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
+
   @override
   Widget build(BuildContext context) {
     var item = widget.item;
@@ -37,6 +57,7 @@ class _VdpScreensState extends State<VdpScreens> {
                     color: Color(0xFFE85B00),
                   ),
                   VdpDetail(
+                    userHost: userHost,
                     item: item,
                   ),
                   Container(
@@ -118,7 +139,8 @@ class _VdpScreensState extends State<VdpScreens> {
                                   RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(7),
                                       side: BorderSide(color: Colors.red)))),
-                      onPressed: () => null),
+                      onPressed: () =>
+                          launch(('tel://${userHost?.phoneNumber}'))),
                   ElevatedButton(
                       child: Text("Reservation".toUpperCase(),
                           style: TextStyle(fontSize: 14)),

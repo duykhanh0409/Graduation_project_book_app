@@ -23,6 +23,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  # lên version  sdk: ">=2.12.0 <3.0.0" sửa hơi mệt
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -37,6 +38,8 @@ dependencies:
   geocoding: ^2.0.0
   flutter_geocoder: ^0.2.2-nullsafety
   geolocator: ^7.0.3
+  url_launcher: ^6.0.4
+  loading_overlay: ^0.3.0
 
 dev_dependencies:
   flutter_test:

@@ -25,13 +25,13 @@ class _MapScreenState extends State<MapScreen> {
   //Coordinates coordinator;
   @override
   void dispose() {
-    _googleMapController.dispose();
+    // _googleMapController.dispose();
     super.dispose();
   }
 
   getCurrentLocation() async {
     // hàm này sai setState chỉ đang lấy đc 1 thằng cuối
-
+    print('vo day chua');
     for (var i = 0; i < widget?.item?.length; i++) {
       var itemTitle = widget?.item[i]?.address;
       final query =
@@ -57,7 +57,8 @@ class _MapScreenState extends State<MapScreen> {
     LatLng(10.846741, 106.778264)
   ];
   void _onMapCreated(GoogleMapController controller) {
-    for (var i = 0; i < widget?.item?.length; i++) {
+    for (var i = 0; i < widget?.item?.length ?? test.length; i++) {
+      print('chay hàm này kh -----------------------------');
       setState(() {
         _markers.add(
           Marker(
@@ -76,7 +77,7 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
-   // print('${coordinators[0].latitude}---------------giá trị');
+    // print('${coordinators[0].latitude}---------------giá trị');
     return Scaffold(
       body: GoogleMap(
           myLocationButtonEnabled: true,
@@ -87,4 +88,3 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 }
-

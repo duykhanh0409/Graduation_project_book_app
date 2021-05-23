@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_project_book_app/bloc/vdpBloc/vdb_bloc.dart';
+import 'package:graduation_project_book_app/bloc/searchBloc/search_bloc.dart';
+import 'package:graduation_project_book_app/bloc/searchBloc/search_state.dart';
+import 'package:graduation_project_book_app/logic/tech_mobile.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -9,9 +11,35 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  // TechMobileState techMobilea;
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    // var techMobile = TechMobile.of(context);
+    // techMobile.getData();
+    //techMobilea = TechMobile.of(context);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Future.delayed(Duration(milliseconds: 3), () {
+      getData(context);
+    });
+  }
+
+  void getData(BuildContext context) {
+    var techMobile = TechMobile.of(context);
+    techMobile.getData();
+  }
+
   @override
   Widget build(BuildContext context) {
-   
+    var techMobile = TechMobile.of(context);
+    print(techMobile?.test);
+    // print(techMobile?.vdpList[0]?.type);
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
