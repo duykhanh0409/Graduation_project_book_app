@@ -20,31 +20,33 @@ class TechMobile extends StatefulWidget {
 
 class TechMobileState extends State<TechMobile> {
   List<VdpItem> vdpList;
-
-  bool test = true;
+  List<VdpItem> vdpListOld;
+ 
+  var isroom='';
+  int selectedRadioPrice;
+  var selectedPrice;
 
   Future<List<VdpItem>> getData() async {
     var result = await Api.fetchData();
     if (result != null)
       setState(() {
         vdpList = result;
+        vdpListOld = result;
       });
     return result;
   }
 
-  void onFilterEntireRoom(var title) {
-    //print("${title} gia tri gif day");
-    var newVdpList = vdpList
-        .where((element) =>
-            element.type.toUpperCase().contains(title.toUpperCase()))
-        .toList();
+  void setSelectedPrice(var a) {
     setState(() {
-      vdpList = newVdpList;
+      vdpList=a;
     });
   }
 
+ 
+
   @override
   Widget build(BuildContext context) {
+    print(isroom);
     return TechMobileInherited(data: this, child: widget.child);
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:graduation_project_book_app/logic/tech_mobile.dart';
+import 'package:graduation_project_book_app/screens/fliter/fliter_screen.dart';
 import 'package:graduation_project_book_app/screens/search/item_card.dart';
 import 'package:graduation_project_book_app/screens/vdp/vdp_Screen.dart';
 import 'package:graduation_project_book_app/widgets/google_map.dart';
@@ -189,107 +190,10 @@ class _SearchScreenState extends State<SearchScreen> {
                             ),
                             GestureDetector(
                                 onTap: () {
-                                  showModalBottomSheet<void>(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return Container(
-                                        height:
-                                            MediaQuery.of(context).size.height,
-                                        // color: Colors.amber,
-                                        child: Center(
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: <Widget>[
-                                              SingleChildScrollView(
-                                                child: Container(
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 15),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      SizedBox(
-                                                        height: 20,
-                                                      ),
-                                                      GestureDetector(
-                                                          onTap: () {
-                                                            Navigator.pop(
-                                                                context);
-                                                          },
-                                                          child: Icon(
-                                                              Icons.close)),
-                                                      SizedBox(
-                                                        height: 30,
-                                                      ),
-                                                      Text(
-                                                        'Popular filter',
-                                                        style: TextStyle(
-                                                            fontSize: 22,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      ),
-                                                      SizedBox(
-                                                        height: 20,
-                                                      ),
-                                                      Text(
-                                                        'These are some of the filters looking accommodation in Ho Chi Minh city use most often',
-                                                        style: TextStyle(
-                                                            fontSize: 18),
-                                                      ),
-                                                      SizedBox(
-                                                        height: 20,
-                                                      ),
-                                                      //checkbox here
-                                                      //DynamicallyCheckbox(),
-                                                      CheckboxListTile(
-                                                        title: new Text(
-                                                            'Entire Home'),
-                                                        value:
-                                                            isCheckEntireRoom,
-                                                        activeColor: Colors
-                                                            .deepPurple[400],
-                                                        checkColor:
-                                                            Colors.white,
-                                                        onChanged:
-                                                            (bool value) {
-                                                          setState(() {
-                                                            isCheckEntireRoom =
-                                                                !isCheckEntireRoom;
-                                                          });
-                                                          techMobile
-                                                              .onFilterEntireRoom(
-                                                                  'Entire Home');
-                                                        },
-                                                      ),
-                                                      SizedBox(
-                                                        height: 7,
-                                                      ),
-                                                      Text('Prices',
-                                                          style: TextStyle(
-                                                              fontSize: 22,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold)),
-                                                      SizedBox(
-                                                        height: 7,
-                                                      ),
-                                                      SizedBox(
-                                                        height: 7,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  );
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return FliterScreen();
+                                  }));
                                 },
                                 child: Icon(Icons.tune))
                           ],

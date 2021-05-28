@@ -38,7 +38,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     var techMobile = TechMobile.of(context);
-    print(techMobile?.test);
+    //print(techMobile?.test);
     // print(techMobile?.vdpList[0]?.type);
     return Scaffold(
       body: SingleChildScrollView(

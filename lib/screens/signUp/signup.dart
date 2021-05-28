@@ -1,5 +1,12 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -7,33 +14,102 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  TextEditingController emailController = new TextEditingController();
+  TextEditingController userController = new TextEditingController();
   TextEditingController passController = new TextEditingController();
-  var emailInval = false;
-  var passInval = false;
+  TextEditingController rePassController = new TextEditingController();
+  var userInval = true;
+  var passInval = true;
+  var rePassInval = true;
+  // PickedFile _imageFile;
+  // final ImagePicker _picker = ImagePicker();
 
-  void onClickButtonLogin() {
+  File _image;
+  //final _picker = ImagePicker();
+  Dio dio = new Dio();
+  void takePhoto(ImageSource source) async {
+    final pickedFile = await ImagePicker().getImage(source: source);
     setState(() {
-      if (emailController.text.length < 6 ||
-          !emailController.text.contains('@')) {
-        emailInval = true;
-      } else {
-        emailInval = false;
-      }
-      if (passController.text.length < 6) {
-        passInval = true;
-      } else {
-        passInval = false;
-      }
-
-      if (!emailInval && !passInval) {
-        Navigator.of(context).pushNamed('/home');
-      }
+      _image = File(pickedFile.path);
     });
+  }
+
+  Future<dynamic> _upload() async {
+    if (_image == null) return;
+    String fileName = _image.path.split('/').last;
+    Map<String, dynamic> formData = {
+      'username': userController.text,
+      'password': passController.text,
+      "image": await MultipartFile.fromFile(_image.path, filename: fileName),
+    };
+    return await Dio()
+        .post('https://book-room-app.herokuapp.com/user/api/registerUser',
+            data: formData)
+        .then((dynamic result) {
+      print(result.toString());
+    });
+  }
+
+  void onClickButtonSignUp() {
+    if (userController.text.length > 6) {
+      setState(() {
+        userInval = true;
+      });
+    } else {
+      setState(() {
+        userInval = false;
+      });
+    }
+    if (passController.text.length > 6) {
+      setState(() {
+        passInval = true;
+      });
+    } else {
+      setState(() {
+        passInval = false;
+      });
+    }
+    if (rePassController.text.contains(passController.text)) {
+      setState(() {
+        rePassInval = true;
+      });
+    } else {
+      setState(() {
+        rePassInval = false;
+      });
+    }
+    if (userInval && passInval && rePassInval && _image != null) {
+      print('do chua ');
+      _upload();
+    }
+  }
+
+  Future<http.Response> createAlbum() async {
+    print('ddddddddddddddddddd');
+    // var image = File(_image?.path);
+    //var image = _image?.path;
+    final bytes = File(_image.path).readAsBytesSync();
+    final response = await http.post(
+        Uri.parse('https://book-room-app.herokuapp.com/user/api/registerUser'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          'username': userController.text,
+          'password': passController.text,
+          'image': bytes
+        }));
+    if (response.statusCode == 201) {
+      print('posst thanh cong');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    print("${_image?.path} giá trị  ");
+    print(
+        "${userInval} ${passInval} ${rePassInval}  giá trị -------------------  ");
+    print(
+        "${userController.text} ${passController.text} ${rePassController.text}  giá trị ---------------- ");
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -68,7 +144,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ],
               ),
             ),
-             SizedBox(height: 20),
+            SizedBox(height: 20),
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
@@ -81,8 +157,79 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     padding: EdgeInsets.all(30),
                     child: Column(
                       children: <Widget>[
+                        Stack(
+                          children: [
+                            CircleAvatar(
+                              radius: 30.0,
+                              backgroundImage: _image == null
+                                  ? AssetImage('assets/images/khanh.jpg')
+                                  : FileImage(File(_image.path)),
+                              backgroundColor: Colors.transparent,
+                            ),
+                            Positioned(
+                              top: 40,
+                              left: 40,
+                              child: InkWell(
+                                  onTap: () {
+                                    showModalBottomSheet(
+                                        context: context,
+                                        builder: (builder) => Container(
+                                              height: 100,
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              margin: EdgeInsets.symmetric(
+                                                horizontal: 20,
+                                                vertical: 20,
+                                              ),
+                                              child: Column(
+                                                children: [
+                                                  Text(
+                                                    "Choose profile photo",
+                                                    style:
+                                                        TextStyle(fontSize: 20),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 20,
+                                                  ),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      FlatButton.icon(
+                                                          onPressed: () {
+                                                            takePhoto(
+                                                                ImageSource
+                                                                    .camera);
+                                                          },
+                                                          icon: Icon(
+                                                              Icons.camera),
+                                                          label:
+                                                              Text('Camera')),
+                                                      FlatButton.icon(
+                                                          onPressed: () {
+                                                            takePhoto(
+                                                                ImageSource
+                                                                    .gallery);
+                                                          },
+                                                          icon:
+                                                              Icon(Icons.image),
+                                                          label:
+                                                              Text('Gallery'))
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                            ));
+                                  },
+                                  child: Icon(Icons.camera_alt,
+                                      color: Colors.teal, size: 20)),
+                            )
+                          ],
+                        ),
                         SizedBox(
-                          height: 20,
+                          height: 15,
                         ),
                         Container(
                           decoration: BoxDecoration(
@@ -103,39 +250,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         bottom: BorderSide(
                                             color: Colors.grey[200]))),
                                 child: TextField(
-                                  controller: emailController,
+                                  controller: userController,
                                   decoration: InputDecoration(
-                                      hintText: "Email or Phone number",
-                                      hintStyle: TextStyle(color: Colors.grey),
-                                      border: InputBorder.none),
-                                ),
-                              ),
-                              Container(
-                                padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                    border: Border(
-                                        bottom: BorderSide(
-                                            color: Colors.grey[200]))),
-                                child: TextField(
-                                  controller: emailController,
-                                  decoration: InputDecoration(
-                                      hintText: "Email or Phone number",
-                                      hintStyle: TextStyle(color: Colors.grey),
-                                      border: InputBorder.none),
-                                ),
-                              ),
-                              Container(
-                                padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                    border: Border(
-                                        bottom: BorderSide(
-                                            color: Colors.grey[200]))),
-                                child: TextField(
-                                  controller: emailController,
-                                  decoration: InputDecoration(
-                                      hintText: "Email or Phone number",
-                                      hintStyle: TextStyle(color: Colors.grey),
-                                      border: InputBorder.none),
+                                    hintText: "UserName",
+                                    hintStyle: TextStyle(color: Colors.grey),
+                                    border: InputBorder.none,
+                                    errorText: userInval
+                                        ? null
+                                        : 'vui long nhap dung email',
+                                  ),
                                 ),
                               ),
                               Container(
@@ -147,7 +270,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 child: TextField(
                                   controller: passController,
                                   decoration: InputDecoration(
-                                      hintText: "Password",
+                                    hintText: "Password",
+                                    hintStyle: TextStyle(color: Colors.grey),
+                                    border: InputBorder.none,
+                                    errorText: passInval
+                                        ? null
+                                        : 'password khong hop le',
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            color: Colors.grey[200]))),
+                                child: TextField(
+                                  controller: rePassController,
+                                  decoration: InputDecoration(
+                                      hintText: "RePassword",
                                       hintStyle: TextStyle(color: Colors.grey),
                                       border: InputBorder.none),
                                 ),
@@ -165,8 +306,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         SizedBox(
                           height: 40,
                         ),
-                        GestureDetector(
-                          onTap: onClickButtonLogin,
+                        InkWell(
+                          onTap: onClickButtonSignUp,
                           child: Container(
                             height: 50,
                             margin: EdgeInsets.symmetric(horizontal: 50),

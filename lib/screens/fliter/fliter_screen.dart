@@ -8,9 +8,46 @@ class FliterScreen extends StatefulWidget {
   _FliterScreenState createState() => _FliterScreenState();
 }
 
+enum SingingCharacter { priceOption1, priceOption2, priceOption3 }
+
 class _FliterScreenState extends State<FliterScreen> {
-  RangeValues _currentRangeValues = const RangeValues(20, 100);
-  bool isCheckEntireRoom = false;
+  //fliter ở đây
+  var selectedPriceValue;
+
+  void filterOptions(BuildContext context) {
+    print('goi ham');
+    var techMobile = TechMobile.of(context);
+    // ignore: unused_local_variable
+    var newList = techMobile?.vdpListOld;
+    if (selectedPriceValue == 1) {
+      newList = techMobile.vdpListOld
+          .where(
+              (element) => element.type.toUpperCase().contains("ENTIRE HOME"))
+          .toList();
+    }
+    if (selectedPriceValue == 2) {
+      newList = techMobile.vdpListOld
+          .where((element) => element.type.toUpperCase().contains("ROOM"))
+          .toList();
+    }
+    if (selectedPriceValue == 3) {
+      newList = techMobile.vdpListOld
+          .where((element) => int.parse(element.price.room) > 1000000)
+          .toList();
+    }
+    if (selectedPriceValue == 4) {
+      newList = techMobile.vdpListOld
+          .where((element) => int.parse(element.price.room) > 2000000)
+          .toList();
+    }
+    if (selectedPriceValue == 5) {
+      newList = techMobile.vdpListOld
+          .where((element) => int.parse(element.price.room) > 2000000)
+          .toList();
+    }
+    return techMobile.setSelectedPrice(newList);
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -19,8 +56,6 @@ class _FliterScreenState extends State<FliterScreen> {
       statusBarIconBrightness: Brightness.light,
       //statusBarBrightness: Brightness.dark,
     ));
-    var techMobile = TechMobile.of(context);
-
     return Scaffold(
         // extendBodyBehindAppBar: true,
         // extendBody: true,
@@ -58,22 +93,32 @@ class _FliterScreenState extends State<FliterScreen> {
                   SizedBox(
                     height: 20,
                   ),
-                  //checkbox here
-                  //DynamicallyCheckbox(),
-                  CheckboxListTile(
-                    title: new Text('Entire Home'),
-                    value: isCheckEntireRoom,
-                    activeColor: Colors.deepPurple[400],
-                    checkColor: Colors.white,
-                    onChanged: (bool value) {
+                  RadioListTile(
+                    value: 1,
+                    groupValue: selectedPriceValue,
+                    title: Text('Entire Home'),
+                    onChanged: (val) {
                       setState(() {
-                        isCheckEntireRoom = !isCheckEntireRoom;
+                        selectedPriceValue = 1;
                       });
-                      techMobile.onFilterEntireRoom('Entire Home');
                     },
+                    activeColor: Colors.grey,
+                    selected: false,
                   ),
                   SizedBox(
                     height: 7,
+                  ),
+                  RadioListTile(
+                    value: 2,
+                    groupValue: selectedPriceValue,
+                    title: Text('Room'),
+                    onChanged: (val) {
+                      setState(() {
+                        selectedPriceValue = 2;
+                      });
+                    },
+                    activeColor: Colors.grey,
+                    selected: false,
                   ),
                   Text('Prices',
                       style:
@@ -84,21 +129,6 @@ class _FliterScreenState extends State<FliterScreen> {
                   SizedBox(
                     height: 7,
                   ),
-                  RangeSlider(
-                    values: _currentRangeValues,
-                    min: 0,
-                    max: 100,
-                    divisions: 20,
-                    labels: RangeLabels(
-                      _currentRangeValues.start.round().toString(),
-                      _currentRangeValues.end.round().toString(),
-                    ),
-                    onChanged: (RangeValues values) {
-                      setState(() {
-                        _currentRangeValues = values;
-                      });
-                    },
-                  ),
                   Divider(
                     thickness: 1,
                     color: Colors.grey.withOpacity(0.3),
@@ -107,23 +137,50 @@ class _FliterScreenState extends State<FliterScreen> {
                   SizedBox(
                     height: 10,
                   ),
-                  Text('Rooms and beds',
+                  Text('Prices',
                       style:
                           TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-                  FliterFacility(
-                    title: 'Beds',
+                  RadioListTile(
+                    value: 3,
+                    groupValue: selectedPriceValue,
+                    title: Text('> 1.000.000 VND'),
+                    onChanged: (val) {
+                      setState(() {
+                        selectedPriceValue = 3;
+                      });
+                    },
+                    activeColor: Colors.grey,
+                    selected: false,
                   ),
                   SizedBox(
                     height: 15,
                   ),
-                  FliterFacility(
-                    title: 'Bedrooms',
+                  RadioListTile(
+                    value: 4,
+                    groupValue: selectedPriceValue,
+                    title: Text('> 2.000.000 VND'),
+                    onChanged: (val) {
+                      setState(() {
+                        selectedPriceValue = 4;
+                      });
+                    },
+                    activeColor: Colors.grey,
+                    selected: false,
                   ),
                   SizedBox(
                     height: 15,
                   ),
-                  FliterFacility(
-                    title: 'Bathrooms',
+                  RadioListTile(
+                    value: 5,
+                    groupValue: selectedPriceValue,
+                    title: Text('> 3.000.000 VND'),
+                    onChanged: (val) {
+                      setState(() {
+                        selectedPriceValue = 5;
+                      });
+                    },
+                    activeColor: Colors.grey,
+                    selected: false,
                   ),
                   SizedBox(
                     height: 100,
@@ -155,8 +212,7 @@ class _FliterScreenState extends State<FliterScreen> {
                   Container(
                     width: 180,
                     child: ElevatedButton(
-                        child: Text(
-                            "${techMobile.vdpList?.length ?? 0}".toUpperCase(),
+                        child: Text("Fliter".toUpperCase(),
                             style: TextStyle(fontSize: 14)),
                         style: ButtonStyle(
                             foregroundColor:
@@ -168,7 +224,7 @@ class _FliterScreenState extends State<FliterScreen> {
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(7),
                                     side: BorderSide(color: Colors.red)))),
-                        onPressed: () => null),
+                        onPressed: () => filterOptions(context)),
                   )
                 ],
               ),
@@ -238,61 +294,61 @@ class MyClass {
   }
 }
 
-class DynamicallyCheckbox extends StatefulWidget {
-  final String subtitle;
+// class DynamicallyCheckbox extends StatefulWidget {
+//   final String subtitle;
 
-  const DynamicallyCheckbox({Key key, this.subtitle}) : super(key: key);
-  @override
-  DynamicallyCheckboxState createState() => new DynamicallyCheckboxState();
-}
+//   const DynamicallyCheckbox({Key key, this.subtitle}) : super(key: key);
+//   @override
+//   DynamicallyCheckboxState createState() => new DynamicallyCheckboxState();
+// }
 
-class DynamicallyCheckboxState extends State {
-  Map<String, bool> List = {
-    'Entire Room': false,
-    'Private Room': false,
-  };
+// class DynamicallyCheckboxState extends State {
+//   Map<String, bool> List = {
+//     'Entire Room': false,
+//     'Private Room': false,
+//   };
 
-  var holder_1 = [];
+//   var holder_1 = [];
 
-  getItems() {
-    List.forEach((key, value) {
-      if (value == true) {
-        holder_1.add(key);
-      }
-    });
+//   getItems() {
+//     List.forEach((key, value) {
+//       if (value == true) {
+//         holder_1.add(key);
+//       }
+//     });
 
-    print(holder_1);
-    holder_1.clear();
-  }
+//     print(holder_1);
+//     holder_1.clear();
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    var techMobile = TechMobile.of(context);
-    return Container(
-      height: 300,
-      child: ListView(
-        children: List.keys.map((String key) {
-          return new CheckboxListTile(
-            title: new Text(key),
-            value: List[key],
-            activeColor: Colors.deepPurple[400],
-            checkColor: Colors.white,
-            onChanged: (bool value) {
-              setState(() {
-                List[key] = value;
-                List.forEach((key, value) {
-                  if (value) {
-                    techMobile.onFilterEntireRoom(List[value]);
-                  }
-                });
-              });
-            },
-          );
-        }).toList(),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     var techMobile = TechMobile.of(context);
+//     return Container(
+//       height: 300,
+//       child: ListView(
+//         children: List.keys.map((String key) {
+//           return new CheckboxListTile(
+//             title: new Text(key),
+//             value: List[key],
+//             activeColor: Colors.deepPurple[400],
+//             checkColor: Colors.white,
+//             onChanged: (bool value) {
+//               setState(() {
+//                 List[key] = value;
+//                 List.forEach((key, value) {
+//                   if (value) {
+//                     techMobile.onFilterEntireRoom(List[value]);
+//                   }
+//                 });
+//               });
+//             },
+//           );
+//         }).toList(),
+//       ),
+//     );
+//   }
+// }
 
 class FilterItem extends StatelessWidget {
   final String title;

@@ -39,7 +39,8 @@ dependencies:
   flutter_geocoder: ^0.2.2-nullsafety
   geolocator: ^7.0.3
   url_launcher: ^6.0.4
-  loading_overlay: ^0.3.0
+  image_picker: ^0.7.5+3
+  dio: ^4.0.0
 
 dev_dependencies:
   flutter_test:
