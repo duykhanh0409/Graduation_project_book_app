@@ -11,20 +11,21 @@ class _FacilityTypeState extends State<FacilityType> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
-            child: Column(
-      children: [
-        Text('What facility will you offer?'),
-        Text(
-            "You'll be able to add more amenities after you publish your listing"),
-        Text('Facilitys'),
-        Container(
-          child: Row(
-            children: [
-              
-            ],
-          ),
-        )
-      ],
+            child: Container(
+      padding: EdgeInsets.symmetric(horizontal: 20,vertical: 30),
+      child: Column(
+        children: [
+          Text('What facility will you offer?'),
+          Text(
+              "You'll be able to add more amenities after you publish your listing"),
+          Text('Facilitys'),
+          Container(
+            child: Row(
+              children: [],
+            ),
+          )
+        ],
+      ),
     )));
   }
 }

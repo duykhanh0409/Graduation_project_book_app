@@ -28,10 +28,11 @@ class TechMobileState extends State<TechMobile> {
 
   //host
   var typeRoom = '';
-  var address='';
-  var ward='';
-  var district='';
-  var city='';
+  var address = '';
+  var ward = '';
+  var district = '';
+  var city = '';
+  var descriptionRoom = '';
 
   Future<List<VdpItem>> getData() async {
     var result = await Api.fetchData();

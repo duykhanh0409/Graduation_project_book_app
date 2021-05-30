@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation_project_book_app/logic/tech_mobile.dart';
 
 class AddressType extends StatefulWidget {
   @override
@@ -11,11 +12,25 @@ class _AddressTypeState extends State<AddressType> {
   TextEditingController wardController = new TextEditingController();
   TextEditingController districtController = new TextEditingController();
   TextEditingController cityController = new TextEditingController();
-  void fillInforLocation(){
-    if(streetController.text!=""){
-      
+  void fillInforLocation(BuildContext context) {
+    var techMobile = TechMobile.of(context);
+    if (streetController.text != "") {
+      techMobile.address = streetController.text;
     }
+    if (wardController.text != "") {
+      techMobile.address = wardController.text;
+    }
+    if (districtController.text != "") {
+      techMobile.address = districtController.text;
+    }
+    if (cityController.text != "") {
+      techMobile.address = cityController.text;
+    }
+    // if(streetController.text!=""&& wardController.text != ""&& districtController.text != ""&& cityController.text != ""){
+    //   Navigator.pop(context);
+    // }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,9 +84,14 @@ class _AddressTypeState extends State<AddressType> {
         ),
       )),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          fillInforLocation(context);
+        },
         tooltip: 'Continues',
-        child: Icon(Icons.arrow_right_alt_sharp,size: 30,),
+        child: Icon(
+          Icons.arrow_right_alt_sharp,
+          size: 30,
+        ),
       ), //
     );
   }
@@ -80,10 +100,8 @@ class _AddressTypeState extends State<AddressType> {
 class AddressField extends StatelessWidget {
   final String addressField;
   final TextEditingController controler;
-  const AddressField({
-    Key key,
-    this.addressField,this.controler
-  }) : super(key: key);
+  const AddressField({Key key, this.addressField, this.controler})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +115,6 @@ class AddressField extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            
             addressField,
             style: Theme.of(context)
                 .textTheme
@@ -107,7 +124,7 @@ class AddressField extends StatelessWidget {
           Container(
               height: 30,
               child: TextField(
-                controller:controler ,
+                controller: controler,
                 style: TextStyle(fontSize: 20),
               ))
         ],

@@ -2,8 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:graduation_project_book_app/screens/host/widget/address_type.dart';
+import 'package:graduation_project_book_app/screens/host/widget/description.dart';
 import 'package:graduation_project_book_app/screens/host/widget/facility_type.dart';
+import 'package:graduation_project_book_app/screens/host/widget/photo_room.dart';
 import 'package:graduation_project_book_app/screens/host/widget/room_type.dart';
+import 'package:graduation_project_book_app/screens/vdp/vdp_detail.dart';
 
 class CreateNewRoom extends StatefulWidget {
   @override
@@ -62,11 +65,11 @@ class _CreateNewRoomState extends State<CreateNewRoom> {
           PropertyRoom(propertyName: 'Address', navigatorName: AddressType()),
           PropertyRoom(
             propertyName: 'Photos',
-            navigatorName: RoomType(),
+            navigatorName: PhotoRoom(),
           ),
           PropertyRoom(
             propertyName: 'Description',
-            navigatorName: RoomType(),
+            navigatorName: DescriptionRoom(),
           ),
           PropertyRoom(
             propertyName: 'Facility',
