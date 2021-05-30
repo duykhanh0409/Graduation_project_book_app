@@ -21,6 +21,7 @@ class TechMobile extends StatefulWidget {
 class TechMobileState extends State<TechMobile> {
   List<VdpItem> vdpList;
   List<VdpItem> vdpListOld;
+  List<VdpItem> listSaveUser;
 
   var isroom = '';
   int selectedRadioPrice;
@@ -33,6 +34,11 @@ class TechMobileState extends State<TechMobile> {
   var district = '';
   var city = '';
   var descriptionRoom = '';
+  var gac = '';
+  var square = '';
+  var wifi = '';
+  var bathRoom = '';
+  var bedRoom = '';
 
   Future<List<VdpItem>> getData() async {
     var result = await Api.fetchData();
@@ -40,6 +46,15 @@ class TechMobileState extends State<TechMobile> {
       setState(() {
         vdpList = result;
         vdpListOld = result;
+      });
+    return result;
+  }
+
+  Future<List<VdpItem>> getListSave() async {
+    var result = await Api.getListSave('2a5P2tAVxkXURkC2eOmV');
+    if (result != null) 
+      setState(() {
+        listSaveUser = result;
       });
     return result;
   }

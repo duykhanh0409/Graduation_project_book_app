@@ -5,6 +5,7 @@ import 'package:graduation_project_book_app/screens/host/widget/address_type.dar
 import 'package:graduation_project_book_app/screens/host/widget/description.dart';
 import 'package:graduation_project_book_app/screens/host/widget/facility_type.dart';
 import 'package:graduation_project_book_app/screens/host/widget/photo_room.dart';
+import 'package:graduation_project_book_app/screens/host/widget/price.dart';
 import 'package:graduation_project_book_app/screens/host/widget/room_type.dart';
 import 'package:graduation_project_book_app/screens/vdp/vdp_detail.dart';
 
@@ -77,7 +78,7 @@ class _CreateNewRoomState extends State<CreateNewRoom> {
           ),
           PropertyRoom(
             propertyName: 'Price',
-            navigatorName: RoomType(),
+            navigatorName: PriceRoom(),
           ),
         ],
       ),

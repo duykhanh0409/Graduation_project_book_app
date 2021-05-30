@@ -118,7 +118,10 @@ class _RoomTypeState extends State<RoomType> {
           Navigator.pop(context);
         },
         tooltip: 'Continues',
-        child: Icon(Icons.add),
+        child: Icon(
+          Icons.arrow_right_alt_sharp,
+          size: 30,
+        ),
       ), //
     );
   }

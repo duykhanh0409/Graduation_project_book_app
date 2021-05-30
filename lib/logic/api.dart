@@ -32,8 +32,7 @@ class Api {
 
   static postListSave(var idUser, var idProduct) async {
     String url = 'https://book-room-app.herokuapp.com/user/api/addFavourite';
-    final response = await http.post(
-        Uri.parse(url),
+    final response = await http.post(Uri.parse(url),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -43,6 +42,22 @@ class Api {
         }));
     if (response.statusCode == 201) {
       print('post list save ');
+    }
+  }
+
+  static getListSave(var idUser) async {
+    List<VdpItem> list = [];
+    String url =
+        'https://book-room-app.herokuapp.com/user/api/getListFavourite/$idUser';
+    var response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      for (int i = 0; i < json.decode(response.body).length; i++) {
+        list.add(VdpItem.fromJson(json.decode(response.body)[i]));
+      }
+      print(list[0].type);
+      return list;
+    } else {
+      throw Exception(" Lỗi khi load Json");
     }
   }
 }
