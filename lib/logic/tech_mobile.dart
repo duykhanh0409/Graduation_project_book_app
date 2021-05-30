@@ -21,10 +21,17 @@ class TechMobile extends StatefulWidget {
 class TechMobileState extends State<TechMobile> {
   List<VdpItem> vdpList;
   List<VdpItem> vdpListOld;
- 
-  var isroom='';
+
+  var isroom = '';
   int selectedRadioPrice;
   var selectedPrice;
+
+  //host
+  var typeRoom = '';
+  var address='';
+  var ward='';
+  var district='';
+  var city='';
 
   Future<List<VdpItem>> getData() async {
     var result = await Api.fetchData();
@@ -38,11 +45,9 @@ class TechMobileState extends State<TechMobile> {
 
   void setSelectedPrice(var a) {
     setState(() {
-      vdpList=a;
+      vdpList = a;
     });
   }
-
- 
 
   @override
   Widget build(BuildContext context) {

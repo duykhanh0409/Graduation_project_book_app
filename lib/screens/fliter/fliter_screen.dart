@@ -224,7 +224,10 @@ class _FliterScreenState extends State<FliterScreen> {
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(7),
                                     side: BorderSide(color: Colors.red)))),
-                        onPressed: () => filterOptions(context)),
+                        onPressed: () {
+                          filterOptions(context);
+                          Navigator.pop(context);
+                        }),
                   )
                 ],
               ),

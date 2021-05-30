@@ -1,32 +1,35 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_geocoder/geocoder.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:graduation_project_book_app/logic/tech_mobile.dart';
 import 'package:graduation_project_book_app/screens/fliter/fliter_screen.dart';
 import 'package:graduation_project_book_app/screens/search/item_card.dart';
 import 'package:graduation_project_book_app/screens/vdp/vdp_Screen.dart';
 import 'package:graduation_project_book_app/widgets/google_map.dart';
+import 'package:graduation_project_book_app/widgets/search_inbox.dart';
 
 class SearchScreen extends StatefulWidget {
+  final LatLng searchLocation;
+
+  const SearchScreen({Key key, this.searchLocation}) : super(key: key);
+
   @override
   _SearchScreenState createState() => _SearchScreenState();
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  String latti = "";
-  String longitu = "";
   bool isShow = false;
-  bool isLoading = true;
+
   bool isCheckEntireRoom = false;
+  List<Coordinates> coordinators = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    Future.delayed(Duration(milliseconds: 3), () {
-      getData(context);
-    });
+    getCurrentLocation(context);
   }
 
   @override
@@ -35,21 +38,24 @@ class _SearchScreenState extends State<SearchScreen> {
     super.dispose();
   }
 
-  void getData(BuildContext context) {
-    print('chay lai khong');
-    var techMobile = TechMobile.of(context);
-    var result;
-    if (techMobile.vdpList?.length ?? 0 == 0) {
-      setState(() {
-        isLoading = true;
-      });
-      result = techMobile.getData();
+  Future<List<Coordinates>> getCurrentLocation(BuildContext context) async {
+    var data = TechMobile.of(context)?.vdpList;
+    for (var i = 0; i < data.length; i++) {
+      var itemTitle = data[i]?.address;
+      final query =
+          '${itemTitle?.addressNumber},${itemTitle?.ward},quận ${itemTitle?.district},${itemTitle?.city}' ??
+              '111 Lê văn Chí,Linh Chiểu,Thủ Đức, thành phố hồ chí minh';
+      print('${query}------------địa chỉ--------');
+      var addresses = await Geocoder.local.findAddressesFromQuery(query);
+      print(addresses[0].coordinates.latitude);
+      coordinators.add(addresses[0].coordinates);
+
+      print(coordinators[i].latitude.toString() + "---------lat");
+      print(coordinators[i].longitude.toString() + "---------long");
     }
-    if (result != null) {
-      setState(() {
-        isLoading = false;
-      });
-    }
+    print(coordinators.length);
+
+    return coordinators;
   }
 
   Widget build(BuildContext context) {
@@ -60,7 +66,7 @@ class _SearchScreenState extends State<SearchScreen> {
       //statusBarBrightness: Brightness.dark,
     ));
     var techMobile = TechMobile.of(context);
-    print(isLoading);
+
     return techMobile.vdpList == null
         ? Scaffold(
             body: Center(
@@ -78,8 +84,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       width: MediaQuery.of(context).size.width,
                       color: Colors.blue,
                       child: MapScreen(
-                        item: techMobile?.vdpList,
-                      )),
+                          item: coordinators, location: widget.searchLocation)),
                 ),
                 Container(
                   // cái mới làm nè
@@ -146,25 +151,34 @@ class _SearchScreenState extends State<SearchScreen> {
                                     child: Icon(Icons.tune))
                               ],
                             ),
-                            Container(
-                              margin:
-                                  EdgeInsets.only(top: 10, right: 10, left: 10),
-                              height: 40,
-                              width: MediaQuery.of(context).size.width,
-                              alignment: Alignment.centerLeft,
-                              padding: EdgeInsets.only(left: 20),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                      width: 1,
-                                      color: Colors.grey.withOpacity(0.4))),
-                              child: Row(
-                                children: [
-                                  Icon(Icons.search),
-                                  Text(
-                                    'Ho Chi Minh',
-                                  )
-                                ],
+                            FlatButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SearchInbox()),
+                                );
+                              },
+                              child: Container(
+                                margin: EdgeInsets.only(
+                                    top: 10, right: 10, left: 10),
+                                height: 40,
+                                width: MediaQuery.of(context).size.width,
+                                alignment: Alignment.centerLeft,
+                                padding: EdgeInsets.only(left: 20),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                        width: 1,
+                                        color: Colors.grey.withOpacity(0.4))),
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.search),
+                                    Text(
+                                      'Ho Chi Minh',
+                                    )
+                                  ],
+                                ),
                               ),
                             )
                           ],

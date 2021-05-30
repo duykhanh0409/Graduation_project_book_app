@@ -1,11 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
+
+//import 'package:image/image.dart';
 import 'package:image_picker/image_picker.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -27,27 +30,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
   //final _picker = ImagePicker();
   Dio dio = new Dio();
   void takePhoto(ImageSource source) async {
-    final pickedFile = await ImagePicker().getImage(source: source);
+    final pickedFile =
+        await ImagePicker().getImage(source: source, imageQuality: 5);
     setState(() {
       _image = File(pickedFile.path);
     });
   }
 
-  Future<dynamic> _upload() async {
-    if (_image == null) return;
-    String fileName = _image.path.split('/').last;
-    Map<String, dynamic> formData = {
-      'username': userController.text,
-      'password': passController.text,
-      "image": await MultipartFile.fromFile(_image.path, filename: fileName),
-    };
-    return await Dio()
-        .post('https://book-room-app.herokuapp.com/user/api/registerUser',
-            data: formData)
-        .then((dynamic result) {
-      print(result.toString());
-    });
-  }
+  // Future<dynamic> _upload() async {
+  //   if (_image == null) return;
+  //   String fileName = _image.path.split('/').last;
+  //   Map<String, dynamic> formData = {
+  //     'username': userController.text,
+  //     'password': passController.text,
+  //     "image": await MultipartFile.fromFile(_image.path, filename: fileName),
+  //   };
+  //   return await Dio()
+  //       .post('https://book-room-app.herokuapp.com/user/api/registerUser',
+  //           data: formData)
+  //       .then((dynamic result) {
+  //     print(result.toString());
+  //   });
+  // }
 
   void onClickButtonSignUp() {
     if (userController.text.length > 6) {
@@ -77,9 +81,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
         rePassInval = false;
       });
     }
-    if (userInval && passInval && rePassInval && _image != null) {
+    if (userInval && passInval && rePassInval ) {
       print('do chua ');
-      _upload();
+      // _upload();
+      createAlbum();
     }
   }
 
@@ -87,20 +92,36 @@ class _SignUpScreenState extends State<SignUpScreen> {
     print('ddddddddddddddddddd');
     // var image = File(_image?.path);
     //var image = _image?.path;
-    final bytes = File(_image.path).readAsBytesSync();
-    final response = await http.post(
-        Uri.parse('https://book-room-app.herokuapp.com/user/api/registerUser'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, dynamic>{
-          'username': userController.text,
-          'password': passController.text,
-          'image': bytes
-        }));
-    if (response.statusCode == 201) {
-      print('posst thanh cong');
+
+    //Image byte = await convertFileToImage(_image);
+    print(_image);
+    try {
+      final response = await http.post(
+          Uri.parse(
+              'https://book-room-app.herokuapp.com/user/api/registerUser'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, dynamic>{
+            'username': userController.text,
+            'password': passController.text,
+            'image': File(
+                'E:\Application_Project\Flutter\Graduation_project_book_app\assets\images\img7.jpg').readAsBytesSync()
+          }));
+      if (response.statusCode == 201) {
+        print('posst thanh cong');
+      }
+    } catch (e) {
+      print(e);
     }
+  }
+
+  Future<Image> convertFileToImage(File picture) async {
+    List<int> imageBase64 = picture.readAsBytesSync();
+    String imageAsString = base64Encode(imageBase64);
+    Uint8List uint8list = base64.decode(imageAsString);
+    Image image = Image.memory(uint8list);
+    return image;
   }
 
   @override
@@ -163,7 +184,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               radius: 30.0,
                               backgroundImage: _image == null
                                   ? AssetImage('assets/images/khanh.jpg')
-                                  : FileImage(File(_image.path)),
+                                  : FileImage(_image),
                               backgroundColor: Colors.transparent,
                             ),
                             Positioned(
@@ -237,7 +258,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               borderRadius: BorderRadius.circular(10),
                               boxShadow: [
                                 BoxShadow(
-                                    color: Color.fromRGBO(225, 95, 27, .3),
+                                    color: Colors.white,
                                     blurRadius: 20,
                                     offset: Offset(0, 10))
                               ]),

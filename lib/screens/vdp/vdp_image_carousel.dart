@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation_project_book_app/logic/api.dart';
 import 'package:graduation_project_book_app/models/vdp.dart';
 import 'package:graduation_project_book_app/styles/colors.dart';
 
@@ -17,7 +18,7 @@ class VdpImageCarousel extends StatefulWidget {
 
 class _VdpImageCarouselState extends State<VdpImageCarousel> {
   int _current = 0;
-
+  bool isColorSave = false;
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height / 2;
@@ -97,15 +98,24 @@ class _VdpImageCarouselState extends State<VdpImageCarousel> {
                     ),
                   ),
                 ),
-                Container(
-                  height: 40,
-                  width: 40,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white),
-                  child: Icon(
-                    Icons.favorite_border_outlined,
-                    color: Colors.black,
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      isColorSave = true;
+                    });
+                    Api.postListSave(
+                        'FIlLcwZvGN010VsFBTBz', 'jgAXd8MhNuCx6F5mmmUC');
+                  },
+                  child: Container(
+                    height: 40,
+                    width: 40,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white),
+                    child: Icon(
+                      Icons.favorite_border_outlined,
+                      color: isColorSave ? Colors.red : Colors.black,
+                    ),
                   ),
                 ),
               ],

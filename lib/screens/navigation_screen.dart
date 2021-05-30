@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:graduation_project_book_app/screens/fliter/fliter_screen.dart';
 import 'package:graduation_project_book_app/screens/home/home_screen.dart';
 import 'package:graduation_project_book_app/screens/profile/profile_screen.dart';
@@ -15,7 +16,9 @@ class _NavigationScreenState extends State<NavigationScreen> {
   int _selectedItem = 0;
   List<Widget> screens = [
     HomePage(),
-    SearchScreen(),
+    SearchScreen(
+      searchLocation: LatLng(10.84582, 106.79453),
+    ),
     SaveRoom(),
     ProfileScreen()
   ];

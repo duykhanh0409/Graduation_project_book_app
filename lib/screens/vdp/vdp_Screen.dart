@@ -19,6 +19,9 @@ class VdpScreens extends StatefulWidget {
 }
 
 class _VdpScreensState extends State<VdpScreens> {
+  TextEditingController userNameController = new TextEditingController();
+  TextEditingController sdtController = new TextEditingController();
+  TextEditingController dateController = new TextEditingController();
   User userHost;
   Future<User> getData() async {
     var result = await Api.getUser(widget.item.host?.hostId);
@@ -154,7 +157,7 @@ class _VdpScreensState extends State<VdpScreens> {
                                     borderRadius: BorderRadius.circular(7),
                                     side: BorderSide(color: Colors.red)))),
                     onPressed: () {
-                      buildShowGeneralDialog(context);
+                      _modalBottomSheetMenu();
                     },
                   )
                 ],
@@ -166,28 +169,22 @@ class _VdpScreensState extends State<VdpScreens> {
     );
   }
 
-  Future<Object> buildShowGeneralDialog(BuildContext context) {
-    return showGeneralDialog(
-      barrierLabel: "Label",
-      barrierDismissible: true,
-      barrierColor: Colors.black.withOpacity(0.5),
-      transitionDuration: Duration(milliseconds: 700),
-      context: context,
-      pageBuilder: (context, anim1, anim2) {
-        return Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            height: 350,
-            width: MediaQuery.of(context).size.width,
-            margin: EdgeInsets.only(bottom: 100, left: 12, right: 12),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(30),
-            ),
-            child: Scaffold(
-              body: SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.only(top: 20),
+  void _modalBottomSheetMenu() {
+    showModalBottomSheet(
+        context: context,
+        builder: (builder) {
+          return new Container(
+            height: 850.0,
+            color: Colors.transparent, //could change this to Color(0xFF737373),
+            //so you don't have to change MaterialApp canvasColor
+            child: new Container(
+                padding: EdgeInsets.only(top: 20),
+                decoration: new BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: new BorderRadius.only(
+                        topLeft: const Radius.circular(10.0),
+                        topRight: const Radius.circular(10.0))),
+                child: SingleChildScrollView(
                   child: Column(
                     children: [
                       Text('Đặt Lịch Hẹn',
@@ -248,21 +245,27 @@ class _VdpScreensState extends State<VdpScreens> {
                               border: InputBorder.none),
                         ),
                       ),
+                      ElevatedButton(
+                        child: Text("Gửi Lịch Hẹn".toUpperCase(),
+                            style: TextStyle(fontSize: 14)),
+                        style: ButtonStyle(
+                            foregroundColor:
+                                MaterialStateProperty.all<Color>(Colors.white),
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.red),
+                            shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(7),
+                                    side: BorderSide(color: Colors.red)))),
+                        onPressed: () {
+                          print('gui lịch');
+                        },
+                      )
                     ],
                   ),
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-      transitionBuilder: (context, anim1, anim2, child) {
-        return SlideTransition(
-          position:
-              Tween(begin: Offset(0, 1), end: Offset(0, 0)).animate(anim1),
-          child: child,
-        );
-      },
-    );
+                )),
+          );
+        });
   }
 }

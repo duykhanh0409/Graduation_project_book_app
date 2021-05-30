@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:graduation_project_book_app/logic/tech_mobile.dart';
 import 'package:graduation_project_book_app/screens/home/become_host.dart';
 import 'package:graduation_project_book_app/screens/home/explore_nearby.dart';
 import 'package:graduation_project_book_app/screens/home/keyword_search.dart';
 import 'package:graduation_project_book_app/screens/home/live_anywhere.dart';
-import 'package:graduation_project_book_app/screens/home/title_bar.dart';
-import 'package:graduation_project_book_app/services/vdp_services.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -27,10 +26,34 @@ class _HomePageState extends State<HomePage> {
   var listImage = [
     'assets/images/item1.jpg',
     'assets/images/item2.jpg',
-    'assets/images/item3.jpg',
-    'assets/images/picture.jpg',
   ];
-  var listTitle = ['Entire homes', 'Rooms', 'Motel', 'Motel'];
+  var listTitle = ['Entire homes', 'Rooms'];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      getData(context);
+    });
+  }
+
+  void getData(BuildContext context) {
+    print('chay lai khong');
+    var techMobile = TechMobile.of(context);
+    var result;
+    if (techMobile.vdpList?.length ?? 0 == 0) {
+      // setState(() {
+      //   isLoading = true;
+      // });
+      result = techMobile.getData();
+    }
+    if (result != null) {
+      // setState(() {
+      //   isLoading = false;
+      // });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(

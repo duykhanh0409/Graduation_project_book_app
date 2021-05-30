@@ -7,61 +7,82 @@ class AddressType extends StatefulWidget {
 }
 
 class _AddressTypeState extends State<AddressType> {
+  TextEditingController streetController = new TextEditingController();
+  TextEditingController wardController = new TextEditingController();
+  TextEditingController districtController = new TextEditingController();
+  TextEditingController cityController = new TextEditingController();
+  void fillInforLocation(){
+    if(streetController.text!=""){
+      
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            FlatButton.icon(
-                padding: EdgeInsets.zero,
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                icon: Icon(Icons.arrow_back),
-                label: Text('')),
-            Padding(
-              padding: const EdgeInsets.only(right: 20, top: 10),
-              child: Text(
-                "Where's your place located?",
-                style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 1),
+          child: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              FlatButton.icon(
+                  padding: EdgeInsets.zero,
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon: Icon(Icons.arrow_back),
+                  label: Text('')),
+              Padding(
+                padding: const EdgeInsets.only(right: 20, top: 10),
+                child: Text(
+                  "Where's your place located?",
+                  style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1),
+                ),
               ),
-            ),
-            Text(
-                "Only confirmed guests will get your exact address after they book. We'll show everyone else an approximate location"),
-            SizedBox(
-              height: 30,
-            ),
-            AddressField(
-              addressField: 'Street',
-            ),
-            AddressField(
-              addressField: 'Ward',
-            ),
-            AddressField(
-              addressField: 'District',
-            ),
-            AddressField(
-              addressField: 'City',
-            )
-          ],
+              Text(
+                  "Only confirmed guests will get your exact address after they book. We'll show everyone else an approximate location"),
+              SizedBox(
+                height: 30,
+              ),
+              AddressField(
+                controler: streetController,
+                addressField: 'Street',
+              ),
+              AddressField(
+                controler: wardController,
+                addressField: 'Ward',
+              ),
+              AddressField(
+                controler: districtController,
+                addressField: 'District',
+              ),
+              AddressField(
+                controler: cityController,
+                addressField: 'City',
+              )
+            ],
+          ),
         ),
       )),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        tooltip: 'Continues',
+        child: Icon(Icons.arrow_right_alt_sharp,size: 30,),
+      ), //
     );
   }
 }
 
 class AddressField extends StatelessWidget {
   final String addressField;
+  final TextEditingController controler;
   const AddressField({
     Key key,
-    this.addressField,
+    this.addressField,this.controler
   }) : super(key: key);
 
   @override
@@ -76,6 +97,7 @@ class AddressField extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
+            
             addressField,
             style: Theme.of(context)
                 .textTheme
@@ -85,6 +107,7 @@ class AddressField extends StatelessWidget {
           Container(
               height: 30,
               child: TextField(
+                controller:controler ,
                 style: TextStyle(fontSize: 20),
               ))
         ],
