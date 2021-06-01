@@ -101,10 +101,12 @@ class _VdpImageCarouselState extends State<VdpImageCarousel> {
                 GestureDetector(
                   onTap: () {
                     setState(() {
-                      isColorSave = true;
+                      isColorSave = !isColorSave;
                     });
-                    Api.postListSave(
-                        'FIlLcwZvGN010VsFBTBz', 'jgAXd8MhNuCx6F5mmmUC');
+                    if (isColorSave == true) {
+                      Api.postListSave(
+                          'FIlLcwZvGN010VsFBTBz', 'jgAXd8MhNuCx6F5mmmUC');
+                    }
                   },
                   child: Container(
                     height: 40,

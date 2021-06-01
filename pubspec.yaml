@@ -37,7 +37,6 @@ dependencies:
   equatable: ^2.0.0
   geocoding: ^2.0.0
   flutter_geocoder: ^0.2.2-nullsafety
-  geolocator: ^7.0.3
   url_launcher: ^6.0.4
   image_picker: ^0.7.5+3
   dio: ^4.0.0

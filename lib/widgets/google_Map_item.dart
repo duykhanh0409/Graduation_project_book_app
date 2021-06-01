@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_geocoder/geocoder.dart';
-import 'package:geolocator/geolocator.dart';
+//import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:graduation_project_book_app/models/vdp.dart';
 
@@ -17,11 +17,11 @@ class _MapItemState extends State<MapItem> {
   static const _cameraPosition =
       CameraPosition(target: LatLng(10.845509, 106.755292), zoom: 10.5);
   GoogleMapController _googleMapController;
-
+  Future<Widget> reloadCurrentLocation;
   // List<LatLng> locations;
   //List<Marker> _markers = [];
   Coordinates coordinators;
-  Position myLocation;
+  // Position myLocation;
   //Coordinates coordinator;
   @override
   void dispose() {
@@ -36,11 +36,11 @@ class _MapItemState extends State<MapItem> {
             '111 Lê văn Chí,Linh Chiểu,Thủ Đức, thành phố hồ chí minh';
     print('${query}------------địa chỉ--------');
     var addresses = await Geocoder.local.findAddressesFromQuery(query);
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+    // Position position = await Geolocator.getCurrentPosition(
+    //     desiredAccuracy: LocationAccuracy.high);
     setState(() {
       coordinators = addresses?.first?.coordinates;
-      myLocation = position;
+      // myLocation = position;
     });
   }
 
@@ -48,7 +48,7 @@ class _MapItemState extends State<MapItem> {
   void initState() {
     // TODO: implement initState
     super.initState();
-     getCurrentLocation();
+      getCurrentLocation();
   }
 
   

@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation_project_book_app/screens/signIn/signin.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -37,21 +38,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
     });
   }
 
-  // Future<dynamic> _upload() async {
-  //   if (_image == null) return;
-  //   String fileName = _image.path.split('/').last;
-  //   Map<String, dynamic> formData = {
-  //     'username': userController.text,
-  //     'password': passController.text,
-  //     "image": await MultipartFile.fromFile(_image.path, filename: fileName),
-  //   };
-  //   return await Dio()
-  //       .post('https://book-room-app.herokuapp.com/user/api/registerUser',
-  //           data: formData)
-  //       .then((dynamic result) {
-  //     print(result.toString());
-  //   });
-  // }
+  Future<dynamic> _upload() async {
+    if (_image == null) return;
+    String fileName = _image.path.split('/').last;
+    FormData formData = FormData.fromMap({
+      'username': userController.text,
+      'password': passController.text,
+      "image": await MultipartFile.fromFile(_image.path, filename: fileName),
+    });
+    return await Dio()
+        .post('https://book-room-app.herokuapp.com/user/api/registerUser',
+            data: formData)
+        .then((dynamic result) {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return LoginScreen();
+      }));
+    });
+  }
 
   void onClickButtonSignUp() {
     if (userController.text.length > 6) {
@@ -81,47 +84,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
         rePassInval = false;
       });
     }
-    if (userInval && passInval && rePassInval ) {
+    if (userInval && passInval && rePassInval) {
       print('do chua ');
-      // _upload();
-      createAlbum();
+      _upload();
     }
-  }
-
-  Future<http.Response> createAlbum() async {
-    print('ddddddddddddddddddd');
-    // var image = File(_image?.path);
-    //var image = _image?.path;
-
-    //Image byte = await convertFileToImage(_image);
-    print(_image);
-    try {
-      final response = await http.post(
-          Uri.parse(
-              'https://book-room-app.herokuapp.com/user/api/registerUser'),
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(<String, dynamic>{
-            'username': userController.text,
-            'password': passController.text,
-            'image': File(
-                'E:\Application_Project\Flutter\Graduation_project_book_app\assets\images\img7.jpg').readAsBytesSync()
-          }));
-      if (response.statusCode == 201) {
-        print('posst thanh cong');
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  Future<Image> convertFileToImage(File picture) async {
-    List<int> imageBase64 = picture.readAsBytesSync();
-    String imageAsString = base64Encode(imageBase64);
-    Uint8List uint8list = base64.decode(imageAsString);
-    Image image = Image.memory(uint8list);
-    return image;
   }
 
   @override
