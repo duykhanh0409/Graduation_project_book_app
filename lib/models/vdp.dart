@@ -12,106 +12,110 @@ String vdpItemToJson(List<VdpItem> data) =>
 
 class VdpItem {
   VdpItem({
-    this.type,
-    this.facility,
     this.reviews,
-    this.price,
     this.image,
     this.address,
-    this.discription,
+    this.type,
     this.host,
+    this.facility,
+    this.discription,
+    this.price,
+    this.id,
   });
 
-  String type;
-  Facility facility;
   List<Review> reviews;
-  Price price;
   Image image;
   Address address;
-  String discription;
+  String type;
   Host host;
+  Facility facility;
+  String discription;
+  Price price;
+  String id;
 
   factory VdpItem.fromJson(Map<String, dynamic> json) => VdpItem(
-        type: json["type"],
-        facility: Facility.fromJson(json["facility"]),
         reviews:
             List<Review>.from(json["reviews"].map((x) => Review.fromJson(x))),
-        price: Price.fromJson(json["price"]),
         image: Image.fromJson(json["image"]),
         address: Address.fromJson(json["address"]),
-        discription: json["discription"],
+        type: json["type"],
         host: Host.fromJson(json["host"]),
+        facility: Facility.fromJson(json["facility"]),
+        discription: json["discription"],
+        price: Price.fromJson(json["price"]),
+        id: json["id"],
       );
 
   Map<String, dynamic> toJson() => {
-        "type": type,
-        "facility": facility.toJson(),
         "reviews": List<dynamic>.from(reviews.map((x) => x.toJson())),
-        "price": price.toJson(),
         "image": image.toJson(),
         "address": address.toJson(),
-        "discription": discription,
+        "type": type,
         "host": host.toJson(),
+        "facility": facility.toJson(),
+        "discription": discription,
+        "price": price.toJson(),
+        "id": id,
       };
 }
 
 class Address {
   Address({
-    this.city,
+    this.ward,
     this.district,
     this.addressNumber,
-    this.ward,
+    this.city,
   });
 
-  String city;
+  String ward;
   String district;
   String addressNumber;
-  String ward;
+  String city;
 
   factory Address.fromJson(Map<String, dynamic> json) => Address(
-        city: json["city"],
+        ward: json["ward"],
         district: json["district"],
         addressNumber: json["addressNumber"],
-        ward: json["ward"],
+        city: json["city"],
       );
 
   Map<String, dynamic> toJson() => {
-        "city": city,
+        "ward": ward,
         "district": district,
         "addressNumber": addressNumber,
-        "ward": ward,
+        "city": city,
       };
 }
 
 class Facility {
   Facility({
+    this.wife,
     this.bath,
-    this.square,
     this.mezzanine,
     this.bedroom,
-    this.wife,
+    this.square,
   });
 
+  String wife;
   String bath;
-  String square;
   String mezzanine;
   String bedroom;
-  String wife;
+  String square;
 
   factory Facility.fromJson(Map<String, dynamic> json) => Facility(
+        wife: json["wife"],
         bath: json["bath"],
-        square: json["square"],
         mezzanine: json["mezzanine"],
         bedroom: json["bedroom"],
-        wife: json["wife"],
+        square: json["square"],
       );
 
   Map<String, dynamic> toJson() => {
+        "wife": wife,
         "bath": bath,
-        "square": square,
         "mezzanine": mezzanine,
         "bedroom": bedroom,
-        "wife": wife,
+        "square": square,
       };
 }
 
@@ -133,64 +137,64 @@ class Host {
 
 class Image {
   Image({
-    this.alt,
     this.url,
+    this.alt,
   });
 
-  String alt;
   List<String> url;
+  String alt;
 
   factory Image.fromJson(Map<String, dynamic> json) => Image(
-        alt: json["alt"],
         url: List<String>.from(json["url"].map((x) => x)),
+        alt: json["alt"],
       );
 
   Map<String, dynamic> toJson() => {
-        "alt": alt,
         "url": List<dynamic>.from(url.map((x) => x)),
+        "alt": alt,
       };
 }
 
 class Price {
   Price({
-    this.water,
-    this.electricity,
     this.room,
+    this.electricity,
+    this.water,
   });
 
-  String water;
-  String electricity;
   String room;
+  String electricity;
+  String water;
 
   factory Price.fromJson(Map<String, dynamic> json) => Price(
-        water: json["water"],
-        electricity: json["electricity"],
         room: json["room"],
+        electricity: json["electricity"],
+        water: json["water"],
       );
 
   Map<String, dynamic> toJson() => {
-        "water": water,
-        "electricity": electricity,
         "room": room,
+        "electricity": electricity,
+        "water": water,
       };
 }
 
 class Review {
   Review({
-    this.reviewerId,
     this.comment,
+    this.reviewerId,
   });
 
-  String reviewerId;
   String comment;
+  String reviewerId;
 
   factory Review.fromJson(Map<String, dynamic> json) => Review(
-        reviewerId: json["reviewerID"],
         comment: json["comment"],
+        reviewerId: json["reviewerID"],
       );
 
   Map<String, dynamic> toJson() => {
-        "reviewerID": reviewerId,
         "comment": comment,
+        "reviewerID": reviewerId,
       };
 }

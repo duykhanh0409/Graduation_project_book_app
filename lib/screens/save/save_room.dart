@@ -16,20 +16,21 @@ class _SaveRoomState extends State<SaveRoom> {
     // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      getData(context);
+      getListSave(context);
     });
+    print('----------------------------------------------------------------------------------------------------------initatiState Save');
   }
 
-  void getData(BuildContext context) {
+  void getListSave(BuildContext context) {
     print('chay lai khong');
     var techMobile = TechMobile.of(context);
     var result;
-    if (techMobile.listSaveUser?.length ?? 0 == 0) {
-      result = techMobile.getListSave();
-    }
+    // if (techMobile.listSaveUser?.length ?? 0 == 0) {
+    result = techMobile.getListSave();
+    // }
     if (result != null) {}
   }
-
+      //RefreshIndicator
   @override
   Widget build(BuildContext context) {
     var techMobile = TechMobile.of(context);
@@ -40,10 +41,10 @@ class _SaveRoomState extends State<SaveRoom> {
           backgroundColor: AtcColors.mainColor,
           centerTitle: true,
         ),
-        body: techMobile.listSaveUser == null
+        body: techMobile.listSaveUser.length == 0
             ? Scaffold(
                 body: Center(
-                  child: CircularProgressIndicator(),
+                  child: Text("You don't have save room"),
                 ),
               )
             : Container(

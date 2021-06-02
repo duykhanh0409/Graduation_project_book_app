@@ -34,6 +34,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       getData(context);
+      getListSave(context);
     });
   }
 
@@ -52,6 +53,16 @@ class _HomePageState extends State<HomePage> {
       //   isLoading = false;
       // });
     }
+  }
+
+  void getListSave(BuildContext context) {
+    print('chay lai khong');
+    var techMobile = TechMobile.of(context);
+    var result;
+    // if (techMobile.listSaveUser?.length ?? 0 == 0) {
+    result = techMobile.getListSave();
+    // }
+    if (result != null) {}
   }
 
   @override

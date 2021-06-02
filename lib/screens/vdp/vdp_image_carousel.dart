@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project_book_app/logic/api.dart';
+import 'package:graduation_project_book_app/logic/tech_mobile.dart';
 import 'package:graduation_project_book_app/models/vdp.dart';
 import 'package:graduation_project_book_app/styles/colors.dart';
 
@@ -23,7 +24,21 @@ class _VdpImageCarouselState extends State<VdpImageCarousel> {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height / 2;
     var imageItem = widget.item.image.url;
-
+    var techMobile = TechMobile.of(context);
+    print(techMobile?.listSaveUser?.length);
+    var check = techMobile.listSaveUser.length != 0
+        ? techMobile.listSaveUser.where((e) {
+            print(e.id);
+            return e.id.contains(widget.item.id);
+          }).toList()
+        : [];
+    print("${check.length} tra ve cai gì");
+    if (check.length > 0) {
+      setState(() {
+        isColorSave = true;
+      });
+    }
+    print(isColorSave);
     return Stack(
       children: [
         CarouselSlider(
@@ -100,13 +115,29 @@ class _VdpImageCarouselState extends State<VdpImageCarousel> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    setState(() {
-                      isColorSave = !isColorSave;
-                    });
-                    if (isColorSave == true) {
+                    if (isColorSave == false) {
+                      // fliter thằng item tap vô có nằm trong list
+                      print('chọn save');
                       Api.postListSave(
-                          'FIlLcwZvGN010VsFBTBz', 'jgAXd8MhNuCx6F5mmmUC');
+                          'FIlLcwZvGN010VsFBTBz', "${widget.item.id}");
+                      setState(() {
+                        isColorSave = true; // cái biến is này phải xử lý nòg
+                      });
                     }
+                    // if (isColorSave == true) {
+                    //   print('click cho het do');
+                    //   setState(() {
+                    //     isColorSave = false;
+                    //   });
+                    // }
+                    // if (isColorSave = true) {
+                    //   print('remove save');
+                    //   Api.removeListSave(
+                    //       'FIlLcwZvGN010VsFBTBz', "${widget.item.id}");
+                    //   setState(() {
+                    //     isColorSave = false;
+                    //   });
+                    // }
                   },
                   child: Container(
                     height: 40,
@@ -128,3 +159,11 @@ class _VdpImageCarouselState extends State<VdpImageCarousel> {
     );
   }
 }
+//tab vô có id product này, có thông tin user, tab dô trái tim post lên, Nhưng vẫn phải có biến true false rồi
+//if(ele=> ele.id.contans(id){ isSave=true})
+//isSave=true thì trái tim đỏ
+// tab dô trái tim, isSave chuyển thành true và gọi hàm post , oke
+
+//issave =false
+//lúc đầu isSave== false gọi hàm post
+//isSave==true gọi hàm remove

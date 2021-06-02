@@ -60,4 +60,20 @@ class Api {
       throw Exception(" Lỗi khi load Json");
     }
   }
+
+  static removeListSave(var idUser, var idProduct) async {
+    String url =
+        'https://book-room-app.herokuapp.com/user/api/removeProductInListFavourite';
+    final response = await http.post(Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          'idUser': idUser,
+          'idProduct': idProduct,
+        }));
+    if (response.statusCode == 201) {
+      print('remove list save ');
+    }
+  }
 }
