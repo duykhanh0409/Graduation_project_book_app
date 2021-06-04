@@ -227,13 +227,13 @@ class _SearchScreenState extends State<SearchScreen> {
                       builder: (BuildContext context,
                           ScrollController scrollController) {
                         return Container(
-                          // padding: EdgeInsets.only(top: 30),
+                          alignment: Alignment.center,
                           decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(25),
                                   topRight: Radius.circular(25))),
-                          child: ListView.builder(
+                          child: techMobile.vdpList?.length!=0?ListView.builder(
                             controller: scrollController,
                             itemCount: techMobile.vdpList?.length ?? 0,
                             itemBuilder: (BuildContext context, int index) {
@@ -252,7 +252,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 ),
                               );
                             },
-                          ),
+                          ):Text('Không có phòng ở khu vực này'),
                         );
                       },
                     ))

@@ -119,7 +119,7 @@ class _VdpImageCarouselState extends State<VdpImageCarousel> {
                       // fliter thằng item tap vô có nằm trong list
                       print('chọn save');
                       Api.postListSave(
-                          'FIlLcwZvGN010VsFBTBz', "${widget.item.id}");
+                          techMobile?.user?.id, "${widget.item.id}");
                       setState(() {
                         isColorSave = true; // cái biến is này phải xử lý nòg
                       });
@@ -132,11 +132,11 @@ class _VdpImageCarouselState extends State<VdpImageCarousel> {
                     // }
                     // if (isColorSave = true) {
                     //   print('remove save');
-                    //   Api.removeListSave(
-                    //       'FIlLcwZvGN010VsFBTBz', "${widget.item.id}");
-                    //   setState(() {
-                    //     isColorSave = false;
+                    //    setState(() {
+                    //     isColorSave = false; // cái biến is này phải xử lý nòg
                     //   });
+                    //   Api.removeListSave(
+                    //       techMobile?.user?.id, "${widget.item.id}");
                     // }
                   },
                   child: Container(

@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:graduation_project_book_app/logic/tech_mobile.dart';
+import 'package:graduation_project_book_app/screens/search/search_screen.dart';
 
 class SearchInbox extends StatefulWidget {
   @override
@@ -7,8 +10,72 @@ class SearchInbox extends StatefulWidget {
 }
 
 class _SearchInboxState extends State<SearchInbox> {
+  List title = [
+    {
+      'title': 'Tăng Nhơn Phú A',
+      'time': '1.5',
+      'lat': '10.84582',
+      'long': '106.79453'
+    },
+    {
+      'title': 'Hiệp Phú',
+      'time': '1.5',
+      'lat': '10.846751',
+      'long': '106.782023'
+    },
+    {
+      'title': 'Linh Chiểu',
+      'time': '1.5',
+      'lat': '10.851934',
+      'long': '106.766493'
+    },
+    {
+      'title': 'Linh Đông',
+      'time': '1.5',
+      'lat': '10.851457',
+      'long': '106.745018'
+    },
+    {
+      'title': 'Thảo Điền',
+      'time': '1.5',
+      'lat': '10.804136',
+      'long': '106.743508'
+    },
+    {
+      'title': 'Long Thạnh Mỹ',
+      'time': '1.5',
+      'lat': '10.848265',
+      'long': ' 106.814921'
+    },
+    {
+      'title': 'Linh Xuân',
+      'time': '1.5',
+      'lat': '10.873552',
+      'long': '106.769959'
+    },
+    {
+      'title': 'Thủ Thiên',
+      'time': '1.5',
+      'lat': '10.768714',
+      'long': '106.713654'
+    },
+    {
+      'title': 'Phước Long A',
+      'time': '1.5',
+      'lat': '10.821309',
+      'long': '106.763276'
+    },
+    {
+      'title': 'Hiệp Bình Phước',
+      'time': '1.5',
+      'lat': '10.8483',
+      'long': '106.720319'
+    },
+    {'title': 'An Phú', 'time': '1.5', 'lat': '10.79238', 'long': '105.090486'},
+  ];
   @override
   Widget build(BuildContext context) {
+    var techMobile = TechMobile.of(context);
     return Scaffold(
         body: SingleChildScrollView(
       child: Container(
@@ -51,7 +118,7 @@ class _SearchInboxState extends State<SearchInbox> {
               height: 500,
               width: MediaQuery.of(context).size.width,
               child: ListView.builder(
-                itemCount: 3,
+                itemCount: title.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Container(
                     padding: EdgeInsets.all(10),
@@ -63,7 +130,15 @@ class _SearchInboxState extends State<SearchInbox> {
                                 color: Colors.grey.withOpacity(0.3)))),
                     child: FlatButton(
                       onPressed: () {
-                        print('khanh');
+                        techMobile.fliterRoomLocation(title[index]['title']);
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return SearchScreen(
+                            searchLocation: LatLng(
+                                double.parse(title[index]['lat']),
+                                double.parse(title[index]['long'])),
+                          );
+                        }));
                       },
                       child: Row(
                         children: [
@@ -76,7 +151,7 @@ class _SearchInboxState extends State<SearchInbox> {
                                 borderRadius: BorderRadius.circular(10)),
                             child: Icon(Icons.location_city_rounded),
                           ),
-                          Text('Thảo Điền,Quận 2, Ho Chi Minh city')
+                          Text("${title[index]['title']},Thành phố Thủ Đức")
                         ],
                       ),
                     ),

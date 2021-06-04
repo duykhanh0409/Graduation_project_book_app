@@ -44,7 +44,7 @@ class TechMobileState extends State<TechMobile> {
 
   //fliter room follow location
   void fliterRoomLocation(String location) {
-    var newList = vdpList
+    var newList = vdpListOld
         .where((element) =>
             element.address.ward.toUpperCase().contains(location.toUpperCase()))
         .toList();
@@ -68,7 +68,7 @@ class TechMobileState extends State<TechMobile> {
   }
 
   Future<List<VdpItem>> getListSave() async {
-    var result = await Api.getListSave('FIlLcwZvGN010VsFBTBz');
+    var result = await Api.getListSave(user.id);
     if (result != null)
       setState(() {
         listSaveUser = result;
