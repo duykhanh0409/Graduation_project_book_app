@@ -10,36 +10,40 @@ String userToJson(User data) => json.encode(data.toJson());
 
 class User {
   User({
-    this.phoneNumber,
-    this.username,
     this.avatar,
-    this.email,
     this.password,
+    this.phoneNumber,
+    this.favouriteList,
+    this.email,
+    this.username,
     this.id,
   });
 
-  String phoneNumber;
-  String username;
   String avatar;
-  String email;
   String password;
+  String phoneNumber;
+  List<dynamic> favouriteList;
+  String email;
+  String username;
   String id;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-        phoneNumber: json["phoneNumber"],
-        username: json["username"],
         avatar: json["avatar"],
-        email: json["email"],
         password: json["password"],
+        phoneNumber: json["phoneNumber"],
+        favouriteList: List<dynamic>.from(json["favouriteList"].map((x) => x)),
+        email: json["email"],
+        username: json["username"],
         id: json["id"],
       );
 
   Map<String, dynamic> toJson() => {
-        "phoneNumber": phoneNumber,
-        "username": username,
         "avatar": avatar,
-        "email": email,
         "password": password,
+        "phoneNumber": phoneNumber,
+        "favouriteList": List<dynamic>.from(favouriteList.map((x) => x)),
+        "email": email,
+        "username": username,
         "id": id,
       };
 }

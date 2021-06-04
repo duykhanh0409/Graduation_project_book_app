@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:graduation_project_book_app/constants/near_location.dart';
+import 'package:graduation_project_book_app/logic/tech_mobile.dart';
 import 'package:graduation_project_book_app/screens/search/search_screen.dart';
 import 'package:graduation_project_book_app/screens/vdp/vdp_Screen.dart';
 
@@ -76,7 +77,7 @@ class ExploreNearby extends StatelessWidget {
       },
     ];
     final controller = ScrollController();
-
+    var techMobile=TechMobile.of(context);
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       SizedBox(
         height: 30,
@@ -107,6 +108,7 @@ class ExploreNearby extends StatelessWidget {
             itemBuilder: (context, index) {
               return FlatButton(
                 onPressed: () {
+                  techMobile.fliterRoomLocation(title[index]['title']);
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return SearchScreen(
                       searchLocation: LatLng(double.parse(title[index]['lat']),

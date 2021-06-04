@@ -18,36 +18,37 @@ class _FliterScreenState extends State<FliterScreen> {
     print('goi ham');
     var techMobile = TechMobile.of(context);
     // ignore: unused_local_variable
-    var newList = techMobile?.vdpListOld;
+    var newList = techMobile?.listRoomFilterLocation;
     if (selectedPriceValue == 1) {
-      newList = techMobile.vdpListOld
+      newList = techMobile.vdpList
           .where(
               (element) => element.type.toUpperCase().contains("ENTIRE HOME"))
           .toList();
     }
     if (selectedPriceValue == 2) {
-      newList = techMobile.vdpListOld
+      newList = techMobile.vdpList
           .where((element) => element.type.toUpperCase().contains("ROOM"))
           .toList();
     }
     if (selectedPriceValue == 3) {
-      newList = techMobile.vdpListOld
+      newList = techMobile.vdpList
           .where((element) => int.parse(element.price.room) > 1000000)
           .toList();
     }
     if (selectedPriceValue == 4) {
-      newList = techMobile.vdpListOld
+      newList = techMobile.vdpList
           .where((element) => int.parse(element.price.room) > 2000000)
           .toList();
     }
     if (selectedPriceValue == 5) {
-      newList = techMobile.vdpListOld
+      newList = techMobile.vdpList
           .where((element) => int.parse(element.price.room) > 2000000)
           .toList();
     }
     return techMobile.setSelectedPrice(newList);
   }
 
+  
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -68,14 +69,6 @@ class _FliterScreenState extends State<FliterScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: 20,
-                  ),
-                  GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Icon(Icons.close)),
                   SizedBox(
                     height: 30,
                   ),

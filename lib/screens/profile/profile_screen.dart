@@ -38,8 +38,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     var techMobile = TechMobile.of(context);
-    //print(techMobile?.test);
-    // print(techMobile?.vdpList[0]?.type);
+
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
@@ -57,18 +56,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       width: 60,
                       margin: EdgeInsets.only(left: 20, right: 10),
                       decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              image: AssetImage(
-                                'assets/images/host.jpg',
-                              ),
-                              fit: BoxFit.cover)),
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: NetworkImage(techMobile?.user?.avatar),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Duy',
+                        Text(techMobile?.user?.username,
                             style: Theme.of(context).textTheme.headline6),
                         SizedBox(
                           height: 8,

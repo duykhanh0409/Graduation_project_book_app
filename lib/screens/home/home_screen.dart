@@ -73,8 +73,8 @@ class _HomePageState extends State<HomePage> {
       statusBarIconBrightness: Brightness.dark,
       statusBarBrightness: Brightness.dark,
     ));
-    // Vdpservice vdpservice=new Vdpservice();
-    // vdpservice.fetchVdp();
+    var techmobile = TechMobile.of(context);
+    print(techmobile.user.username);
     return Scaffold(
       body: ListView(children: [
         //TitleBar(),

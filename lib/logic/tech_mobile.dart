@@ -21,12 +21,14 @@ class TechMobile extends StatefulWidget {
 class TechMobileState extends State<TechMobile> {
   List<VdpItem> vdpList;
   List<VdpItem> vdpListOld;
-  List<VdpItem> listSaveUser=[];
-
+  List<VdpItem> listSaveUser = [];
+  List<VdpItem> listRoomFilterLocation = [];
+  User user;
   var isroom = '';
   int selectedRadioPrice;
   var selectedPrice;
-
+  //search room location
+  String searchRoomLocation;
   //host
   var typeRoom = '';
   var address = '';
@@ -40,6 +42,21 @@ class TechMobileState extends State<TechMobile> {
   var bathRoom = '';
   var bedRoom = '';
 
+  //fliter room follow location
+  void fliterRoomLocation(String location) {
+    var newList = vdpList
+        .where((element) =>
+            element.address.ward.toUpperCase().contains(location.toUpperCase()))
+        .toList();
+    setState(() {
+      ///không không h chổ này tạo một biến lưu list đã fliter địa điểm, lúc fliter có cái để setlai
+      vdpList = newList;
+      listRoomFilterLocation = newList;
+    });
+  }
+
+//fliter trên listOld rồi ở bên explore nearby tab vo địa điểm cũng đem giá trị và filter trên listold
+//tab vô địa điểm và filter trên listOld, listOld t
   Future<List<VdpItem>> getData() async {
     var result = await Api.fetchData();
     if (result != null)
@@ -52,16 +69,17 @@ class TechMobileState extends State<TechMobile> {
 
   Future<List<VdpItem>> getListSave() async {
     var result = await Api.getListSave('FIlLcwZvGN010VsFBTBz');
-    if (result != null) 
+    if (result != null)
       setState(() {
         listSaveUser = result;
       });
     return result;
   }
 
-  void setSelectedPrice(var a) {
+  //fliter trên listOld
+  void setSelectedPrice(var data) {
     setState(() {
-      vdpList = a;
+      vdpList = data;
     });
   }
 

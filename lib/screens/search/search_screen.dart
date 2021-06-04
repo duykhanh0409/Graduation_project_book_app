@@ -29,7 +29,9 @@ class _SearchScreenState extends State<SearchScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getCurrentLocation(context);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      getCurrentLocation(context);
+    });
   }
 
   @override
@@ -66,7 +68,8 @@ class _SearchScreenState extends State<SearchScreen> {
       //statusBarBrightness: Brightness.dark,
     ));
     var techMobile = TechMobile.of(context);
-
+    print("${techMobile?.vdpListOld.length} gia trị của t.any-------------");
+    print("${techMobile?.vdpList.length} thằng khứa này------------------");
     return techMobile.vdpList == null
         ? Scaffold(
             body: Center(

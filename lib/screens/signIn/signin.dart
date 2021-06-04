@@ -1,6 +1,12 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation_project_book_app/logic/tech_mobile.dart';
+import 'package:graduation_project_book_app/models/user.dart';
 import 'package:graduation_project_book_app/screens/signUp/signup.dart';
+import 'package:http/http.dart' as http;
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -8,30 +14,73 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController emailController = new TextEditingController();
+  TextEditingController userController = new TextEditingController();
   TextEditingController passController = new TextEditingController();
   var emailInval = false;
   var passInval = false;
 
-  void onClickButtonLogin() {
-    // setState(() {
-    //   if (emailController.text.length < 6 ||
-    // !emailController.text.contains('@')) {
-    //     emailInval = true;
-    //   } else {
-    //     emailInval = false;
-    //   }
-    //   if (passController.text.length < 6) {
-    //     passInval = true;
-    //   } else {
-    //     passInval = false;
-    //   }
+  // Future<dynamic> signIn() async {
+  //   var techMobile = TechMobile.of(context);
+  //   String url = 'https://book-room-app.herokuapp.com/user/api/validateLogin';
+  //   final response = await http.post(Uri.parse(url),
+  //       headers: <String, String>{
+  //         'Content-Type': 'application/json; charset=UTF-8',
+  //       },
+  //       body: jsonEncode(<String, dynamic>{
+  //         'username': userController.text,
+  //         'password': passController.text,
+  //       }));
+  //   if (response.statusCode == 201) {
+  //     var result = User.fromJson(json.decode(response.body));
+  //     techMobile.user = result;
+  //      Navigator.of(context).pushNamed('/home');
+  //     //return result;
+  //   }
+  // }
 
-    //   if (!emailInval && !passInval) {
-    //     Navigator.of(context).pushNamed('/home');
-    //   }
-    // });
-    Navigator.of(context).pushNamed('/home');
+  Future<dynamic> signIn() async {
+    FormData formData = FormData.fromMap({
+      'username': userController.text,
+      'password': passController.text,
+    });
+    Response response = await Dio().post(
+        'https://book-room-app.herokuapp.com/user/api/validateLogin',
+        data: formData);
+    if (response.statusCode == 200) {
+      final body = response.data;
+      print(body);
+      var techMobile = TechMobile.of(context);
+      techMobile.user = User(
+          avatar: body['avatar'],
+          favouriteList: body['favouriteList'],
+          email: body['email'],
+          password: body['password'],
+          username: body['username'],
+          id: body['id'],
+          phoneNumber: body['phoneNumber']);
+      return Navigator.of(context).pushNamed('/home');
+    } else {
+      print('loix');
+    }
+  }
+
+  void onClickButtonLogin() {
+    setState(() {
+      if (userController.text.length < 6) {
+        emailInval = true;
+      } else {
+        emailInval = false;
+      }
+      if (passController.text.length < 6) {
+        passInval = true;
+      } else {
+        passInval = false;
+      }
+
+      if (!emailInval && !passInval) {
+        signIn();
+      }
+    });
   }
 
   @override
@@ -105,7 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         bottom: BorderSide(
                                             color: Colors.grey[200]))),
                                 child: TextField(
-                                  controller: emailController,
+                                  controller: userController,
                                   decoration: InputDecoration(
                                       hintText: "Email or Phone number",
                                       hintStyle: TextStyle(color: Colors.grey),
