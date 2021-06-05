@@ -77,45 +77,44 @@ class _SearchInboxState extends State<SearchInbox> {
   Widget build(BuildContext context) {
     var techMobile = TechMobile.of(context);
     return Scaffold(
-        body: SingleChildScrollView(
+        body: Container(
+      color: Colors.blue,
       child: Container(
-        color: Colors.blue,
-        child: Container(
-          margin: EdgeInsets.only(top: 40),
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20), topRight: Radius.circular(20))),
-          padding: EdgeInsets.symmetric(horizontal: 0),
-          child: Column(children: [
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Icon(Icons.arrow_back_outlined)),
-                Container(
-                  height: 30,
-                  width: 300,
-                  margin: EdgeInsets.only(top: 10),
-                  padding: EdgeInsets.only(
-                    left: 20,
-                  ),
-                  child: TextField(
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Where are you going?'),
-                  ),
-                )
-              ],
-            ),
-            Container(
-              height: 500,
+        margin: EdgeInsets.only(top: 40),
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+        padding: EdgeInsets.symmetric(horizontal: 0),
+        child: Column(children: [
+          SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Icon(Icons.arrow_back_outlined)),
+              Container(
+                height: 30,
+                width: 300,
+                margin: EdgeInsets.only(top: 10),
+                padding: EdgeInsets.only(
+                  left: 20,
+                ),
+                child: TextField(
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Where are you going?'),
+                ),
+              )
+            ],
+          ),
+          Expanded(
+            child: Container(
               width: MediaQuery.of(context).size.width,
               child: ListView.builder(
                 itemCount: title.length,
@@ -143,15 +142,19 @@ class _SearchInboxState extends State<SearchInbox> {
                       child: Row(
                         children: [
                           Container(
-                            height: 50,
-                            width: 50,
                             margin: EdgeInsets.only(right: 10),
                             decoration: BoxDecoration(
                                 color: Colors.grey.withOpacity(0.3),
                                 borderRadius: BorderRadius.circular(10)),
                             child: Icon(Icons.location_city_rounded),
                           ),
-                          Text("${title[index]['title']},Thành phố Thủ Đức")
+                          Expanded(
+                            child: Text(
+                              "${title[index]['title']},Thành phố Thủ Đức",
+                              softWrap: true,
+                              maxLines: 3,
+                            ),
+                          )
                         ],
                       ),
                     ),
@@ -159,8 +162,8 @@ class _SearchInboxState extends State<SearchInbox> {
                 },
               ),
             ),
-          ]),
-        ),
+          ),
+        ]),
       ),
     ));
   }

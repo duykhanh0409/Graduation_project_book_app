@@ -20,7 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
   var passInval = false;
   var isLoading = false;
   var loginError;
-
+  
   Future<dynamic> signIn() async {
     FormData formData = FormData.fromMap({
       'username': userController.text,
@@ -91,6 +91,13 @@ class _LoginScreenState extends State<LoginScreen> {
         signIn();
       }
     });
+  }
+  @override
+  void initState() {
+    userController.text='khanhNguyen';
+    passController.text='123456';
+    // TODO: implement initState
+    super.initState();
   }
 
   @override

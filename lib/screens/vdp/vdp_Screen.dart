@@ -9,10 +9,14 @@ import 'package:graduation_project_book_app/widgets/google_Map_item.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class VdpScreens extends StatefulWidget {
+  final List<VdpItem> listSave;
+  final User user;
   final VdpItem item;
   const VdpScreens({
     Key key,
     this.item,
+    this.user,
+    this.listSave,
   }) : super(key: key);
   @override
   _VdpScreensState createState() => _VdpScreensState();
@@ -66,8 +70,9 @@ class _VdpScreensState extends State<VdpScreens> {
               child: Column(
                 children: [
                   VdpImageCarousel(
-                    item: item,
-                  ),
+                      listSave: widget.listSave,
+                      item: widget.item,
+                      user: widget.user),
                   Container(
                     height: 2,
                     color: Color(0xFFE85B00),

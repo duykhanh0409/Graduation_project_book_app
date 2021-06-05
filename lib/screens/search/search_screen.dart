@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_geocoder/geocoder.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:graduation_project_book_app/logic/tech_mobile.dart';
+import 'package:graduation_project_book_app/models/vdp.dart';
 import 'package:graduation_project_book_app/screens/fliter/fliter_screen.dart';
 import 'package:graduation_project_book_app/screens/search/item_card.dart';
 import 'package:graduation_project_book_app/screens/vdp/vdp_Screen.dart';
@@ -31,7 +32,18 @@ class _SearchScreenState extends State<SearchScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       getCurrentLocation(context);
+      getListSave(context);
     });
+  }
+
+  void getListSave(BuildContext context) {
+    print('chay lai khong');
+    var techMobile = TechMobile.of(context);
+    var result;
+    // if (techMobile.listSaveUser?.length ?? 0 == 0) {
+    result = techMobile.getListSave();
+    // }
+    if (result != null) {}
   }
 
   @override
@@ -68,8 +80,7 @@ class _SearchScreenState extends State<SearchScreen> {
       //statusBarBrightness: Brightness.dark,
     ));
     var techMobile = TechMobile.of(context);
-    print("${techMobile?.vdpListOld.length} gia trị của t.any-------------");
-    print("${techMobile?.vdpList.length} thằng khứa này------------------");
+
     return techMobile.vdpList == null
         ? Scaffold(
             body: Center(
@@ -233,26 +244,66 @@ class _SearchScreenState extends State<SearchScreen> {
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(25),
                                   topRight: Radius.circular(25))),
-                          child: techMobile.vdpList?.length!=0?ListView.builder(
-                            controller: scrollController,
-                            itemCount: techMobile.vdpList?.length ?? 0,
-                            itemBuilder: (BuildContext context, int index) {
-                              //print(state.vdpItem[index].type);
-                              return FlatButton(
-                                onPressed: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return VdpScreens(
-                                      item: techMobile?.vdpList[index] ?? {},
-                                    );
-                                  }));
-                                },
-                                child: ItemCard(
-                                  item: techMobile?.vdpList[index] ?? {},
-                                ),
-                              );
-                            },
-                          ):Text('Không có phòng ở khu vực này'),
+                          child: techMobile.vdpList?.length != 0
+                              ? Container(
+                                  height: MediaQuery.of(context).size.height,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            EdgeInsets.symmetric(vertical: 10),
+                                        child: Container(
+                                          height: 3,
+                                          width: 30,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                      Text(
+                                          '${techMobile?.vdpList?.length} places to stay',
+                                          style: TextStyle(fontSize: 15)),
+                                      Expanded(
+                                        child: ListView.builder(
+                                          controller: scrollController,
+                                          padding: EdgeInsets.zero,
+                                          itemCount:
+                                              techMobile.vdpList?.length ?? 0,
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            //print(state.vdpItem[index].type);
+                                            return FlatButton(
+                                              onPressed: () async {
+                                                List<VdpItem> s =
+                                                    await techMobile
+                                                        .getListSave();
+                                                Navigator.push(context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) {
+                                                  return VdpScreens(
+                                                    listSave: s,
+                                                    user: techMobile.user,
+                                                    item: techMobile
+                                                            ?.vdpList[index] ??
+                                                        {},
+                                                  );
+                                                }));
+                                              },
+                                              child: ItemCard(
+                                                item: techMobile
+                                                        ?.vdpList[index] ??
+                                                    {},
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              : Text('Không có phòng ở khu vực này'),
                         );
                       },
                     ))

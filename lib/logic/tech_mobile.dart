@@ -68,7 +68,7 @@ class TechMobileState extends State<TechMobile> {
   }
 
   Future<List<VdpItem>> getListSave() async {
-    var result = await Api.getListSave(user.id);
+    List<VdpItem> result = await Api.getListSave(user.id);
     if (result != null)
       setState(() {
         listSaveUser = result;
