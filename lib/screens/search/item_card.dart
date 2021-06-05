@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project_book_app/models/vdp.dart';
-import 'package:graduation_project_book_app/screens/vdp/vdp_Screen.dart';
+import 'package:intl/intl.dart';
 
 class ItemCard extends StatefulWidget {
   final VdpItem item;
@@ -135,8 +135,8 @@ class _ItemCardState extends State<ItemCard> {
                 ),
                 RichText(
                   text: TextSpan(
-                    text: widget.item.price
-                        .room, //dùng number fortmat mà chưa dùng đc '${NumberFormat('#,###').format(widget.listingPrice)}'
+                    text:
+                        '${NumberFormat('#,###').format(int.parse(widget.item.price.room))}', //dùng number fortmat mà chưa dùng đc '${NumberFormat('#,###').format(widget.listingPrice)}'
                     style: TextStyle(
                         fontWeight: FontWeight.bold, color: Colors.black),
                     children: <TextSpan>[

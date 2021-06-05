@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/image.dart' as Images;
 import 'package:graduation_project_book_app/logic/api.dart';
 import 'package:graduation_project_book_app/models/user.dart';
 import 'package:graduation_project_book_app/models/vdp.dart';
+import 'package:intl/intl.dart';
 
 class VdpDetail extends StatefulWidget {
   final VdpItem item;
@@ -43,7 +44,7 @@ class _VdpDetailState extends State<VdpDetail> {
               Column(
                 children: [
                   Text(
-                    '${widget.item.price.room} VDN',
+                    "${NumberFormat('#,###').format(int.parse(widget.item.price.room))} VDN",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                   Text('Per month')

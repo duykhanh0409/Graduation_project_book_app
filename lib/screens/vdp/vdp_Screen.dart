@@ -23,6 +23,7 @@ class _VdpScreensState extends State<VdpScreens> {
   TextEditingController sdtController = new TextEditingController();
   TextEditingController dateController = new TextEditingController();
   User userHost;
+  DateTime _date = DateTime.now();
   Future<User> getData() async {
     var result = await Api.getUser(widget.item.host?.hostId);
     if (result != null)
@@ -30,6 +31,19 @@ class _VdpScreensState extends State<VdpScreens> {
         userHost = result;
       });
     //return result;
+  }
+
+  Future<Null> _selecteDate(BuildContext context) async {
+    DateTime _datePicker = await showDatePicker(
+        context: context,
+        initialDate: _date,
+        firstDate: DateTime(1947),
+        lastDate: DateTime(2030));
+    if (_datePicker != null && _datePicker != _date) {
+      setState(() {
+        _date = _datePicker;
+      });
+    }
   }
 
   @override
@@ -172,13 +186,14 @@ class _VdpScreensState extends State<VdpScreens> {
   void _modalBottomSheetMenu() {
     showModalBottomSheet(
         context: context,
+        isScrollControlled: true,
         builder: (builder) {
           return new Container(
-            height: 850.0,
+            height: 450.0,
             color: Colors.transparent, //could change this to Color(0xFF737373),
             //so you don't have to change MaterialApp canvasColor
             child: new Container(
-                padding: EdgeInsets.only(top: 20),
+                padding: EdgeInsets.only(top: 40),
                 decoration: new BoxDecoration(
                     color: Colors.white,
                     borderRadius: new BorderRadius.only(
@@ -239,8 +254,14 @@ class _VdpScreensState extends State<VdpScreens> {
                                 width: 1,
                                 color: Colors.black.withOpacity(0.6))),
                         child: TextField(
+                          readOnly: true,
+                          onTap: () {
+                            setState(() {
+                              _selecteDate(context);
+                            });
+                          },
                           decoration: InputDecoration(
-                              hintText: "Ngày hẹn",
+                              hintText: _date.toString(),
                               hintStyle: TextStyle(color: Colors.grey),
                               border: InputBorder.none),
                         ),

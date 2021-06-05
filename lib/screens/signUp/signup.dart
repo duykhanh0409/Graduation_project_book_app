@@ -21,9 +21,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController userController = new TextEditingController();
   TextEditingController passController = new TextEditingController();
   TextEditingController rePassController = new TextEditingController();
-  var userInval = true;
-  var passInval = true;
-  var rePassInval = true;
+  var userInval = false;
+  var passInval = false;
+  var rePassInval = false;
   var isLoading = false;
 
   File _image;
@@ -58,7 +58,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void onClickButtonSignUp() {
-    if (userController.text.length > 6) {
+    if (userController.text.length < 6) {
       setState(() {
         userInval = true;
       });
@@ -67,7 +67,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         userInval = false;
       });
     }
-    if (passController.text.length > 6) {
+    if (passController.text.length < 6) {
       setState(() {
         passInval = true;
       });
@@ -78,11 +78,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
     if (rePassController.text.contains(passController.text)) {
       setState(() {
-        rePassInval = true;
+        rePassInval = false;
       });
     } else {
       setState(() {
-        rePassInval = false;
+        rePassInval = true;
       });
     }
     if (userInval && passInval && rePassInval) {
@@ -101,291 +101,338 @@ class _SignUpScreenState extends State<SignUpScreen> {
         "${userInval} ${passInval} ${rePassInval}  giá trị -------------------  ");
     print(
         "${userController.text} ${passController.text} ${rePassController.text}  giá trị ---------------- ");
-    return isLoading
-        ? Scaffold(
-            body: Container(
-              color: Colors.white,
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
-            ),
-          )
-        : Scaffold(
-            //ishow check ở đây
-            body: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-                Colors.orange[900],
-                Colors.orange[800],
-                Colors.orange[400]
-              ])),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(
-                    height: 30,
+    return Scaffold(
+      //ishow check ở đây
+      body: Stack(
+        children: [
+          Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(begin: Alignment.topCenter, colors: [
+              Colors.orange[900],
+              Colors.orange[800],
+              Colors.orange[400]
+            ])),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(
+                  height: 30,
+                ),
+                Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "Sign Up",
+                        style: TextStyle(color: Colors.white, fontSize: 40),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Welcome Back",
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: EdgeInsets.all(20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          "Sign Up",
-                          style: TextStyle(color: Colors.white, fontSize: 40),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "Welcome Back",
-                          style: TextStyle(color: Colors.white, fontSize: 18),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(60),
-                              topRight: Radius.circular(60))),
-                      child: SingleChildScrollView(
-                        child: Padding(
-                          padding: EdgeInsets.all(30),
-                          child: Column(
-                            children: <Widget>[
-                              Stack(
-                                children: [
-                                  CircleAvatar(
-                                    radius: 30.0,
-                                    backgroundImage: _image == null
-                                        ? AssetImage('assets/images/khanh.jpg')
-                                        : FileImage(_image),
-                                    backgroundColor: Colors.transparent,
+                ),
+                SizedBox(height: 20),
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            topRight: Radius.circular(30))),
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: EdgeInsets.all(30),
+                        child: Column(
+                          children: <Widget>[
+                            Stack(
+                              children: [
+                                CircleAvatar(
+                                  radius: 30.0,
+                                  backgroundImage: _image == null
+                                      ? AssetImage('assets/images/khanh.jpg')
+                                      : FileImage(_image),
+                                  backgroundColor: Colors.transparent,
+                                ),
+                                Positioned(
+                                  top: 40,
+                                  left: 40,
+                                  child: InkWell(
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                            context: context,
+                                            builder: (builder) => Container(
+                                                  height: 100,
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  margin: EdgeInsets.symmetric(
+                                                    horizontal: 20,
+                                                    vertical: 20,
+                                                  ),
+                                                  child: Column(
+                                                    children: [
+                                                      Text(
+                                                        "Choose profile photo",
+                                                        style: TextStyle(
+                                                            fontSize: 20),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 20,
+                                                      ),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          FlatButton.icon(
+                                                              onPressed: () {
+                                                                takePhoto(
+                                                                    ImageSource
+                                                                        .camera);
+                                                              },
+                                                              icon: Icon(
+                                                                  Icons.camera),
+                                                              label: Text(
+                                                                  'Camera')),
+                                                          FlatButton.icon(
+                                                              onPressed: () {
+                                                                takePhoto(
+                                                                    ImageSource
+                                                                        .gallery);
+                                                              },
+                                                              icon: Icon(
+                                                                  Icons.image),
+                                                              label: Text(
+                                                                  'Gallery'))
+                                                        ],
+                                                      )
+                                                    ],
+                                                  ),
+                                                ));
+                                      },
+                                      child: Icon(Icons.camera_alt,
+                                          color: Colors.teal, size: 20)),
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.white,
+                                        blurRadius: 20,
+                                        offset: Offset(0, 10))
+                                  ]),
+                              child: Column(
+                                children: <Widget>[
+                                  Container(
+                                    padding: EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color: Color.fromRGBO(
+                                                  225, 95, 27, .3),
+                                              blurRadius: 20,
+                                              offset: Offset(0, 10)),
+                                        ],
+                                        border: Border.all(
+                                            width: 1, color: Colors.grey[200])),
+                                    child: TextField(
+                                      controller: userController,
+                                      decoration: InputDecoration(
+                                        hintText: "UserName",
+                                        hintStyle:
+                                            TextStyle(color: Colors.grey),
+                                        border: InputBorder.none,
+                                      ),
+                                    ),
                                   ),
-                                  Positioned(
-                                    top: 40,
-                                    left: 40,
-                                    child: InkWell(
-                                        onTap: () {
-                                          showModalBottomSheet(
-                                              context: context,
-                                              builder: (builder) => Container(
-                                                    height: 100,
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                            .size
-                                                            .width,
-                                                    margin:
-                                                        EdgeInsets.symmetric(
-                                                      horizontal: 20,
-                                                      vertical: 20,
-                                                    ),
-                                                    child: Column(
-                                                      children: [
-                                                        Text(
-                                                          "Choose profile photo",
-                                                          style: TextStyle(
-                                                              fontSize: 20),
-                                                        ),
-                                                        SizedBox(
-                                                          height: 20,
-                                                        ),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            FlatButton.icon(
-                                                                onPressed: () {
-                                                                  takePhoto(
-                                                                      ImageSource
-                                                                          .camera);
-                                                                },
-                                                                icon: Icon(Icons
-                                                                    .camera),
-                                                                label: Text(
-                                                                    'Camera')),
-                                                            FlatButton.icon(
-                                                                onPressed: () {
-                                                                  takePhoto(
-                                                                      ImageSource
-                                                                          .gallery);
-                                                                },
-                                                                icon: Icon(Icons
-                                                                    .image),
-                                                                label: Text(
-                                                                    'Gallery'))
-                                                          ],
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ));
-                                        },
-                                        child: Icon(Icons.camera_alt,
-                                            color: Colors.teal, size: 20)),
-                                  )
+                                  userInval
+                                      ? Text(
+                                          'UserName must be more than 6 characters',
+                                          style: TextStyle(
+                                              color: Colors.red, fontSize: 10))
+                                      : SizedBox(
+                                          height: 0,
+                                        ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color: Color.fromRGBO(
+                                                  225, 95, 27, .3),
+                                              blurRadius: 20,
+                                              offset: Offset(0, 10)),
+                                        ],
+                                        border: Border.all(
+                                            width: 1, color: Colors.grey[200])),
+                                    child: TextField(
+                                      controller: passController,
+                                      decoration: InputDecoration(
+                                        hintText: "Password",
+                                        hintStyle:
+                                            TextStyle(color: Colors.grey),
+                                        border: InputBorder.none,
+                                      ),
+                                    ),
+                                  ),
+                                  passInval
+                                      ? Text(
+                                          'Password must be more than 6 characters',
+                                          style: TextStyle(
+                                              color: Colors.red, fontSize: 10))
+                                      : SizedBox(
+                                          height: 0,
+                                        ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color: Color.fromRGBO(
+                                                  225, 95, 27, .3),
+                                              blurRadius: 20,
+                                              offset: Offset(0, 10)),
+                                        ],
+                                        border: Border.all(
+                                            width: 1, color: Colors.grey[200])),
+                                    child: TextField(
+                                      controller: rePassController,
+                                      decoration: InputDecoration(
+                                          hintText: "RePassword",
+                                          hintStyle:
+                                              TextStyle(color: Colors.grey),
+                                          border: InputBorder.none),
+                                    ),
+                                  ),
                                 ],
                               ),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              Container(
+                            ),
+                            rePassInval
+                                ? Text('rePassword does not match password',
+                                    style: TextStyle(
+                                        color: Colors.red, fontSize: 10))
+                                : SizedBox(
+                                    height: 0,
+                                  ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            // Text(
+                            //   "Forgot Password?",
+                            //   style: TextStyle(color: Colors.grey),
+                            // ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            InkWell(
+                              onTap: onClickButtonSignUp,
+                              child: Container(
+                                height: 50,
+                                margin: EdgeInsets.symmetric(horizontal: 50),
                                 decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Colors.white,
-                                          blurRadius: 20,
-                                          offset: Offset(0, 10))
-                                    ]),
-                                child: Column(
-                                  children: <Widget>[
-                                    Container(
-                                      padding: EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                          border: Border(
-                                              bottom: BorderSide(
-                                                  color: Colors.grey[200]))),
-                                      child: TextField(
-                                        controller: userController,
-                                        decoration: InputDecoration(
-                                          hintText: "UserName",
-                                          hintStyle:
-                                              TextStyle(color: Colors.grey),
-                                          border: InputBorder.none,
-                                          errorText: userInval
-                                              ? null
-                                              : 'vui long nhap dung email',
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                          border: Border(
-                                              bottom: BorderSide(
-                                                  color: Colors.grey[200]))),
-                                      child: TextField(
-                                        controller: passController,
-                                        decoration: InputDecoration(
-                                          hintText: "Password",
-                                          hintStyle:
-                                              TextStyle(color: Colors.grey),
-                                          border: InputBorder.none,
-                                          errorText: passInval
-                                              ? null
-                                              : 'password khong hop le',
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                          border: Border(
-                                              bottom: BorderSide(
-                                                  color: Colors.grey[200]))),
-                                      child: TextField(
-                                        controller: rePassController,
-                                        decoration: InputDecoration(
-                                            hintText: "RePassword",
-                                            hintStyle:
-                                                TextStyle(color: Colors.grey),
-                                            border: InputBorder.none),
-                                      ),
-                                    ),
-                                  ],
+                                    borderRadius: BorderRadius.circular(50),
+                                    color: Colors.orange[900]),
+                                child: Center(
+                                  child: Text(
+                                    "Sign Up",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
                               ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              // Text(
-                              //   "Forgot Password?",
-                              //   style: TextStyle(color: Colors.grey),
-                              // ),
-                              SizedBox(
-                                height: 40,
-                              ),
-                              InkWell(
-                                onTap: onClickButtonSignUp,
-                                child: Container(
+                            ),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            Text(
+                              "Continue with social media",
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            Row(
+                              children: <Widget>[
+                                Expanded(
+                                    child: Container(
                                   height: 50,
-                                  margin: EdgeInsets.symmetric(horizontal: 50),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(50),
-                                      color: Colors.orange[900]),
+                                      color: Colors.blue),
                                   child: Center(
                                     child: Text(
-                                      "Sign Up",
+                                      "Facebook",
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ),
+                                )),
+                                SizedBox(
+                                  width: 30,
                                 ),
-                              ),
-                              SizedBox(
-                                height: 30,
-                              ),
-                              Text(
-                                "Continue with social media",
-                                style: TextStyle(color: Colors.grey),
-                              ),
-                              SizedBox(
-                                height: 30,
-                              ),
-                              Row(
-                                children: <Widget>[
-                                  Expanded(
-                                      child: Container(
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(50),
-                                        color: Colors.blue),
-                                    child: Center(
-                                      child: Text(
-                                        "Facebook",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold),
-                                      ),
+                                Expanded(
+                                    child: Container(
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                      color: Colors.black),
+                                  child: Center(
+                                    child: Text(
+                                      "Email",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
                                     ),
-                                  )),
-                                  SizedBox(
-                                    width: 30,
                                   ),
-                                  Expanded(
-                                      child: Container(
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(50),
-                                        color: Colors.black),
-                                    child: Center(
-                                      child: Text(
-                                        "Email",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  )),
-                                ],
-                              )
-                            ],
-                          ),
+                                )),
+                              ],
+                            )
+                          ],
                         ),
                       ),
                     ),
-                  )
-                ],
-              ),
+                  ),
+                )
+              ],
             ),
-          );
+          ),
+          isLoading
+              ? Positioned(
+                  child: Container(
+                    color: Colors.grey.withOpacity(0.7),
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
+                )
+              : Container(),
+        ],
+      ),
+    );
   }
 }
