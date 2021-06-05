@@ -175,7 +175,7 @@ class _VdpDetailState extends State<VdpDetail> {
               DescriptionDetail(
                 icon: Icons.wifi,
                 title: 'Wifi',
-                total: widget.item.facility.wife != Null ? 'Yes' : 'No',
+                total: widget.item.facility.wife == "1" ? 'Yes' : 'No',
                 subtitle: 'Cung cấp Wifi cho người thuê sử dụng',
               ),
               DescriptionDetail(

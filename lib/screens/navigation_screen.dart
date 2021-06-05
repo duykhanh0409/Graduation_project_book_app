@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:graduation_project_book_app/logic/tech_mobile.dart';
 import 'package:graduation_project_book_app/screens/fliter/fliter_screen.dart';
 import 'package:graduation_project_book_app/screens/home/home_screen.dart';
 import 'package:graduation_project_book_app/screens/profile/profile_screen.dart';
@@ -25,6 +26,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var techMobile = TechMobile.of(context);
     return Scaffold(
       bottomNavigationBar: CustomBottomNavigationBar(
         iconList: [
@@ -34,6 +36,10 @@ class _NavigationScreenState extends State<NavigationScreen> {
           Icons.settings,
         ],
         onChange: (val) {
+          print(val);
+          if (val == 1) {
+            techMobile.fliterRoomLocation('Hiệp Phú');
+          }
           setState(() {
             _selectedItem = val;
           });
