@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project_book_app/bloc/searchBloc/search_bloc.dart';
 import 'package:graduation_project_book_app/bloc/searchBloc/search_state.dart';
 import 'package:graduation_project_book_app/logic/tech_mobile.dart';
+import 'package:graduation_project_book_app/models/user.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -134,9 +135,53 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ProfileInfor(
                         infor: 'Terms of Service',
                         icon: Icons.list_alt_outlined),
-                    ProfileInfor(
-                      infor: 'Log out',
-                      icon: null,
+                    FlatButton(
+                      onPressed: () => showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          title: const Text('AlertDialog Title'),
+                          content: const Text('AlertDialog description'),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, 'Cancel'),
+                              child: const Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                techMobile.user = User(
+                                    username: null,
+                                    password: null,
+                                    avatar: null,
+                                    favouriteList: null,
+                                    email: null,
+                                    id: null,
+                                    phoneNumber: null);
+                                Navigator.of(context).pushNamed('/login');
+                              },
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        ),
+                      ),
+                      padding: EdgeInsets.zero,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 14),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Log Out',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle1
+                                  .copyWith(
+                                      //fontWeight: FontWeight.w300,
+                                      color: Colors.black,
+                                      fontSize: 19),
+                            ),
+                          ],
+                        ),
+                      ),
                     )
                   ],
                 ),

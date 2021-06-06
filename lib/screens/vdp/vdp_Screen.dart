@@ -60,7 +60,7 @@ class _VdpScreensState extends State<VdpScreens> {
   @override
   Widget build(BuildContext context) {
     var item = widget.item;
-
+    print(_date);
     return Scaffold(
       body: Stack(
         children: [
@@ -225,6 +225,7 @@ class _VdpScreensState extends State<VdpScreens> {
                                 width: 1,
                                 color: Colors.black.withOpacity(0.6))),
                         child: TextField(
+                          controller: userNameController,
                           decoration: InputDecoration(
                               hintText: "Full Name",
                               hintStyle: TextStyle(color: Colors.grey),
@@ -242,6 +243,7 @@ class _VdpScreensState extends State<VdpScreens> {
                                 width: 1,
                                 color: Colors.black.withOpacity(0.6))),
                         child: TextField(
+                          controller: sdtController,
                           decoration: InputDecoration(
                               hintText: "Email or Phone number",
                               hintStyle: TextStyle(color: Colors.grey),
