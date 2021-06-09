@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation_project_book_app/logic/tech_mobile.dart';
+import 'package:graduation_project_book_app/screens/host/create_new_room.dart';
 
 class PriceRoom extends StatefulWidget {
   @override
@@ -10,12 +12,31 @@ class _PriceRoomState extends State<PriceRoom> {
   TextEditingController priceRoomController = new TextEditingController();
   TextEditingController eletricController = new TextEditingController();
   TextEditingController waterController = new TextEditingController();
+  void fillFacility() {
+    var techMobile = TechMobile.of(context);
+    if (priceRoomController.text != "") {
+      techMobile.priceRoom = priceRoomController.text;
+    }
+    if (eletricController.text != "") {
+      techMobile.priceElec = eletricController.text;
+    }
+    if (waterController.text != "") {
+      techMobile.priceWater = waterController.text;
+    }
+
+    if (priceRoomController.text != "" &&
+        eletricController.text != "" &&
+        waterController.text != "") {
+      techMobile.isShowPrice = true;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          padding:EdgeInsets.symmetric(horizontal: 20,vertical: 30),
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
           child: Column(
             children: [
               Text(
@@ -43,7 +64,12 @@ class _PriceRoomState extends State<PriceRoom> {
       ),
 
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          fillFacility();
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return CreateNewRoom();
+          }));
+        },
         tooltip: 'Continues',
         child: Icon(
           Icons.arrow_right_alt_sharp,

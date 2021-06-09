@@ -41,7 +41,17 @@ class TechMobileState extends State<TechMobile> {
   var wifi = '';
   var bathRoom = '';
   var bedRoom = '';
-
+  var listPhoto;
+  var priceRoom='';
+  var priceElec='';
+  var priceWater='';
+  //status
+  bool isShowRoomType = false;
+  bool isShowAddress = false;
+  bool isShowPhoto = false;
+  bool isShowDescription = false;
+  bool isShowFacility = false;
+  bool isShowPrice = false;
   //fliter room follow location
   void fliterRoomLocation(String location) {
     var newList = vdpListOld

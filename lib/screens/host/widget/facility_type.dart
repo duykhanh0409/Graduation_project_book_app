@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project_book_app/logic/tech_mobile.dart';
+import 'package:graduation_project_book_app/screens/host/create_new_room.dart';
 
 class FacilityType extends StatefulWidget {
   @override
@@ -30,6 +31,16 @@ class _FacilityTypeState extends State<FacilityType> {
     }
     if (ischeckWifi = true) {
       techMobile.wifi = '1';
+    }
+    if (ischeckWifi = false) {
+      techMobile.wifi = '0';
+    }
+    if (gacController.text != "" &&
+        squareController.text != "" &&
+        bathController.text != "" &&
+        bedController.text != "" &&
+        ischeckWifi != null) {
+      techMobile.isShowFacility = true;
     }
   }
 
@@ -74,7 +85,12 @@ class _FacilityTypeState extends State<FacilityType> {
         ),
       )),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          fillFacility();
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return CreateNewRoom();
+          }));
+        },
         tooltip: 'Continues',
         child: Icon(
           Icons.arrow_right_alt_sharp,

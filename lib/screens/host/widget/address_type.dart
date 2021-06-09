@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project_book_app/logic/tech_mobile.dart';
+import 'package:graduation_project_book_app/screens/host/create_new_room.dart';
 
 class AddressType extends StatefulWidget {
   @override
@@ -26,9 +27,15 @@ class _AddressTypeState extends State<AddressType> {
     if (cityController.text != "") {
       techMobile.address = cityController.text;
     }
-    // if(streetController.text!=""&& wardController.text != ""&& districtController.text != ""&& cityController.text != ""){
-    //   Navigator.pop(context);
-    // }
+    if (streetController.text != "" &&
+        wardController.text != "" &&
+        districtController.text != "" &&
+        cityController.text != "") {
+      techMobile.isShowAddress = true;
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return CreateNewRoom();
+      }));
+    }
   }
 
   @override

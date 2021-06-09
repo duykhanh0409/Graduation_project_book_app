@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:graduation_project_book_app/logic/tech_mobile.dart';
 import 'package:graduation_project_book_app/screens/host/widget/address_type.dart';
 import 'package:graduation_project_book_app/screens/host/widget/description.dart';
 import 'package:graduation_project_book_app/screens/host/widget/facility_type.dart';
@@ -16,13 +17,28 @@ class CreateNewRoom extends StatefulWidget {
 
 class _CreateNewRoomState extends State<CreateNewRoom> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print('chayj laij di');
+  }
+
+  @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.blueGrey,
       systemNavigationBarIconBrightness: Brightness.dark,
       statusBarIconBrightness: Brightness.dark,
-      //statusBarBrightness: Brightness.dark,
+      //s
+      //tatusBarBrightness: Brightness.dark,
     ));
+
+    var techMobile = TechMobile.of(context);
+    print(techMobile.typeRoom);
+    print(techMobile.address);
+    print(techMobile.wifi);
+    print(techMobile?.listPhoto?.length);
+
     return Scaffold(
       body: Column(
         children: [
@@ -60,25 +76,31 @@ class _CreateNewRoomState extends State<CreateNewRoom> {
             height: 20,
           ),
           PropertyRoom(
-            propertyName: 'Property Room Type',
-            navigatorName: RoomType(),
-          ),
-          PropertyRoom(propertyName: 'Address', navigatorName: AddressType()),
+              propertyName: 'Property Room Type',
+              navigatorName: RoomType(),
+              isVisible: techMobile.isShowRoomType),
           PropertyRoom(
-            propertyName: 'Photos',
-            navigatorName: PhotoRoom(),
-          ),
+              propertyName: 'Address',
+              navigatorName: AddressType(),
+              isVisible: techMobile.isShowAddress),
+          PropertyRoom(
+              propertyName: 'Photos',
+              navigatorName: PhotoRoom(),
+              isVisible: techMobile.isShowPhoto),
           PropertyRoom(
             propertyName: 'Description',
             navigatorName: DescriptionRoom(),
+            isVisible: techMobile.isShowDescription,
           ),
           PropertyRoom(
             propertyName: 'Facility',
             navigatorName: FacilityType(),
+            isVisible: techMobile.isShowFacility,
           ),
           PropertyRoom(
             propertyName: 'Price',
             navigatorName: PriceRoom(),
+            isVisible: techMobile.isShowPrice,
           ),
         ],
       ),
@@ -89,10 +111,12 @@ class _CreateNewRoomState extends State<CreateNewRoom> {
 class PropertyRoom extends StatelessWidget {
   final String propertyName;
   final Widget navigatorName;
+  final bool isVisible;
   const PropertyRoom({
     Key key,
     this.propertyName,
     this.navigatorName,
+    this.isVisible,
   }) : super(key: key);
 
   @override
@@ -114,12 +138,14 @@ class PropertyRoom extends StatelessWidget {
                 bottom:
                     BorderSide(width: 1, color: Colors.grey.withOpacity(0.4)))),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               propertyName,
               style: Theme.of(context).textTheme.subtitle2.copyWith(
                   fontSize: 16, fontWeight: FontWeight.bold, letterSpacing: 1),
-            )
+            ),
+            isVisible == true ? Icon(Icons.check_circle_outline) : Container()
           ],
         ),
       ),

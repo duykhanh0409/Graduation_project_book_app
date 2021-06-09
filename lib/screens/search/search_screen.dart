@@ -31,7 +31,7 @@ class _SearchScreenState extends State<SearchScreen> {
     // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      getCurrentLocation(context);
+      //getCurrentLocation(context);
       getListSave(context);
     });
   }
@@ -52,25 +52,25 @@ class _SearchScreenState extends State<SearchScreen> {
     super.dispose();
   }
 
-  Future<List<Coordinates>> getCurrentLocation(BuildContext context) async {
-    var data = TechMobile.of(context)?.vdpList;
-    for (var i = 0; i < data.length; i++) {
-      var itemTitle = data[i]?.address;
-      final query =
-          '${itemTitle?.addressNumber},${itemTitle?.ward},quận ${itemTitle?.district},${itemTitle?.city}' ??
-              '111 Lê văn Chí,Linh Chiểu,Thủ Đức, thành phố hồ chí minh';
-      print('${query}------------địa chỉ--------');
-      var addresses = await Geocoder.local.findAddressesFromQuery(query);
-      print(addresses[0].coordinates.latitude);
-      coordinators.add(addresses[0].coordinates);
+  // Future<List<Coordinates>> getCurrentLocation(BuildContext context) async {
+  //   var data = TechMobile.of(context)?.vdpList;
+  //   for (var i = 0; i < data.length; i++) {
+  //     var itemTitle = data[i]?.address;
+  //     final query =
+  //         '${itemTitle?.addressNumber},${itemTitle?.ward},quận ${itemTitle?.district},${itemTitle?.city}' ??
+  //             '111 Lê văn Chí,Linh Chiểu,Thủ Đức, thành phố hồ chí minh';
+  //     print('${query}------------địa chỉ--------');
+  //     var addresses = await Geocoder.local.findAddressesFromQuery(query);
+  //     print(addresses[0].coordinates.latitude);
+  //     coordinators.add(addresses[0].coordinates);
 
-      print(coordinators[i].latitude.toString() + "---------lat");
-      print(coordinators[i].longitude.toString() + "---------long");
-    }
-    print(coordinators.length);
+  //     print(coordinators[i].latitude.toString() + "---------lat");
+  //     print(coordinators[i].longitude.toString() + "---------long");
+  //   }
+  //   print(coordinators.length);
 
-    return coordinators;
-  }
+  //   return coordinators;
+  // }
 
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(

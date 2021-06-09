@@ -1,6 +1,10 @@
 import 'dart:developer';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:graduation_project_book_app/logic/tech_mobile.dart';
+import 'package:graduation_project_book_app/screens/host/create_new_room.dart';
 import 'dart:async';
 
 import 'package:multi_image_picker2/multi_image_picker2.dart';
@@ -68,6 +72,24 @@ class _PhotoRoomState extends State<PhotoRoom> {
     });
   }
 
+  List<MultipartFile> fileImages = new List<MultipartFile>();
+  _saveImage() async {
+    var techMobile = TechMobile.of(context);
+    if (images != null) {
+      for (var i = 0; i < images.length; i++) {
+        ByteData byteData = await images[i].getByteData();
+        List<int> imageData = byteData.buffer.asInt8List();
+        MultipartFile multipartFile = MultipartFile.fromBytes(
+          imageData,
+          filename: images[i].name,
+        );
+        fileImages.add(multipartFile);
+      }
+      techMobile.isShowPhoto = true;
+      techMobile.listPhoto = fileImages;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     print(images.length > 0 ? images[1] : images);
@@ -89,7 +111,12 @@ class _PhotoRoomState extends State<PhotoRoom> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () async {
+            await _saveImage();
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return CreateNewRoom();
+            }));
+          },
           tooltip: 'Continues',
           child: Icon(
             Icons.arrow_right_alt_sharp,

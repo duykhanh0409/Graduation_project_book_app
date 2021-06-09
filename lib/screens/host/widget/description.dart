@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project_book_app/logic/tech_mobile.dart';
+import 'package:graduation_project_book_app/screens/host/create_new_room.dart';
 
 class DescriptionRoom extends StatefulWidget {
   @override
@@ -13,6 +14,7 @@ class _DescriptionRoomState extends State<DescriptionRoom> {
     var techMobile = TechMobile.of(context);
     if (descriptionController.text != "") {
       techMobile.descriptionRoom = descriptionController.text;
+      techMobile.isShowDescription = true;
     }
   }
 
@@ -66,6 +68,9 @@ class _DescriptionRoomState extends State<DescriptionRoom> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           filterDescription(context);
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return CreateNewRoom();
+          }));
         },
         tooltip: 'Continues',
         child: Icon(

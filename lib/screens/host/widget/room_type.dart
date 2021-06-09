@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project_book_app/logic/tech_mobile.dart';
+import 'package:graduation_project_book_app/screens/host/create_new_room.dart';
 
 class RoomType extends StatefulWidget {
   @override
@@ -12,13 +13,15 @@ class RoomType extends StatefulWidget {
 class _RoomTypeState extends State<RoomType> {
   var selectedRoom;
 
-  void selectedTypeRoom(BuildContext context) {
+  void selectedTypeRoom() {
     var techMobile = TechMobile.of(context);
     if (selectedRoom == 1) {
       techMobile.typeRoom = "Entire Room";
+      techMobile.isShowRoomType = true;
     }
     if (selectedRoom == 2) {
       techMobile.typeRoom = "Room";
+      techMobile.isShowRoomType = true;
     }
   }
 
@@ -114,8 +117,10 @@ class _RoomTypeState extends State<RoomType> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          selectedTypeRoom(context);
-          Navigator.pop(context);
+          selectedTypeRoom();
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return CreateNewRoom();
+          }));
         },
         tooltip: 'Continues',
         child: Icon(
