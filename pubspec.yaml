@@ -43,6 +43,7 @@ dependencies:
   image: ^3.0.2
   intl: ^0.17.0
   multi_image_picker2: ^5.0.0
+  email_auth: ^0.0.1+4
 
 dev_dependencies:
   flutter_test:

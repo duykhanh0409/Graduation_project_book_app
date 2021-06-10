@@ -5,7 +5,6 @@ import 'package:graduation_project_book_app/logic/api.dart';
 import 'package:graduation_project_book_app/logic/tech_mobile.dart';
 import 'package:graduation_project_book_app/models/user.dart';
 import 'package:graduation_project_book_app/models/vdp.dart';
-import 'package:graduation_project_book_app/styles/colors.dart';
 
 class VdpImageCarousel extends StatefulWidget {
   final List<VdpItem> listSave;

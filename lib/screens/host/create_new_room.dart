@@ -8,6 +8,7 @@ import 'package:graduation_project_book_app/screens/host/widget/facility_type.da
 import 'package:graduation_project_book_app/screens/host/widget/photo_room.dart';
 import 'package:graduation_project_book_app/screens/host/widget/price.dart';
 import 'package:graduation_project_book_app/screens/host/widget/room_type.dart';
+import 'package:graduation_project_book_app/screens/host/widget/verify_host.dart';
 import 'package:graduation_project_book_app/screens/vdp/vdp_detail.dart';
 
 class CreateNewRoom extends StatefulWidget {
@@ -103,6 +104,18 @@ class _CreateNewRoomState extends State<CreateNewRoom> {
             isVisible: techMobile.isShowPrice,
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return VerifyHost();
+          }));
+        },
+        tooltip: 'Continues',
+        child: Icon(
+          Icons.arrow_right_alt_sharp,
+          size: 30,
+        ),
       ),
     );
   }
