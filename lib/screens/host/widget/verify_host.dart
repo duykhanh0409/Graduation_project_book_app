@@ -1,7 +1,9 @@
 import 'package:email_auth/email_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation_project_book_app/logic/tech_mobile.dart';
 import 'package:graduation_project_book_app/screens/host/create_new_room.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class VerifyHost extends StatefulWidget {
   const VerifyHost({Key key}) : super(key: key);
@@ -13,6 +15,7 @@ class VerifyHost extends StatefulWidget {
 class _VerifyHostState extends State<VerifyHost> {
   final TextEditingController _emailcontroller = TextEditingController();
   final TextEditingController _otpcontroller = TextEditingController();
+  final TextEditingController _phonecontroller = TextEditingController();
   void sendOtp() async {
     EmailAuth.sessionName = "Company Name";
     bool result =
@@ -23,14 +26,36 @@ class _VerifyHostState extends State<VerifyHost> {
   }
 
   void verify() {
+    var techMobile = TechMobile.of(context);
+    if (_phonecontroller.text != null) {
+      techMobile.phoneHost = _phonecontroller.text;
+    }
+    if (_emailcontroller.text != null) {
+      techMobile.emailHost = _emailcontroller.text;
+    }
     var res = EmailAuth.validate(
         receiverMail: _emailcontroller.value.text,
         userOTP: _otpcontroller.value.text);
+
     if (res) {
+      techMobile.verifyHost=true;
       Navigator.push(context, MaterialPageRoute(builder: (context) {
         return CreateNewRoom();
       }));
     } else {
+      final snackBar = SnackBar(
+          padding: EdgeInsets.all(10),
+          content: Text(
+            "OTP invalid",
+            style: TextStyle(color: Colors.red, fontSize: 15),
+          ),
+          action: SnackBarAction(
+            label: 'Undo',
+            onPressed: () {
+              // Some code to undo the change.
+            },
+          ));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
       print('invalid');
     }
   }
@@ -38,53 +63,75 @@ class _VerifyHostState extends State<VerifyHost> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Center(
-          child: Text(
-            'Verify Host',
-            style: TextStyle(
-                fontSize: 24, color: Colors.black, fontWeight: FontWeight.bold),
-          ),
-        ),
-      ),
-      body: SafeArea(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 30,
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Container(
+              height: 120,
+              color: Colors.blueGrey,
+              alignment: Alignment.center,
+              child: Text(
+                "Verify Host Information",
+                style: Theme.of(context).textTheme.subtitle1.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 28),
               ),
-              TextField(
-                controller: _emailcontroller,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                    hintText: 'Enter email',
-                    labelText: 'Email',
-                    suffixIcon: TextButton(
-                      child: Text("Send OTP"),
-                      onPressed: () {
-                        sendOtp();
-                      },
-                    )),
+            ),
+            
+            Container(
+              padding: EdgeInsets.fromLTRB(20, 130, 20, 0),
+              child: Column(
+                children: [
+                  // SvgPicture.asset(
+                  //   "assets/images/login.svg",
+                  //   height: 300,
+                  // ),
+
+                  Image.asset(
+                    'assets/images/splash_bg.png',
+                    height: 200,
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  TextField(
+                      controller: _phonecontroller,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                          hintText: 'Phone Number', labelText: 'Phone')),
+                  TextField(
+                    controller: _emailcontroller,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                        hintText: 'Enter email',
+                        labelText: 'Email',
+                        suffixIcon: TextButton(
+                          child: Text("Send OTP"),
+                          onPressed: () {
+                            sendOtp();
+                          },
+                        )),
+                  ),
+                  TextField(
+                      controller: _otpcontroller,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                          hintText: 'Enter OTP', labelText: 'OTP')),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  FlatButton(
+                    onPressed: () {
+                      verify();
+                    },
+                    child: Text('Verify OTP'),
+                    color: Colors.orange[900],
+                  )
+                ],
               ),
-              TextField(
-                  controller: _otpcontroller,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration:
-                      InputDecoration(hintText: 'Enter OTP', labelText: 'OTP')),
-              SizedBox(
-                height: 30,
-              ),
-              FlatButton(
-                onPressed: () {
-                  verify();
-                },
-                child: Text('Verify OTP'),
-                color: Colors.orange[900],
-              )
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

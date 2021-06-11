@@ -103,6 +103,16 @@ class _CreateNewRoomState extends State<CreateNewRoom> {
             navigatorName: PriceRoom(),
             isVisible: techMobile.isShowPrice,
           ),
+          SizedBox(
+            height: 30,
+          ),
+          FlatButton(
+            onPressed: () {
+             
+            },
+            child: Text('POST ROOM'),
+            color: Colors.orange[900],
+          )
         ],
       ),
       floatingActionButton: FloatingActionButton(
