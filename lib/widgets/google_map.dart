@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_geocoder/geocoder.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:graduation_project_book_app/logic/tech_mobile.dart';
+import 'package:graduation_project_book_app/models/vdp.dart';
 
 class MapScreen extends StatefulWidget {
-  List<Coordinates> item;
+  final List<VdpItem> item;
   LatLng location;
   MapScreen({this.item, this.location});
 
@@ -15,41 +17,31 @@ class MapScreen extends StatefulWidget {
 class _MapScreenState extends State<MapScreen> {
   LatLng _latLng = LatLng(10.849690, 106.773916);
 
-  GoogleMapController _googleMapController;
-
-  // List<LatLng> locations;
   List<Marker> _markers = [];
   List<Coordinates> coordinators = [];
   @override
   void dispose() {
-    // _googleMapController.dispose();
     super.dispose();
   }
 
-  Marker gramercyMarker = Marker(
-    markerId: MarkerId('gramercy'),
-    position: LatLng(10.845694, 106.758342),
-    infoWindow: InfoWindow(title: 'Gramercy Tavern'),
-    icon: BitmapDescriptor.defaultMarkerWithHue(
-      BitmapDescriptor.hueViolet,
-    ),
-  );
+  Future<List<Coordinates>> getCurrentLocation() async {
+    var data = widget.item;
+    for (var i = 0; i < data.length; i++) {
+      var itemTitle = data[i]?.address;
+      final query =
+          '${itemTitle?.addressNumber},${itemTitle?.ward},quận ${itemTitle?.district},${itemTitle?.city}' ??
+              '111 Lê văn Chí,Linh Chiểu,Thủ Đức, thành phố hồ chí minh';
+      print('${query}------------địa chỉ--------');
+      var addresses = await Geocoder.local.findAddressesFromQuery(query);
+      print(addresses[0].coordinates.latitude);
+      setState(() {
+        coordinators.add(addresses[0].coordinates);
+      });
+    }
+    print(coordinators.length);
 
-  Marker bernardinMarker = Marker(
-    markerId: MarkerId('bernardin'),
-    position: LatLng(10.85059, 106.77188),
-    infoWindow: InfoWindow(title: 'Le Bernardin'),
-    icon: BitmapDescriptor.defaultMarkerWithHue(
-      BitmapDescriptor.hueViolet,
-    ),
-  );
-  Marker blueMarker = Marker(
-      markerId: MarkerId('bluehill'),
-      position: LatLng(10.846664613902156, 106.77834887046636),
-      infoWindow: InfoWindow(title: 'Blue Hill'),
-      icon: BitmapDescriptor.defaultMarkerWithHue(
-        BitmapDescriptor.hueViolet,
-      ));
+    return coordinators;
+  }
 
   @override
   void initState() {
@@ -59,18 +51,23 @@ class _MapScreenState extends State<MapScreen> {
     setState(() {
       _latLng = widget.location;
     });
+    // Future.delayed(Duration(seconds: 2), () {
+    //   getCurrentLocation();
+    // }); // chạy đây trước
   }
 
   List<LatLng> test = [LatLng(10.85110, 106.77512)];
-  void _onMapCreated(GoogleMapController controller) {
-    for (var i = 0; i < test.length; i++) {
+  void _onMapCreated(GoogleMapController controller) async {
+    await getCurrentLocation();
+    for (var i = 0; i < coordinators.length; i++) {
       print('chay hàm này kh -----------------------------');
       setState(() {
         _markers.add(
           Marker(
-            markerId: MarkerId('${i.toString()}'),
-            position: test[i],
-            infoWindow: InfoWindow(title: 'khanh'),
+            markerId: MarkerId('${coordinators[i].latitude}'),
+            position:
+                LatLng(coordinators[i].latitude, coordinators[i].longitude),
+            infoWindow: InfoWindow(title: 'Room ${i.toString()}'),
             icon: BitmapDescriptor.defaultMarkerWithHue(
               BitmapDescriptor.hueViolet,
             ),
@@ -86,11 +83,12 @@ class _MapScreenState extends State<MapScreen> {
     print("${coordinators.length} nay quan trong");
     return Scaffold(
       body: GoogleMap(
+        //4 vô đây
         myLocationButtonEnabled: true,
         zoomControlsEnabled: true,
         initialCameraPosition: CameraPosition(target: _latLng, zoom: 13.5),
-        onMapCreated: _onMapCreated,
-        markers: Set.from(_markers),
+        onMapCreated: _onMapCreated, //2 vô đây
+        markers: Set.from(_markers), //3 vô đây
       ),
     );
   }

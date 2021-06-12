@@ -52,8 +52,6 @@ class _SearchScreenState extends State<SearchScreen> {
     super.dispose();
   }
 
- 
-
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
@@ -80,7 +78,8 @@ class _SearchScreenState extends State<SearchScreen> {
                       width: MediaQuery.of(context).size.width,
                       color: Colors.blue,
                       child: MapScreen(
-                          item: coordinators, location: widget.searchLocation)),
+                          item: techMobile.vdpList,
+                          location: widget.searchLocation)),
                 ),
                 Container(
                   // cái mới làm nè

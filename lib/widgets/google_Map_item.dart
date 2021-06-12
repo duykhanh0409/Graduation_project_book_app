@@ -25,7 +25,7 @@ class _MapItemState extends State<MapItem> {
   //Coordinates coordinator;
   @override
   void dispose() {
-   // _googleMapController.dispose();
+    // _googleMapController.dispose();
     super.dispose();
   }
 
@@ -48,10 +48,9 @@ class _MapItemState extends State<MapItem> {
   void initState() {
     // TODO: implement initState
     super.initState();
-      getCurrentLocation();
+    getCurrentLocation();
   }
 
-  
   @override
   Widget build(BuildContext context) {
     //print('${myLocation?.latitude}---------------giá trị');
@@ -61,34 +60,16 @@ class _MapItemState extends State<MapItem> {
       zoomControlsEnabled: true,
       initialCameraPosition: _cameraPosition,
       onMapCreated: (controler) => _googleMapController = controler,
-      // polylines: {
-      //   Polyline(
-      //       polylineId: PolylineId('Overview'),
-      //       color: Colors.red,
-      //       width: 5,
-      //       points: [
-      //         LatLng(coordinators?.latitude, coordinators?.longitude),
-      //         LatLng(myLocation?.latitude, myLocation?.longitude)
-      //       ])
-      // },
       markers: {
         Marker(
           markerId: MarkerId('khanh'),
-          position: LatLng(
-              coordinators?.latitude ?? 10.8773221, coordinators?.longitude),
+          position: LatLng(coordinators?.latitude ?? 10.846751,
+              coordinators?.longitude ?? 106.782023),
           infoWindow: InfoWindow(title: 'khanh'),
           icon: BitmapDescriptor.defaultMarkerWithHue(
             BitmapDescriptor.hueViolet,
           ),
         ),
-        //  Marker(
-        //   markerId: MarkerId('My Location'),
-        //   position: LatLng(myLocation?.latitude??10.8773221, myLocation?.longitude),
-        //   infoWindow: InfoWindow(title: 'khanh'),
-        //   icon: BitmapDescriptor.defaultMarkerWithHue(
-        //     BitmapDescriptor.hueViolet,
-        //   ),
-        // ),
       },
     ));
   }

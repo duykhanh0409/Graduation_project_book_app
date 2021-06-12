@@ -106,27 +106,29 @@ class _CreateNewRoomState extends State<CreateNewRoom> {
           SizedBox(
             height: 30,
           ),
-          FlatButton(
-            onPressed: () {
-             
-            },
-            child: Text('POST ROOM'),
-            color: Colors.orange[900],
-          )
+          techMobile.verifyHost
+              ? FlatButton(
+                  onPressed: () {},
+                  child: Text('POST ROOM'),
+                  color: Colors.orange[900],
+                )
+              : Container()
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return VerifyHost();
-          }));
-        },
-        tooltip: 'Continues',
-        child: Icon(
-          Icons.arrow_right_alt_sharp,
-          size: 30,
-        ),
-      ),
+      floatingActionButton: techMobile.verifyHost
+          ? null
+          : FloatingActionButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return VerifyHost();
+                }));
+              },
+              tooltip: 'Continues',
+              child: Icon(
+                Icons.arrow_right_alt_sharp,
+                size: 30,
+              ),
+            ),
     );
   }
 }
