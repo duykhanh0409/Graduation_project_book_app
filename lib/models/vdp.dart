@@ -34,8 +34,10 @@ class VdpItem {
   String id;
 
   factory VdpItem.fromJson(Map<String, dynamic> json) => VdpItem(
-        reviews:
-            List<Review>.from(json["reviews"].map((x) => Review.fromJson(x))),
+        reviews: json["reviews"] == null
+            ? null
+            : List<Review>.from(
+                json["reviews"]?.map((x) => Review.fromJson(x))),
         image: Image.fromJson(json["image"]),
         address: Address.fromJson(json["address"]),
         type: json["type"],

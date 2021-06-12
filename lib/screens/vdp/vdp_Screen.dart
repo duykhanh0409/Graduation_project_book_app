@@ -29,7 +29,7 @@ class _VdpScreensState extends State<VdpScreens> {
   User userHost;
   DateTime _date = DateTime.now();
   Future<User> getData() async {
-    var result = await Api.getUser(widget.item.host?.hostId);
+    var result = await Api.getUser(widget.item?.host?.hostId);
     if (result != null)
       setState(() {
         userHost = result;
@@ -60,6 +60,7 @@ class _VdpScreensState extends State<VdpScreens> {
   @override
   Widget build(BuildContext context) {
     var item = widget.item;
+    print("${userHost.username} có phai null kh");
     print(_date);
     return Scaffold(
       body: Stack(

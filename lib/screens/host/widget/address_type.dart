@@ -13,19 +13,25 @@ class _AddressTypeState extends State<AddressType> {
   TextEditingController wardController = new TextEditingController();
   TextEditingController districtController = new TextEditingController();
   TextEditingController cityController = new TextEditingController();
+  @override
+  void initState() {
+    // TODO: implement initState
+    cityController.text='Hồ Chí Mính';
+    super.initState();
+  }
   void fillInforLocation(BuildContext context) {
     var techMobile = TechMobile.of(context);
     if (streetController.text != "") {
       techMobile.address = streetController.text;
     }
     if (wardController.text != "") {
-      techMobile.address = wardController.text;
+      techMobile.ward = wardController.text;
     }
     if (districtController.text != "") {
-      techMobile.address = districtController.text;
+      techMobile.district = districtController.text;
     }
     if (cityController.text != "") {
-      techMobile.address = cityController.text;
+      techMobile.city = cityController.text;
     }
     if (streetController.text != "" &&
         wardController.text != "" &&
@@ -37,7 +43,7 @@ class _AddressTypeState extends State<AddressType> {
       }));
     }
   }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

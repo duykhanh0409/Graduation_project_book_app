@@ -64,10 +64,10 @@ class _MapScreenState extends State<MapScreen> {
       setState(() {
         _markers.add(
           Marker(
-            markerId: MarkerId('${coordinators[i].latitude}'),
+            markerId: MarkerId('${i.toString()}'),
             position:
                 LatLng(coordinators[i].latitude, coordinators[i].longitude),
-            infoWindow: InfoWindow(title: 'Room ${i.toString()}'),
+            infoWindow: InfoWindow(title: 'Room ${i + 1}'),
             icon: BitmapDescriptor.defaultMarkerWithHue(
               BitmapDescriptor.hueViolet,
             ),
