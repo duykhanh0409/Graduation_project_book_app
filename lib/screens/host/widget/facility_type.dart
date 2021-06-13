@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:graduation_project_book_app/logic/tech_mobile.dart';
 import 'package:graduation_project_book_app/screens/host/create_new_room.dart';
 
@@ -46,44 +47,86 @@ class _FacilityTypeState extends State<FacilityType> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.blueGrey,
+      systemNavigationBarIconBrightness: Brightness.dark,
+      statusBarIconBrightness: Brightness.dark,
+      //s
+      //tatusBarBrightness: Brightness.dark,
+    ));
     return Scaffold(
-      body: SafeArea(
-          child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-        child: Column(
-          children: [
-            Text('What facility will you offer?'),
-            Text(
-                "You'll be able to add more amenities after you publish your listing"),
-            Text('Facilitys'),
-            CheckboxListTile(
-              title: const Text('Wifi'),
-              value: ischeckWifi,
-              onChanged: (bool value) {
-                setState(() {
-                  ischeckWifi = value;
-                });
-              },
-            ),
-            FacilityField(
-              facilityField: "Square",
-              controler: squareController,
-            ),
-            FacilityField(
-              facilityField: "Gac",
-              controler: gacController,
-            ),
-            FacilityField(
-              facilityField: "Bath Room",
-              controler: bathController,
-            ),
-            FacilityField(
-              facilityField: "bedRoom",
-              controler: bedController,
-            )
-          ],
-        ),
-      )),
+      body: Stack(children: [
+        SingleChildScrollView(
+          child: Column(
+            children: [
+              Stack(
+                children: [
+                  Container(
+                    height: 150,
+                    color: Colors.blueGrey,
+                    alignment: Alignment.center,
+                    child: Text(
+                      "What facility will you offer",
+                      style: Theme.of(context).textTheme.subtitle1.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22),
+                    ),
+                  ),
+                  
+                ],
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 30),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      SizedBox(height: 10,),
+                      Text(
+                        'Facilitys',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      CheckboxListTile(
+                        title: const Text(
+                          'Wifi',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        value: ischeckWifi,
+                        onChanged: (bool value) {
+                          setState(() {
+                            ischeckWifi = value;
+                          });
+                        },
+                      ),
+                      FacilityField(
+                        facilityField: "Square",
+                        controler: squareController,
+                        description: 'Diện tích phòng',
+                      ),
+                      FacilityField(
+                        facilityField: "Gac",
+                        controler: gacController,
+                        description: 'Số lượng gác (Nếu có)',
+                      ),
+                      FacilityField(
+                        facilityField: "Bath Room",
+                        controler: bathController,
+                        description: 'Số lượng phòng tắm (Nếu có)',
+                      ),
+                      FacilityField(
+                        facilityField: "bedRoom",
+                        controler: bedController,
+                        description: 'Số lượng phòng ngủ (Nếu có)',
+                      )
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        )
+      ]),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           fillFacility();
@@ -103,8 +146,10 @@ class _FacilityTypeState extends State<FacilityType> {
 
 class FacilityField extends StatelessWidget {
   final String facilityField;
+  final String description;
   final TextEditingController controler;
-  const FacilityField({Key key, this.facilityField, this.controler})
+  const FacilityField(
+      {Key key, this.facilityField, this.controler, this.description})
       : super(key: key);
 
   @override
@@ -118,19 +163,17 @@ class FacilityField extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            facilityField,
-            style: Theme.of(context)
-                .textTheme
-                .subtitle1
-                .copyWith(fontWeight: FontWeight.w400, fontSize: 20),
-          ),
+          Text(description),
           Container(
-              height: 30,
+              height: 50,
+              padding: EdgeInsets.all(5),
               child: TextField(
                 controller: controler,
                 keyboardType: TextInputType.number,
                 style: TextStyle(fontSize: 20),
+                decoration: InputDecoration(
+                  hintText: facilityField,
+                ),
               ))
         ],
       ),

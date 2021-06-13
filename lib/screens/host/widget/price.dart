@@ -34,34 +34,46 @@ class _PriceRoomState extends State<PriceRoom> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+      body: Stack(children: [
+        SingleChildScrollView(
           child: Column(
             children: [
-              Text(
-                'Description Price Room',
-                style: TextStyle(
-                    fontSize: 24,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),
+              Stack(
+                children: [
+                  Container(
+                    height: 150,
+                    color: Colors.blueGrey,
+                    alignment: Alignment.center,
+                    child: Text(
+                      "Description Price Room",
+                      style: Theme.of(context).textTheme.subtitle1.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 30,
               ),
               PriceFiled(
                 priceField: "Price Room",
                 controler: priceRoomController,
+                description: 'Giá phòng (Tháng/VNĐ)',
               ),
               PriceFiled(
-                priceField: "electricity",
-                controler: eletricController,
-              ),
+                  priceField: "electricity",
+                  controler: eletricController,
+                  description: 'Giá điện (Tháng/VNĐ)'),
               PriceFiled(
-                priceField: "Water",
-                controler: waterController,
-              ),
+                  priceField: "Water",
+                  controler: waterController,
+                  description: 'Giá nước (Tháng/VNĐ)'),
             ],
           ),
-        ),
-      ),
+        )
+      ]),
 
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -82,14 +94,15 @@ class _PriceRoomState extends State<PriceRoom> {
 
 class PriceFiled extends StatelessWidget {
   final String priceField;
+  final String description;
   final TextEditingController controler;
-  const PriceFiled({Key key, this.priceField, this.controler})
+  const PriceFiled({Key key, this.priceField, this.controler, this.description})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 10),
+      padding: EdgeInsets.only(top: 10, left: 15, right: 15),
       decoration: BoxDecoration(
           border: Border(
               bottom:
@@ -97,19 +110,17 @@ class PriceFiled extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            priceField,
-            style: Theme.of(context)
-                .textTheme
-                .subtitle1
-                .copyWith(fontWeight: FontWeight.w400, fontSize: 20),
-          ),
+          Text(description),
           Container(
-              height: 30,
+              height: 50,
+              padding: EdgeInsets.all(5),
               child: TextField(
                 controller: controler,
                 keyboardType: TextInputType.number,
                 style: TextStyle(fontSize: 20),
+                decoration: InputDecoration(
+                  hintText: priceField,
+                ),
               ))
         ],
       ),

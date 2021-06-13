@@ -57,6 +57,7 @@ class _PhotoRoomState extends State<PhotoRoom> {
           useDetailsView: false,
           selectCircleStrokeColor: "#000000",
         ),
+        
       );
     } on Exception catch (e) {
       print(e.toString());
@@ -77,7 +78,9 @@ class _PhotoRoomState extends State<PhotoRoom> {
     var techMobile = TechMobile.of(context);
     if (images != null) {
       for (var i = 0; i < images.length; i++) {
-        ByteData byteData = await images[i].getByteData();
+        int maxWidth=MediaQuery.of(context).size.width.round();
+        int maxHight=(MediaQuery.of(context).size.height/2).round();
+        ByteData byteData = await images[i].getThumbByteData(maxWidth, maxHight,quality: 80);
         List<int> imageData = byteData.buffer.asInt8List();
         MultipartFile multipartFile = MultipartFile.fromBytes(
           imageData,

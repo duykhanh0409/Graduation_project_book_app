@@ -64,7 +64,7 @@ class _VdpDetailState extends State<VdpDetail> {
             ),
           ),
           Text(
-            widget.item.discription,
+            widget.item.description,
             textAlign: TextAlign.start,
             style: TextStyle(color: Color(0xFF6D4E4E)),
           ),
@@ -109,7 +109,7 @@ class _VdpDetailState extends State<VdpDetail> {
                               fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                         Text(
-                          '${widget.item.reviews.length} reviews',
+                          '1 reviews',
                           style: TextStyle(color: Color(0xFF464E46)),
                         )
                       ],
@@ -195,7 +195,7 @@ class _VdpDetailState extends State<VdpDetail> {
               DescriptionDetail(
                 icon: Icons.account_balance,
                 title: 'mezzanine',
-                total: widget.item.facility.bath != Null
+                total: widget.item?.facility?.bath != Null
                     ? '${widget.item.facility.mezzanine}'
                     : 'N/A',
                 subtitle: 'Gác cho người thuê',
@@ -228,7 +228,8 @@ class _VdpDetailState extends State<VdpDetail> {
                   Text('Giá Điện:',
                       style:
                           TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-                  Text('${widget.item.price.electricity} VND/kg')
+                  Text(
+                      '${NumberFormat('#,###').format(int.parse(widget.item.price.electricity))} VND/kg')
                 ],
               ),
               SizedBox(
@@ -240,7 +241,8 @@ class _VdpDetailState extends State<VdpDetail> {
                   Text('Giá Nước:',
                       style:
                           TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-                  Text('${widget.item.price.water} VND/M3')
+                  Text(
+                      '${NumberFormat('#,###').format(int.parse(widget.item.price.water))} VND/M3')
                 ],
               )
             ],

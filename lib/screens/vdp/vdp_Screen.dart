@@ -60,7 +60,7 @@ class _VdpScreensState extends State<VdpScreens> {
   @override
   Widget build(BuildContext context) {
     var item = widget.item;
-    print("${userHost.username} có phai null kh");
+    print("${userHost?.username} có phai null kh");
     print(_date);
     return Scaffold(
       body: Stack(

@@ -101,84 +101,86 @@ class _CreateNewRoomState extends State<CreateNewRoom> {
     return Scaffold(
       body: Stack(
         children: [
-          Column(
-            children: [
-              Stack(
-                children: [
-                  Container(
-                    height: 150,
-                    color: Colors.blueGrey,
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Let's set up your listing",
-                      style: Theme.of(context).textTheme.subtitle1.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 28),
-                    ),
-                  ),
-                  Positioned(
-                    top: 30,
-                    left: 30,
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Icon(
-                        Icons.arrow_back,
-                        size: 20,
-                        color: Colors.white,
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                Stack(
+                  children: [
+                    Container(
+                      height: 150,
+                      color: Colors.blueGrey,
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Let's set up your listing",
+                        style: Theme.of(context).textTheme.subtitle1.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 28),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              PropertyRoom(
-                  propertyName: 'Property Room Type',
-                  navigatorName: RoomType(),
-                  isVisible: techMobile.isShowRoomType),
-              PropertyRoom(
-                  propertyName: 'Address',
-                  navigatorName: AddressType(),
-                  isVisible: techMobile.isShowAddress),
-              PropertyRoom(
-                  propertyName: 'Photos',
-                  navigatorName: PhotoRoom(),
-                  isVisible: techMobile.isShowPhoto),
-              PropertyRoom(
-                propertyName: 'Description',
-                navigatorName: DescriptionRoom(),
-                isVisible: techMobile.isShowDescription,
-              ),
-              PropertyRoom(
-                propertyName: 'Facility',
-                navigatorName: FacilityType(),
-                isVisible: techMobile.isShowFacility,
-              ),
-              PropertyRoom(
-                propertyName: 'Price',
-                navigatorName: PriceRoom(),
-                isVisible: techMobile.isShowPrice,
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              techMobile.verifyHost
-                  ? FlatButton(
-                      onPressed: () {
-                        setState(() {
-                          isLoading = true;
-                        });
-                        _uploadRoom();
-                      },
-                      child: Text('POST ROOM'),
-                      color: Colors.orange[900],
-                    )
-                  : Container()
-            ],
+                    Positioned(
+                      top: 30,
+                      left: 30,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Icon(
+                          Icons.arrow_back,
+                          size: 20,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                PropertyRoom(
+                    propertyName: 'Property Room Type',
+                    navigatorName: RoomType(),
+                    isVisible: techMobile.isShowRoomType),
+                PropertyRoom(
+                    propertyName: 'Address',
+                    navigatorName: AddressType(),
+                    isVisible: techMobile.isShowAddress),
+                PropertyRoom(
+                    propertyName: 'Photos', //ghi thêm hướng dẫn
+                    navigatorName: PhotoRoom(),
+                    isVisible: techMobile.isShowPhoto),
+                PropertyRoom(
+                  propertyName: 'Description',
+                  navigatorName: DescriptionRoom(),
+                  isVisible: techMobile.isShowDescription,
+                ),
+                PropertyRoom(
+                  propertyName: 'Facility', //ghi thêm hướng dẫn
+                  navigatorName: FacilityType(),
+                  isVisible: techMobile.isShowFacility,
+                ),
+                PropertyRoom(
+                  propertyName: 'Price', //ghi thêm hướng dẫn
+                  navigatorName: PriceRoom(),
+                  isVisible: techMobile.isShowPrice,
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                techMobile.verifyHost
+                    ? FlatButton(
+                        onPressed: () {
+                          setState(() {
+                            isLoading = true;
+                          });
+                          _uploadRoom();
+                        },
+                        child: Text('POST ROOM'),
+                        color: Colors.orange[900],
+                      )
+                    : Container()
+              ],
+            ),
           ),
           isLoading
               ? Positioned(

@@ -18,7 +18,7 @@ class VdpItem {
     this.type,
     this.host,
     this.facility,
-    this.discription,
+    this.description,
     this.price,
     this.id,
   });
@@ -29,7 +29,7 @@ class VdpItem {
   String type;
   Host host;
   Facility facility;
-  String discription;
+  String description;
   Price price;
   String id;
 
@@ -43,7 +43,7 @@ class VdpItem {
         type: json["type"],
         host: Host.fromJson(json["host"]),
         facility: Facility.fromJson(json["facility"]),
-        discription: json["discription"],
+        description: json["description"],
         price: Price.fromJson(json["price"]),
         id: json["id"],
       );
@@ -55,7 +55,7 @@ class VdpItem {
         "type": type,
         "host": host.toJson(),
         "facility": facility.toJson(),
-        "discription": discription,
+        "description": description,
         "price": price.toJson(),
         "id": id,
       };

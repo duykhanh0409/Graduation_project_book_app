@@ -28,63 +28,71 @@ class _RoomTypeState extends State<RoomType> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: 30,
-          ),
+      body: Stack(children: [
+        SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Stack(
+                children: [
+                  Container(
+                    height: 150,
+                    color: Colors.blueGrey,
+                    alignment: Alignment.center,
+                    child: Text(
+                      "What Type your room",
+                      style: Theme.of(context).textTheme.subtitle1.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22),
+                    ),
+                  ),
+                ],
+              ),
               SizedBox(
                 height: 50,
               ),
-              Text(
-                'What Type your room',
-                style: TextStyle(
-                    fontSize: 24,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              RichText(
-                text: TextSpan(
-                  text: 'ENTIRE ROOM:',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      fontSize: 18),
-                  children: <TextSpan>[
-                    TextSpan(
-                        text: ' this is kind of a mini apartment',
-                        style: TextStyle(
-                            color: Colors.black.withOpacity(0.8),
-                            fontWeight: FontWeight.normal,
-                            fontSize: 18)),
-                  ],
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: RichText(
+                  text: TextSpan(
+                    text: 'ENTIRE ROOM:',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        fontSize: 18),
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: ' this is kind of a mini apartment',
+                          style: TextStyle(
+                              color: Colors.black.withOpacity(0.8),
+                              fontWeight: FontWeight.normal,
+                              fontSize: 18)),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(
                 height: 20,
               ),
-              RichText(
-                text: TextSpan(
-                  text: 'ROOM:',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      fontSize: 18),
-                  children: <TextSpan>[
-                    TextSpan(
-                        text:
-                            'This is a single room, smaller than a mini apartment ',
-                        style: TextStyle(
-                            color: Colors.black.withOpacity(0.8),
-                            fontWeight: FontWeight.normal,
-                            fontSize: 18)),
-                  ],
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: RichText(
+                  text: TextSpan(
+                    text: 'ROOM:',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        fontSize: 18),
+                    children: <TextSpan>[
+                      TextSpan(
+                          text:
+                              'This is a single room, smaller than a mini apartment ',
+                          style: TextStyle(
+                              color: Colors.black.withOpacity(0.8),
+                              fontWeight: FontWeight.normal,
+                              fontSize: 18)),
+                    ],
+                  ),
                 ),
               ),
               RadioListTile(
@@ -110,11 +118,11 @@ class _RoomTypeState extends State<RoomType> {
                 },
                 activeColor: Colors.grey,
                 selected: false,
-              ),
+              )
             ],
           ),
-        ),
-      ),
+        )
+      ]),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           selectedTypeRoom();
