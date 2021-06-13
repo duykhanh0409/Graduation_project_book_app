@@ -25,6 +25,18 @@ class _VerifyHostState extends State<VerifyHost> {
     }
   }
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      var techMobile = TechMobile.of(context);
+      techMobile?.user?.email != null
+          ? _emailcontroller.text = techMobile?.user?.email
+          : _emailcontroller.text = '';
+    });
+  }
+
   void verify() {
     var techMobile = TechMobile.of(context);
     if (_phonecontroller.text != null) {
@@ -38,7 +50,7 @@ class _VerifyHostState extends State<VerifyHost> {
         userOTP: _otpcontroller.value.text);
 
     if (res) {
-      techMobile.verifyHost=true;
+      techMobile.verifyHost = true;
       Navigator.push(context, MaterialPageRoute(builder: (context) {
         return CreateNewRoom();
       }));
@@ -62,6 +74,7 @@ class _VerifyHostState extends State<VerifyHost> {
 
   @override
   Widget build(BuildContext context) {
+    var techMobile = TechMobile.of(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -78,16 +91,10 @@ class _VerifyHostState extends State<VerifyHost> {
                     fontSize: 28),
               ),
             ),
-            
             Container(
               padding: EdgeInsets.fromLTRB(20, 130, 20, 0),
               child: Column(
                 children: [
-                  // SvgPicture.asset(
-                  //   "assets/images/login.svg",
-                  //   height: 300,
-                  // ),
-
                   Image.asset(
                     'assets/images/splash_bg.png',
                     height: 200,
@@ -95,11 +102,13 @@ class _VerifyHostState extends State<VerifyHost> {
                   SizedBox(
                     height: 30,
                   ),
-                  TextField(
-                      controller: _phonecontroller,
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
-                          hintText: 'Phone Number', labelText: 'Phone')),
+                  techMobile?.user?.phoneNumber != null
+                      ? Container()
+                      : TextField(
+                          controller: _phonecontroller,
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: InputDecoration(
+                              hintText: 'Phone Number', labelText: 'Phone')),
                   TextField(
                     controller: _emailcontroller,
                     keyboardType: TextInputType.emailAddress,
