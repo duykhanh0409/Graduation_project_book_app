@@ -54,7 +54,7 @@ class Api {
       for (int i = 0; i < json.decode(response.body).length; i++) {
         list.add(VdpItem.fromJson(json.decode(response.body)[i]));
       }
-     // print(list[0].type);
+      // print(list[0].type);
       return list;
     } else {
       throw Exception(" Lỗi khi load Json");

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation_project_book_app/logic/tech_mobile.dart';
 
 class HostScreen extends StatefulWidget {
   @override
@@ -61,7 +62,7 @@ class _HostScreenState extends State<HostScreen> {
                         top: BorderSide(
                             width: 1, color: Colors.grey.withOpacity(0.4)))),
                 child: Container(
-                  width: MediaQuery.of(context).size.width/1.2,
+                  width: MediaQuery.of(context).size.width / 1.2,
                   height: 50,
                   child: ElevatedButton(
                       child: Text('Get Started',
@@ -79,7 +80,11 @@ class _HostScreenState extends State<HostScreen> {
                                   RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(7),
                                       side: BorderSide(color: Colors.red)))),
-                      onPressed: () => Navigator.of(context).pushNamed('/hostRoomListing')),
+                      onPressed: () {
+                        var techMobile = TechMobile.of(context);
+                        techMobile.filterHostRoom();
+                        Navigator.of(context).pushNamed('/hostRoomListing');
+                      }),
                 )),
           )
         ],

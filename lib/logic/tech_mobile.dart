@@ -56,6 +56,10 @@ class TechMobileState extends State<TechMobile> {
   bool verifyHost = false;
   var emailHost = "";
   var phoneHost = "";
+  //listHostRoom follow user
+
+  List<VdpItem> listHostRoom = [];
+
   //fliter room follow location
   void fliterRoomLocation(String location) {
     var newList = vdpListOld
@@ -88,6 +92,16 @@ class TechMobileState extends State<TechMobile> {
         listSaveUser = result;
       });
     return result;
+  }
+
+  //fliter host room follow user
+  void filterHostRoom() {
+    var newList = vdpListOld
+        .where((element) => element.host.hostId.contains(user.id))
+        .toList();
+    setState(() {
+      listHostRoom = newList;
+    });
   }
 
   //fliter trên listOld
