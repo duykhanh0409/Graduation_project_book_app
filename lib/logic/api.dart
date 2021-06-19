@@ -76,4 +76,21 @@ class Api {
       print('remove list save ');
     }
   }
+
+  static addCommentRoom(String productID, String userID, String comment) async {
+    String url = 'https://book-room-app.herokuapp.com/product/api/comment';
+    final response = await http.post(Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          'productId': productID,
+          'userId': userID,
+          'comment': comment
+        }));
+    if (response.statusCode == 201) {
+      Api.fetchData();
+      print('remove list save ');
+    }
+  }
 }

@@ -26,7 +26,9 @@ class _VdpScreensState extends State<VdpScreens> {
   TextEditingController userNameController = new TextEditingController();
   TextEditingController sdtController = new TextEditingController();
   TextEditingController dateController = new TextEditingController();
+  TextEditingController commentController = new TextEditingController();
   User userHost;
+  bool test = false;
   DateTime _date = DateTime.now();
   Future<User> getData() async {
     var result = await Api.getUser(widget.item?.host?.hostId);
@@ -96,27 +98,73 @@ class _VdpScreensState extends State<VdpScreens> {
                           height: 10,
                         ),
                         Text('Reviews'),
-                        Container(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    height: 70,
-                                    width: 70,
-                                    child: CircleAvatar(
-                                      backgroundImage:
-                                          
-                                    ),
-                                  ),
-                                  Expanded(child: TextField())
-                                ],
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              height: 70,
+                              width: 70,
+                              margin: EdgeInsets.only(right: 5),
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: userHost?.avatar == null
+                                      ? NetworkImage(
+                                          'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png')
+                                      : NetworkImage(userHost?.avatar),
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                            ],
-                          ),
+                            ),
+                            Expanded(
+                                child: TextField(
+                              controller: commentController,
+                            )),
+                            FlatButton(
+                                onPressed: () async {
+                                  setState(() {
+                                    test = true;
+                                  });
+                                  await Api.addCommentRoom(item?.id,
+                                      userHost?.id, commentController.text);
+                                },
+                                child: Icon(Icons.send_outlined))
+                          ],
                         ),
+                        item?.reviews == null
+                            ? Container()
+                            : Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: 200,
+                                child: ListView.builder(
+                                  itemCount: item.reviews != null
+                                      ? item?.reviews?.length
+                                      : 0,
+                                  itemBuilder: (context, index) {
+                                    return Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          height: 50,
+                                          width: 50,
+                                          margin: EdgeInsets.only(right: 5),
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                              image: NetworkImage(
+                                                  'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png'),
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                            child: Text(
+                                                item?.reviews[index].comment))
+                                      ],
+                                    );
+                                  },
+                                ),
+                              ),
                         SizedBox(
                           height: 10,
                         ),
