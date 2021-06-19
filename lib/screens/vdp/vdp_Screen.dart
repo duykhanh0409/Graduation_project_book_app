@@ -95,21 +95,46 @@ class _VdpScreensState extends State<VdpScreens> {
                         SizedBox(
                           height: 10,
                         ),
+                        Text('Reviews'),
+                        Container(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    height: 70,
+                                    width: 70,
+                                    child: CircleAvatar(
+                                      backgroundImage:
+                                          
+                                    ),
+                                  ),
+                                  Expanded(child: TextField())
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
                         Text(
                           '58/2 Thao Dien, Quan 2',
                         ),
                         SizedBox(
                           height: 10,
                         ),
-                        FlatButton(
-                          onPressed: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return MapItem(item: item);
-                            }));
-                          },
-                          child: Container(
-                            height: 240,
+                        Container(
+                          height: 240,
+                          child: FlatButton(
+                            onPressed: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return MapItem(item: item);
+                              }));
+                            },
                             child: MapItem(
                               item: item,
                             ),

@@ -51,14 +51,14 @@ class _HostRoomListingState extends State<HostRoomListing> {
             Container(
                 height: MediaQuery.of(context).size.height - 250,
                 width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.zero,
-                color: Colors.red,
                 child: ListView.builder(
                   itemCount: listHostRoom?.length,
+                  padding: EdgeInsets.zero,
                   itemBuilder: (context, index) {
                     return Container(
                       height: 120,
                       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                      padding: EdgeInsets.symmetric(horizontal: 10),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         boxShadow: [
@@ -74,7 +74,7 @@ class _HostRoomListingState extends State<HostRoomListing> {
                         children: [
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.all(4.0),
+                              padding: const EdgeInsets.only(right: 5),
                               child: Text(
                                 '${listHostRoom[index]?.address?.addressNumber},${listHostRoom[index]?.address?.ward},district ${listHostRoom[index]?.address?.district},${listHostRoom[index]?.address?.city}',
                                 softWrap: true,

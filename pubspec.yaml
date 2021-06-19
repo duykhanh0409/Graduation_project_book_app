@@ -45,6 +45,7 @@ dependencies:
   multi_image_picker2: ^5.0.0
   email_auth: ^0.0.1+4
   flutter_svg: ^0.22.0
+  flutter_otp: ^0.3.2
 
 dev_dependencies:
   flutter_test:
