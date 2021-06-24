@@ -21,9 +21,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController userController = new TextEditingController();
   TextEditingController passController = new TextEditingController();
   TextEditingController rePassController = new TextEditingController();
-  var userInval = false;
-  var passInval = false;
-  var rePassInval = false;
+  var userInval = '';
+  var passInval = '';
+  var rePassInval = '';
+  var imageInval = '';
   var isLoading = false;
 
   File _image;
@@ -42,7 +43,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
     FormData formData = FormData.fromMap({
       'username': userController.text,
       'password': passController.text,
-      "image": await MultipartFile.fromFile(_image.path, filename: fileName),
+      "image": _image != null
+          ? await MultipartFile.fromFile(_image.path, filename: fileName)
+          : '',
     });
     return await Dio()
         .post('https://book-room-app.herokuapp.com/user/api/registerUser',
@@ -58,34 +61,46 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void onClickButtonSignUp() {
-    if (userController.text.length < 6) {
+    if (_image != null) {
       setState(() {
-        userInval = true;
+        imageInval = '';
       });
     } else {
       setState(() {
-        userInval = false;
+        imageInval = 'avatar is required';
+      });
+    }
+    if (userController.text.length < 6) {
+      setState(() {
+        userInval = 'UserName must be more than 6 characters';
+      });
+    } else {
+      setState(() {
+        userInval = '';
       });
     }
     if (passController.text.length < 6) {
       setState(() {
-        passInval = true;
+        passInval = 'Password must be more than 6 characters';
       });
     } else {
       setState(() {
-        passInval = false;
+        passInval = '';
       });
     }
     if (rePassController.text.contains(passController.text)) {
       setState(() {
-        rePassInval = false;
+        rePassInval = '';
       });
     } else {
       setState(() {
-        rePassInval = true;
+        rePassInval = 'rePassword does not match password';
       });
     }
-    if (userInval && passInval && rePassInval) {
+    if (userInval == '' &&
+        passInval == '' &&
+        rePassInval == '' &&
+        _image != null) {
       print('do chua ');
       setState(() {
         isLoading = true;
@@ -153,12 +168,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           children: <Widget>[
                             Stack(
                               children: [
-                                CircleAvatar(
-                                  radius: 30.0,
-                                  backgroundImage: _image == null
-                                      ? AssetImage('assets/images/khanh.jpg')
-                                      : FileImage(_image),
-                                  backgroundColor: Colors.transparent,
+                                Column(
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 30.0,
+                                      backgroundImage: _image == null
+                                          ? AssetImage(
+                                              'assets/images/khanh.jpg')
+                                          : FileImage(_image),
+                                      backgroundColor: Colors.transparent,
+                                    ),
+                                    imageInval != ''
+                                        ? Text(imageInval,
+                                            style: TextStyle(
+                                                color: Colors.red,
+                                                fontSize: 10))
+                                        : SizedBox(),
+                                  ],
                                 ),
                                 Positioned(
                                   top: 40,
@@ -260,14 +286,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       ),
                                     ),
                                   ),
-                                  userInval
-                                      ? Text(
-                                          'UserName must be more than 6 characters',
+                                  userInval != ''
+                                      ? Text(userInval,
                                           style: TextStyle(
                                               color: Colors.red, fontSize: 10))
-                                      : SizedBox(
-                                          height: 0,
-                                        ),
+                                      : SizedBox(),
                                   SizedBox(
                                     height: 10,
                                   ),
@@ -294,14 +317,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       ),
                                     ),
                                   ),
-                                  passInval
-                                      ? Text(
-                                          'Password must be more than 6 characters',
+                                  passInval != ''
+                                      ? Text(passInval,
                                           style: TextStyle(
                                               color: Colors.red, fontSize: 10))
-                                      : SizedBox(
-                                          height: 0,
-                                        ),
+                                      : SizedBox(),
                                   SizedBox(
                                     height: 10,
                                   ),
@@ -330,13 +350,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 ],
                               ),
                             ),
-                            rePassInval
-                                ? Text('rePassword does not match password',
+                            rePassInval != ''
+                                ? Text(rePassInval,
                                     style: TextStyle(
                                         color: Colors.red, fontSize: 10))
-                                : SizedBox(
-                                    height: 0,
-                                  ),
+                                : SizedBox(),
+
                             SizedBox(
                               height: 20,
                             ),

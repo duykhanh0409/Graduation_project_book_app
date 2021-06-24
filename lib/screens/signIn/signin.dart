@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project_book_app/logic/tech_mobile.dart';
 import 'package:graduation_project_book_app/models/user.dart';
+import 'package:graduation_project_book_app/screens/signIn/forgot_password.dart';
 import 'package:graduation_project_book_app/screens/signUp/signup.dart';
 import 'package:http/http.dart' as http;
 
@@ -20,7 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   var passInval = false;
   var isLoading = false;
   var loginError;
-  
+
   Future<dynamic> signIn() async {
     FormData formData = FormData.fromMap({
       'username': userController.text,
@@ -92,10 +93,11 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     });
   }
+
   @override
   void initState() {
-    userController.text='khanhNguyen';
-    passController.text='123456';
+    userController.text = 'khanhNguyen';
+    passController.text = '123456';
     // TODO: implement initState
     super.initState();
   }
@@ -237,9 +239,17 @@ class _LoginScreenState extends State<LoginScreen> {
                             SizedBox(
                               height: 30,
                             ),
-                            Text(
-                              "Forgot Password?",
-                              style: TextStyle(color: Colors.grey),
+                            FlatButton(
+                              onPressed: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return ForgotPassword();
+                                }));
+                              },
+                              child: Text(
+                                "Forgot Password?",
+                                style: TextStyle(color: Colors.grey),
+                              ),
                             ),
                             SizedBox(
                               height: 30,
