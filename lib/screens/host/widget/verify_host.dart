@@ -18,8 +18,9 @@ class _VerifyHostState extends State<VerifyHost> {
   final TextEditingController _phonecontroller = TextEditingController();
   void sendOtp() async {
     EmailAuth.sessionName = "Company Name";
-    bool result =
-        await EmailAuth.sendOtp(receiverMail: _emailcontroller.value.text);
+    print('${_emailcontroller.value.text} ra cái gì');
+    print('${_emailcontroller.text} ra cái gì đây');
+    bool result = await EmailAuth.sendOtp(receiverMail: _emailcontroller.text);
     if (result) {
       print('sent succed');
     }
@@ -75,6 +76,8 @@ class _VerifyHostState extends State<VerifyHost> {
   @override
   Widget build(BuildContext context) {
     var techMobile = TechMobile.of(context);
+    print('${_emailcontroller.value.text} ra cái gì');
+    print('${_emailcontroller.text} ra cái gì đây');
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(

@@ -6,6 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:graduation_project_book_app/logic/tech_mobile.dart';
 import 'package:graduation_project_book_app/models/vdp.dart';
 import 'package:graduation_project_book_app/screens/fliter/fliter_screen.dart';
+import 'package:graduation_project_book_app/screens/navigation_screen.dart';
 import 'package:graduation_project_book_app/screens/search/item_card.dart';
 import 'package:graduation_project_book_app/screens/vdp/vdp_Screen.dart';
 import 'package:graduation_project_book_app/widgets/google_map.dart';
@@ -170,7 +171,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                   children: [
                                     Icon(Icons.search),
                                     Text(
-                                      'Ho Chi Minh',
+                                      "Khu vực ${techMobile.searchRoomLocation}",
                                     )
                                   ],
                                 ),
@@ -190,9 +191,17 @@ class _SearchScreenState extends State<SearchScreen> {
                               },
                               child: Row(
                                 children: [
-                                  Icon(Icons.arrow_back),
+                                  GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return NavigationScreen();
+                                        }));
+                                      },
+                                      child: Icon(Icons.arrow_back)),
                                   Text(
-                                    'Ho chi minh',
+                                   "Khu vực ${techMobile.searchRoomLocation}",
                                   )
                                 ],
                               ),

@@ -236,23 +236,23 @@ class _VdpScreensState extends State<VdpScreens> {
                                       side: BorderSide(color: Colors.red)))),
                       onPressed: () =>
                           launch(('tel://${userHost?.phoneNumber}'))),
-                  ElevatedButton(
-                    child: Text("Reservation".toUpperCase(),
-                        style: TextStyle(fontSize: 14)),
-                    style: ButtonStyle(
-                        foregroundColor:
-                            MaterialStateProperty.all<Color>(Colors.white),
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.red),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(7),
-                                    side: BorderSide(color: Colors.red)))),
-                    onPressed: () {
-                      _modalBottomSheetMenu();
-                    },
-                  )
+                  // ElevatedButton(
+                  //   child: Text("Reservation".toUpperCase(),
+                  //       style: TextStyle(fontSize: 14)),
+                  //   style: ButtonStyle(
+                  //       foregroundColor:
+                  //           MaterialStateProperty.all<Color>(Colors.white),
+                  //       backgroundColor:
+                  //           MaterialStateProperty.all<Color>(Colors.red),
+                  //       shape:
+                  //           MaterialStateProperty.all<RoundedRectangleBorder>(
+                  //               RoundedRectangleBorder(
+                  //                   borderRadius: BorderRadius.circular(7),
+                  //                   side: BorderSide(color: Colors.red)))),
+                  //   onPressed: () {
+                  //     _modalBottomSheetMenu();
+                  //   },
+                  // )
                 ],
               ),
             ),

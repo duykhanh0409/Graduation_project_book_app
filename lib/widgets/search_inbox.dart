@@ -130,6 +130,7 @@ class _SearchInboxState extends State<SearchInbox> {
                     child: FlatButton(
                       onPressed: () {
                         techMobile.fliterRoomLocation(title[index]['title']);
+                        techMobile.searchRoomLocation = title[index]['title'];
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
                           return SearchScreen(

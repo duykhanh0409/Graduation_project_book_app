@@ -24,8 +24,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<dynamic> signIn() async {
     FormData formData = FormData.fromMap({
-      'username': userController.text,
-      'password': passController.text,
+      'username': userController.text.trim(),
+      'password': passController.text.trim(),
     });
 
     try {

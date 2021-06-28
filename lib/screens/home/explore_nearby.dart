@@ -77,7 +77,7 @@ class ExploreNearby extends StatelessWidget {
       },
     ];
     final controller = ScrollController();
-    var techMobile=TechMobile.of(context);
+    var techMobile = TechMobile.of(context);
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       SizedBox(
         height: 30,
@@ -109,6 +109,7 @@ class ExploreNearby extends StatelessWidget {
               return FlatButton(
                 onPressed: () {
                   techMobile.fliterRoomLocation(title[index]['title']);
+                  techMobile.searchRoomLocation = title[index]['title'];
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return SearchScreen(
                       searchLocation: LatLng(double.parse(title[index]['lat']),

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:graduation_project_book_app/models/user.dart';
 import 'package:graduation_project_book_app/models/vdp.dart';
+import 'package:graduation_project_book_app/screens/navigation_screen.dart';
 import 'package:http/http.dart' as http;
 
 class Api {
@@ -91,6 +92,19 @@ class Api {
     if (response.statusCode == 201) {
       Api.fetchData();
       print('remove list save ');
+    }
+  }
+
+  static registerHost(String phoneNumber, String email) async {
+    String url = 'https://book-room-app.herokuapp.com/user/api/registerHost';
+    final response = await http.post(Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(
+            <String, dynamic>{'phone': phoneNumber, 'email': email}));
+    if (response.statusCode == 201) {
+      print('register Host');
     }
   }
 }

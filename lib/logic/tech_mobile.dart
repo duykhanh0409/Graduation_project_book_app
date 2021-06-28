@@ -28,7 +28,7 @@ class TechMobileState extends State<TechMobile> {
   int selectedRadioPrice;
   var selectedPrice;
   //search room location
-  String searchRoomLocation;
+  String searchRoomLocation="";
   //host
   var typeRoom = '';
   var address = '';

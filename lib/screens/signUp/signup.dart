@@ -174,7 +174,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       radius: 30.0,
                                       backgroundImage: _image == null
                                           ? AssetImage(
-                                              'assets/images/khanh.jpg')
+                                              'assets/images/avatar.jpg')
                                           : FileImage(_image),
                                       backgroundColor: Colors.transparent,
                                     ),

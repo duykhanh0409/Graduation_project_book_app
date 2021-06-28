@@ -13,6 +13,9 @@ class _AddressTypeState extends State<AddressType> {
   TextEditingController wardController = new TextEditingController();
   TextEditingController districtController = new TextEditingController();
   TextEditingController cityController = new TextEditingController();
+
+  String _selectedWard; // Option 2
+  String _selectedDistrict; // Option 2
   @override
   void initState() {
     // TODO: implement initState
@@ -21,22 +24,23 @@ class _AddressTypeState extends State<AddressType> {
   }
 
   void fillInforLocation(BuildContext context) {
+    print("${_selectedWard} gia1 ---------------");
     var techMobile = TechMobile.of(context);
     if (streetController.text != "") {
       techMobile.address = streetController.text;
     }
-    if (wardController.text != "") {
-      techMobile.ward = wardController.text;
+    if (_selectedWard != "") {
+      techMobile.ward = _selectedWard;
     }
-    if (districtController.text != "") {
-      techMobile.district = districtController.text;
+    if (_selectedDistrict != "") {
+      techMobile.district = _selectedDistrict;
     }
     if (cityController.text != "") {
       techMobile.city = cityController.text;
     }
     if (streetController.text != "" &&
-        wardController.text != "" &&
-        districtController.text != "" &&
+        _selectedWard != "" &&
+        _selectedDistrict != "" &&
         cityController.text != "") {
       techMobile.isShowAddress = true;
       Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -44,6 +48,22 @@ class _AddressTypeState extends State<AddressType> {
       }));
     }
   }
+
+  List ward = [
+    'Tăng Nhơn Phú A',
+    'Hiệp Phú',
+    'Linh Chiểu',
+    'Linh Đông',
+    'Thảo Điền',
+    'Long Thạnh Mỹ',
+    'Linh Xuân',
+    'Thủ Thiên',
+    'Phước Long A',
+    'Hiệp Bình Phước',
+    'An Phú',
+  ];
+
+  List district = ['Quận 9', 'Thủ Đức', 'Quận 2'];
 
   @override
   Widget build(BuildContext context) {
@@ -84,18 +104,52 @@ class _AddressTypeState extends State<AddressType> {
                 controler: streetController,
                 addressField: 'Street',
               ),
-              AddressField(
-                controler: wardController,
-                addressField: 'Ward',
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                height: 60,
+                width: MediaQuery.of(context).size.width,
+                child: DropdownButton(
+                  hint: Text(
+                      'Please choose a ward'), // Not necessary for Option 1
+                  value: _selectedWard,
+                  onChanged: (newValue) {
+                    setState(() {
+                      _selectedWard = newValue;
+                    });
+                  },
+                  items: ward.map((location) {
+                    return DropdownMenuItem(
+                      child: new Text(location),
+                      value: location,
+                    );
+                  }).toList(),
+                ),
               ),
-              AddressField(
-                controler: districtController,
-                addressField: 'District',
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                height: 60,
+                width: MediaQuery.of(context).size.width,
+                child: DropdownButton(
+                  hint: Text(
+                      'Please choose a district'), // Not necessary for Option 1
+                  value: _selectedDistrict,
+                  onChanged: (newValue) {
+                    setState(() {
+                      _selectedDistrict = newValue;
+                    });
+                  },
+                  items: district.map((location) {
+                    return DropdownMenuItem(
+                      child: new Text(location),
+                      value: location,
+                    );
+                  }).toList(),
+                ),
               ),
               AddressField(
                 controler: cityController,
                 addressField: 'City',
-              )
+              ),
             ],
           ),
         )

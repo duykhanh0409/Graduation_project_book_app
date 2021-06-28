@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:graduation_project_book_app/logic/api.dart';
 import 'package:graduation_project_book_app/logic/tech_mobile.dart';
 import 'package:graduation_project_book_app/screens/host/widget/address_type.dart';
 import 'package:graduation_project_book_app/screens/host/widget/description.dart';
@@ -29,26 +30,6 @@ class _CreateNewRoomState extends State<CreateNewRoom> {
 
   Future<dynamic> _uploadRoom() async {
     var techMobile = TechMobile.of(context);
-    // var address = {
-    //   'district': techMobile.district,
-    //   'ward': techMobile.ward,
-    //   'city': techMobile.city,
-    //   'addr_number': techMobile.address
-    // };
-    // var facility = {
-    //   'squareMeters': techMobile.square,
-    //   'wife': techMobile.wifi,
-    //   'bedroom': techMobile.bedRoom,
-    //   'bath': techMobile.bathRoom,
-    //   'mezzanine': techMobile.gac
-    // };
-    // var host = {'host_id': techMobile?.user?.id};
-    // var price = {
-    //   'room': techMobile.priceRoom,
-    //   'electricity': techMobile.priceElec,
-    //   'water': techMobile.priceWater
-    // };
-    // var image = {"alt": 'phong', "url": techMobile.listPhoto};
 
     FormData formData = FormData.fromMap({
       'type': techMobile.typeRoom,
@@ -76,6 +57,7 @@ class _CreateNewRoomState extends State<CreateNewRoom> {
       setState(() {
         isLoading = false;
       });
+      Api.registerHost(techMobile.phoneHost, techMobile.emailHost);
       Navigator.push(context, MaterialPageRoute(builder: (context) {
         return NavigationScreen();
       }));
@@ -94,7 +76,7 @@ class _CreateNewRoomState extends State<CreateNewRoom> {
 
     var techMobile = TechMobile.of(context);
     print(techMobile.typeRoom);
-    print(techMobile.address);
+    print("${techMobile.ward} gia --------------ádđsdd-");
     print(techMobile.wifi);
     print(techMobile?.listPhoto?.length);
 

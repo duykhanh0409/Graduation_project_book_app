@@ -39,6 +39,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
           print(val);
           if (val == 1) {
             techMobile.fliterRoomLocation('Hiệp Phú');
+             techMobile.searchRoomLocation ='Hiệp Phú';
           }
           setState(() {
             _selectedItem = val;
