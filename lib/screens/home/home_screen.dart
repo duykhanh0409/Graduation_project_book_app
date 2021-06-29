@@ -42,10 +42,7 @@ class _HomePageState extends State<HomePage> {
     print('chay lai khong');
     var techMobile = TechMobile.of(context);
     var result;
-    // if (techMobile.vdpList?.length ?? 0 == 0) {
-    // setState(() {
-    //   isLoading = true;
-    // });
+
     result = techMobile.getData();
     // }
     if (result != null) {
@@ -74,7 +71,8 @@ class _HomePageState extends State<HomePage> {
       statusBarBrightness: Brightness.dark,
     ));
     var techmobile = TechMobile.of(context);
-    print("${techmobile?.vdpList?.length} co dai đálsakdkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+    print(
+        "${techmobile?.vdpList?.length} co dai đálsakdkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
     return Scaffold(
       body: ListView(children: [
         //TitleBar(),

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project_book_app/logic/api.dart';
+import 'package:graduation_project_book_app/logic/tech_mobile.dart';
 import 'package:graduation_project_book_app/models/user.dart';
 import 'package:graduation_project_book_app/models/vdp.dart';
 import 'package:graduation_project_book_app/screens/vdp/vdp_detail.dart';
@@ -29,6 +30,7 @@ class _VdpScreensState extends State<VdpScreens> {
   TextEditingController commentController = new TextEditingController();
   User userHost;
   bool test = false;
+  List<Review> listComment = [];
   DateTime _date = DateTime.now();
   Future<User> getData() async {
     var result = await Api.getUser(widget.item?.host?.hostId);
@@ -57,12 +59,16 @@ class _VdpScreensState extends State<VdpScreens> {
     // TODO: implement initState
     super.initState();
     getData();
+    setState(() {
+      listComment = widget?.item?.reviews;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     var item = widget.item;
     print("${userHost?.username} có phai null kh");
+    var techMobile = TechMobile.of(context);
     print(_date);
     return Scaffold(
       body: Stack(
@@ -102,15 +108,16 @@ class _VdpScreensState extends State<VdpScreens> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              height: 70,
-                              width: 70,
+                              height:60,
+                              width: 60,
                               margin: EdgeInsets.only(right: 5),
                               decoration: BoxDecoration(
+                                shape: BoxShape.circle,
                                 image: DecorationImage(
-                                  image: userHost?.avatar == null
+                                  image: techMobile?.user?.avatar == null
                                       ? NetworkImage(
                                           'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png')
-                                      : NetworkImage(userHost?.avatar),
+                                      : NetworkImage(techMobile?.user?.avatar),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -121,23 +128,28 @@ class _VdpScreensState extends State<VdpScreens> {
                             )),
                             FlatButton(
                                 onPressed: () async {
-                                  setState(() {
-                                    test = true;
-                                  });
                                   await Api.addCommentRoom(item?.id,
-                                      userHost?.id, commentController.text);
+                                     techMobile?.user?.id, commentController.text);
+
+                                  setState(() {
+                                    listComment.add(Review(
+                                      reviewerId: techMobile?.user?.id,
+                                      comment: commentController.text));
+                                  });
+                                  commentController.text='';
                                 },
                                 child: Icon(Icons.send_outlined))
                           ],
                         ),
-                        item?.reviews == null
-                            ? Container()
+                        item?.reviews == null //tạo  []comment==item.reviews
+                            ? Container() // sao đó ở dưới đây []comment.leng
                             : Container(
                                 width: MediaQuery.of(context).size.width,
                                 height: 200,
                                 child: ListView.builder(
-                                  itemCount: item.reviews != null
-                                      ? item?.reviews?.length
+                                  padding: EdgeInsets.zero,
+                                  itemCount: listComment.length != null
+                                      ? listComment.length
                                       : 0,
                                   itemBuilder: (context, index) {
                                     return Row(
@@ -147,7 +159,7 @@ class _VdpScreensState extends State<VdpScreens> {
                                         Container(
                                           height: 50,
                                           width: 50,
-                                          margin: EdgeInsets.only(right: 5),
+                                          margin: EdgeInsets.only(right: 5,bottom: 5),
                                           decoration: BoxDecoration(
                                             shape: BoxShape.circle,
                                             image: DecorationImage(
@@ -157,9 +169,10 @@ class _VdpScreensState extends State<VdpScreens> {
                                             ),
                                           ),
                                         ),
+                                        
                                         Expanded(
                                             child: Text(
-                                                item?.reviews[index].comment))
+                                                listComment[index].comment))
                                       ],
                                     );
                                   },
