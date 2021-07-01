@@ -60,7 +60,9 @@ class _VdpScreensState extends State<VdpScreens> {
     super.initState();
     getData();
     setState(() {
-      listComment = widget?.item?.reviews;
+      if (widget?.item?.reviews != null) {
+        listComment = widget?.item?.reviews;
+      }
     });
   }
 
@@ -108,7 +110,7 @@ class _VdpScreensState extends State<VdpScreens> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              height:60,
+                              height: 60,
                               width: 60,
                               margin: EdgeInsets.only(right: 5),
                               decoration: BoxDecoration(
@@ -128,20 +130,22 @@ class _VdpScreensState extends State<VdpScreens> {
                             )),
                             FlatButton(
                                 onPressed: () async {
-                                  await Api.addCommentRoom(item?.id,
-                                     techMobile?.user?.id, commentController.text);
+                                  await Api.addCommentRoom(
+                                      item?.id,
+                                      techMobile?.user?.id,
+                                      commentController.text);
 
                                   setState(() {
                                     listComment.add(Review(
-                                      reviewerId: techMobile?.user?.id,
-                                      comment: commentController.text));
+                                        reviewerId: techMobile?.user?.id,
+                                        comment: commentController.text));
                                   });
-                                  commentController.text='';
+                                  commentController.text = '';
                                 },
                                 child: Icon(Icons.send_outlined))
                           ],
                         ),
-                        item?.reviews == null //tạo  []comment==item.reviews
+                        listComment.length == 0 //tạo  []comment==item.reviews
                             ? Container() // sao đó ở dưới đây []comment.leng
                             : Container(
                                 width: MediaQuery.of(context).size.width,
@@ -159,7 +163,8 @@ class _VdpScreensState extends State<VdpScreens> {
                                         Container(
                                           height: 50,
                                           width: 50,
-                                          margin: EdgeInsets.only(right: 5,bottom: 5),
+                                          margin: EdgeInsets.only(
+                                              right: 5, bottom: 5),
                                           decoration: BoxDecoration(
                                             shape: BoxShape.circle,
                                             image: DecorationImage(
@@ -169,7 +174,6 @@ class _VdpScreensState extends State<VdpScreens> {
                                             ),
                                           ),
                                         ),
-                                        
                                         Expanded(
                                             child: Text(
                                                 listComment[index].comment))

@@ -40,6 +40,7 @@ class _VerifyHostState extends State<VerifyHost> {
 
   void signInWithPhoneAuthCredential(
       PhoneAuthCredential phoneAuthCredential) async {
+    var techMobile = TechMobile.of(context);
     setState(() {
       showLoading = true;
     });
@@ -53,7 +54,12 @@ class _VerifyHostState extends State<VerifyHost> {
       });
 
       if (authCredential?.user != null) {
-        
+        techMobile.verifyHost = true;
+        if (techMobile?.user?.email == null &&
+            techMobile?.user?.phoneNumber == null) {
+          techMobile.emailHost = _emailcontroller.text;
+          techMobile.phoneHost = _phonecontroller.text;
+        }
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => CreateNewRoom()));
       }
@@ -71,7 +77,19 @@ class _VerifyHostState extends State<VerifyHost> {
   getMobileFormWidget(context) {
     return Column(
       children: [
-        Spacer(),
+        SizedBox(
+          height: 20,
+        ),
+        Image.asset(
+          'assets/images/holding-phone.png',
+          height: 150,
+        ),
+        TextField(
+          controller: _emailcontroller,
+          decoration: InputDecoration(
+            hintText: "Email",
+          ),
+        ),
         TextField(
           controller: _phonecontroller,
           decoration: InputDecoration(
@@ -88,7 +106,7 @@ class _VerifyHostState extends State<VerifyHost> {
             });
 
             await _auth.verifyPhoneNumber(
-              phoneNumber: _phonecontroller.text,
+              phoneNumber: "+84${_phonecontroller.text}",
               verificationCompleted: (phoneAuthCredential) async {
                 setState(() {
                   showLoading = false;
@@ -111,7 +129,7 @@ class _VerifyHostState extends State<VerifyHost> {
             );
           },
           child: Text("SEND"),
-          color: Colors.blue,
+          color: Colors.orange[900],
           textColor: Colors.white,
         ),
         Spacer(),
@@ -122,7 +140,13 @@ class _VerifyHostState extends State<VerifyHost> {
   getOtpFormWidget(context) {
     return Column(
       children: [
-        Spacer(),
+        SizedBox(
+          height: 20,
+        ),
+        Image.asset(
+          'assets/images/holding-phone.png',
+          height: 150,
+        ),
         TextField(
           controller: _otpcontroller,
           decoration: InputDecoration(
@@ -141,7 +165,7 @@ class _VerifyHostState extends State<VerifyHost> {
             signInWithPhoneAuthCredential(phoneAuthCredential);
           },
           child: Text("VERIFY"),
-          color: Colors.blue,
+          color: Colors.orange[900],
           textColor: Colors.white,
         ),
         Spacer(),
@@ -154,15 +178,24 @@ class _VerifyHostState extends State<VerifyHost> {
     var techMobile = TechMobile.of(context);
 
     return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.orange[900],
+          centerTitle: true,
+          automaticallyImplyLeading: false,
+          title: Text(
+            'Verify Host',
+            textAlign: TextAlign.center,
+          ),
+        ),
         body: Container(
-      child: showLoading
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : currentState == MobileVerificationState.SHOW_MOBILE_FORM_STATE
-              ? getMobileFormWidget(context)
-              : getOtpFormWidget(context),
-      padding: const EdgeInsets.all(16),
-    ));
+          child: showLoading
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : currentState == MobileVerificationState.SHOW_MOBILE_FORM_STATE
+                  ? getMobileFormWidget(context)
+                  : getOtpFormWidget(context),
+          padding: const EdgeInsets.all(16),
+        ));
   }
 }

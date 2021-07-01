@@ -95,14 +95,14 @@ class Api {
     }
   }
 
-  static registerHost(String phoneNumber, String email) async {
+  static registerHost(String phoneNumber, String email,String userID) async {
     String url = 'https://book-room-app.herokuapp.com/user/api/registerHost';
     final response = await http.post(Uri.parse(url),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(
-            <String, dynamic>{'phone': phoneNumber, 'email': email}));
+            <String, dynamic>{'phone': phoneNumber, 'email': email,'userID':userID}));
     if (response.statusCode == 201) {
       print('register Host');
     }

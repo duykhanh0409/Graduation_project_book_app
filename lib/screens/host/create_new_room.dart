@@ -57,7 +57,11 @@ class _CreateNewRoomState extends State<CreateNewRoom> {
       setState(() {
         isLoading = false;
       });
-      Api.registerHost(techMobile.phoneHost, techMobile.emailHost);
+      if (techMobile?.user?.email == null &&
+          techMobile?.user?.phoneNumber == null) {
+        Api.registerHost(
+            techMobile.phoneHost, techMobile.emailHost, techMobile?.user?.id);
+      }
       Navigator.push(context, MaterialPageRoute(builder: (context) {
         return NavigationScreen();
       }));
@@ -66,13 +70,13 @@ class _CreateNewRoomState extends State<CreateNewRoom> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Colors.blueGrey,
-      systemNavigationBarIconBrightness: Brightness.dark,
-      statusBarIconBrightness: Brightness.dark,
-      //s
-      //tatusBarBrightness: Brightness.dark,
-    ));
+    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    //   statusBarColor: Colors.blueGrey,
+    //   systemNavigationBarIconBrightness: Brightness.dark,
+    //   statusBarIconBrightness: Brightness.dark,
+    //   //s
+    //   //tatusBarBrightness: Brightness.dark,
+    // ));
 
     var techMobile = TechMobile.of(context);
     print(techMobile.typeRoom);
@@ -101,8 +105,8 @@ class _CreateNewRoomState extends State<CreateNewRoom> {
                       ),
                     ),
                     Positioned(
-                      top: 30,
-                      left: 30,
+                      top: 65,
+                      left: 20,
                       child: GestureDetector(
                         onTap: () {
                           Navigator.pop(context);
@@ -204,6 +208,9 @@ class _CreateNewRoomState extends State<CreateNewRoom> {
                       ));
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 }
+                // Navigator.push(context, MaterialPageRoute(builder: (context) {
+                //   return VerifyHost();
+                // }));
               },
               tooltip: 'Continues',
               child: Icon(
