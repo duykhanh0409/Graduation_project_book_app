@@ -73,7 +73,6 @@ class _FacilityTypeState extends State<FacilityType> {
                           fontSize: 22),
                     ),
                   ),
-                  
                 ],
               ),
               Container(
@@ -81,7 +80,9 @@ class _FacilityTypeState extends State<FacilityType> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      SizedBox(height: 10,),
+                      SizedBox(
+                        height: 10,
+                      ),
                       Text(
                         'Facilitys',
                         style: TextStyle(
@@ -103,21 +104,25 @@ class _FacilityTypeState extends State<FacilityType> {
                         facilityField: "Square",
                         controler: squareController,
                         description: 'Diện tích phòng',
+                        example: '(example: 25 m2)',
                       ),
                       FacilityField(
                         facilityField: "Gac",
                         controler: gacController,
                         description: 'Số lượng gác (Nếu có)',
+                        example: '(example: 1)',
                       ),
                       FacilityField(
                         facilityField: "Bath Room",
                         controler: bathController,
                         description: 'Số lượng phòng tắm (Nếu có)',
+                        example: '(example: 1)',
                       ),
                       FacilityField(
                         facilityField: "bedRoom",
                         controler: bedController,
                         description: 'Số lượng phòng ngủ (Nếu có)',
+                        example: '(example: 1)',
                       )
                     ],
                   ),
@@ -147,9 +152,14 @@ class _FacilityTypeState extends State<FacilityType> {
 class FacilityField extends StatelessWidget {
   final String facilityField;
   final String description;
+  final String example;
   final TextEditingController controler;
   const FacilityField(
-      {Key key, this.facilityField, this.controler, this.description})
+      {Key key,
+      this.facilityField,
+      this.controler,
+      this.description,
+      this.example})
       : super(key: key);
 
   @override
@@ -163,7 +173,7 @@ class FacilityField extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(description),
+          Text("${description} ${example}"),
           Container(
               height: 50,
               padding: EdgeInsets.all(5),

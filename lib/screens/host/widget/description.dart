@@ -46,6 +46,13 @@ class _DescriptionRoomState extends State<DescriptionRoom> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
+                        'Describe your room in detail in terms of location, space in the room or current costs, problems of the room',
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w300)),
+                    SizedBox(height: 10,),
+                    Text(
                       'Description',
                       style: Theme.of(context)
                           .textTheme
