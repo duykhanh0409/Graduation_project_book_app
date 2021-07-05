@@ -20,6 +20,12 @@ class _AddressTypeState extends State<AddressType> {
   void initState() {
     // TODO: implement initState
     cityController.text = 'Hồ Chí Mính';
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      var techMobile = TechMobile.of(context);
+      streetController.text = techMobile.address;
+      wardController.text = techMobile.ward;
+      districtController.text = techMobile.district;
+    });
     super.initState();
   }
 

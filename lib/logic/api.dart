@@ -95,16 +95,34 @@ class Api {
     }
   }
 
-  static registerHost(String phoneNumber, String email,String userID) async {
+  static registerHost(String phoneNumber, String email, String userID) async {
     String url = 'https://book-room-app.herokuapp.com/user/api/registerHost';
     final response = await http.post(Uri.parse(url),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode(
-            <String, dynamic>{'phone': phoneNumber, 'email': email,'userID':userID}));
+        body: jsonEncode(<String, dynamic>{
+          'phone': phoneNumber,
+          'email': email,
+          'userID': userID
+        }));
     if (response.statusCode == 201) {
       print('register Host');
+    }
+  }
+
+  static updatePassword(String username, String newPassword) async {
+    String url = 'https://book-room-app.herokuapp.com/user/api/updatePassword';
+    final response = await http.post(Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          'username': username,
+          'newpassword': newPassword
+        }));
+    if (response.statusCode == 201) {
+      print('new password succedd');
     }
   }
 }

@@ -47,17 +47,40 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ? await MultipartFile.fromFile(_image.path, filename: fileName)
           : '',
     });
-    return await Dio()
-        .post('https://book-room-app.herokuapp.com/user/api/registerUser',
-            data: formData)
-        .then((dynamic result) {
-      setState(() {
-        isLoading = false;
-      });
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return LoginScreen();
-      }));
-    });
+    try {
+      Response response = await Dio().post(
+          'https://book-room-app.herokuapp.com/user/api/registerUser',
+          data: formData);
+      if (response.statusCode == 200) {
+        setState(() {
+          isLoading = false;
+        });
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return LoginScreen();
+        }));
+      }
+    } on DioError catch (e) {
+      if (e.response.statusCode == 500) {
+        print('vo đây');
+        print(e.response.data);
+        final snackBar = SnackBar(
+            padding: EdgeInsets.all(10),
+            content: Text(
+              e.response.data,
+              style: TextStyle(color: Colors.red, fontSize: 15),
+            ),
+            action: SnackBarAction(
+              label: 'Undo',
+              onPressed: () {
+                // Some code to undo the change.
+              },
+            ));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        setState(() {
+          isLoading = false;
+        });
+      }
+    }
   }
 
   void onClickButtonSignUp() {
@@ -111,11 +134,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print("${_image?.path} giá trị  ");
-    print(
-        "${userInval} ${passInval} ${rePassInval}  giá trị -------------------  ");
-    print(
-        "${userController.text} ${passController.text} ${rePassController.text}  giá trị ---------------- ");
     return Scaffold(
       //ishow check ở đây
       body: Stack(
