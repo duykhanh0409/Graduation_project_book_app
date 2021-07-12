@@ -2,11 +2,12 @@
     package="com.example.graduation_project_book_app">
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+  
+ 
    <application
         android:label="Book Room"
         android:icon="@mipmap/ic_launcher">
-        android:usesCleartextTraffic="true"
-         
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

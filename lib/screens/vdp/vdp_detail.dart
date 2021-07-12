@@ -109,7 +109,7 @@ class _VdpDetailState extends State<VdpDetail> {
                               fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                         Text(
-                          '1 reviews',
+                          "${widget.item.reviews.length ?? 0} reviews",
                           style: TextStyle(color: Color(0xFF464E46)),
                         )
                       ],
