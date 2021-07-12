@@ -69,6 +69,7 @@ class _VdpScreensState extends State<VdpScreens> {
   @override
   Widget build(BuildContext context) {
     var item = widget.item;
+    var address = widget.item.address;
     print("${userHost?.username} có phai null kh");
     var techMobile = TechMobile.of(context);
     print(_date);
@@ -97,53 +98,36 @@ class _VdpScreensState extends State<VdpScreens> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Location',
-                          style: Theme.of(context).textTheme.subtitle1.copyWith(
-                              fontSize: 15, fontWeight: FontWeight.bold),
-                        ),
                         SizedBox(
                           height: 10,
                         ),
-                        Text('Reviews'),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              height: 60,
-                              width: 60,
-                              margin: EdgeInsets.only(right: 5),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  image: techMobile?.user?.avatar == null
-                                      ? NetworkImage(
-                                          'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png')
-                                      : NetworkImage(techMobile?.user?.avatar),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                                child: TextField(
-                              controller: commentController,
-                            )),
-                            FlatButton(
-                                onPressed: () async {
-                                  await Api.addCommentRoom(
-                                      item?.id,
-                                      techMobile?.user?.id,
-                                      commentController.text);
-
-                                  setState(() {
-                                    listComment.add(Review(
-                                        reviewerId: techMobile?.user?.id,
-                                        comment: commentController.text));
-                                  });
-                                  commentController.text = '';
-                                },
-                                child: Icon(Icons.send_outlined))
-                          ],
+                        Text(
+                          'Reviews about Room',
+                          style: Theme.of(context).textTheme.subtitle1.copyWith(
+                              fontSize: 15, fontWeight: FontWeight.bold),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          child: ElevatedButton(
+                              style: ButtonStyle(
+                                  foregroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.white),
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.red),
+                                  shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(7),
+                                          side:
+                                              BorderSide(color: Colors.red)))),
+                              onPressed: () async {
+                                await buildShowModalBottomSheet(
+                                    context, techMobile, item);
+                              },
+                              child: Text('Add Comments')),
                         ),
                         listComment.length == 0 //tạo  []comment==item.reviews
                             ? Container() // sao đó ở dưới đây []comment.leng
@@ -174,9 +158,19 @@ class _VdpScreensState extends State<VdpScreens> {
                                             ),
                                           ),
                                         ),
-                                        Expanded(
-                                            child: Text(
-                                                listComment[index].comment))
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text('khanh'),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Text(listComment[index].comment)
+                                          ],
+                                        )
                                       ],
                                     );
                                   },
@@ -186,7 +180,12 @@ class _VdpScreensState extends State<VdpScreens> {
                           height: 10,
                         ),
                         Text(
-                          '58/2 Thao Dien, Quan 2',
+                          'Location',
+                          style: Theme.of(context).textTheme.subtitle1.copyWith(
+                              fontSize: 15, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          '${address.addressNumber},${address.ward},district ${address.district},${address.city}',
                         ),
                         SizedBox(
                           height: 10,
@@ -279,94 +278,65 @@ class _VdpScreensState extends State<VdpScreens> {
     );
   }
 
-  void _modalBottomSheetMenu() {
+  buildShowModalBottomSheet(
+      BuildContext context, TechMobileState techMobile, VdpItem item) async {
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
         builder: (builder) {
-          return new Container(
-            height: 450.0,
-            color: Colors.transparent, //could change this to Color(0xFF737373),
-            //so you don't have to change MaterialApp canvasColor
+          return SingleChildScrollView(
             child: new Container(
-                padding: EdgeInsets.only(top: 40),
-                decoration: new BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: new BorderRadius.only(
-                        topLeft: const Radius.circular(10.0),
-                        topRight: const Radius.circular(10.0))),
-                child: SingleChildScrollView(
+              height: 390.0,
+              //could change this to Color(0xFF737373),
+              decoration: new BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: new BorderRadius.only(
+                      topLeft: const Radius.circular(10.0),
+                      topRight: const Radius.circular(10.0))),
+              child: new Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                   child: Column(
                     children: [
-                      Text('Đặt Lịch Hẹn',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20),
-                          textAlign: TextAlign.center),
+                      // Text(
+                      //   'Review Room',
+                      //   style: Theme.of(context).textTheme.subtitle1.copyWith(
+                      //       fontSize: 15, fontWeight: FontWeight.bold),
+                      // ),
+                      Container(
+                        height: 60,
+                        width: 60,
+                        margin: EdgeInsets.only(right: 5),
+                        padding: EdgeInsets.only(top: 10, bottom: 10),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            image: techMobile?.user?.avatar == null
+                                ? NetworkImage(
+                                    'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png')
+                                : NetworkImage(techMobile?.user?.avatar),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        techMobile?.user?.username,
+                        style: Theme.of(context).textTheme.subtitle1.copyWith(
+                            fontSize: 15, fontWeight: FontWeight.bold),
+                      ),
                       SizedBox(
                         height: 15,
                       ),
-                      Container(
-                        height: 60,
-                        margin:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                        padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                                width: 1,
-                                color: Colors.black.withOpacity(0.6))),
-                        child: TextField(
-                          controller: userNameController,
-                          decoration: InputDecoration(
-                              hintText: "Full Name",
-                              hintStyle: TextStyle(color: Colors.grey),
-                              border: InputBorder.none),
-                        ),
-                      ),
-                      Container(
-                        height: 60,
-                        margin:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                                width: 1,
-                                color: Colors.black.withOpacity(0.6))),
-                        child: TextField(
-                          controller: sdtController,
-                          decoration: InputDecoration(
-                              hintText: "Email or Phone number",
-                              hintStyle: TextStyle(color: Colors.grey),
-                              border: InputBorder.none),
-                        ),
-                      ),
-                      Container(
-                        height: 60,
-                        margin:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                                width: 1,
-                                color: Colors.black.withOpacity(0.6))),
-                        child: TextField(
-                          readOnly: true,
-                          onTap: () {
-                            setState(() {
-                              _selecteDate(context);
-                            });
-                          },
-                          decoration: InputDecoration(
-                              hintText: _date.toString(),
-                              hintStyle: TextStyle(color: Colors.grey),
-                              border: InputBorder.none),
+                      TextFormField(
+                        minLines:
+                            6, // any number you need (It works as the rows for the textarea)
+                        keyboardType: TextInputType.multiline,
+                        maxLines: null,
+                        controller: commentController,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
                         ),
                       ),
                       ElevatedButton(
-                        child: Text("Gửi Lịch Hẹn".toUpperCase(),
-                            style: TextStyle(fontSize: 14)),
                         style: ButtonStyle(
                             foregroundColor:
                                 MaterialStateProperty.all<Color>(Colors.white),
@@ -377,13 +347,31 @@ class _VdpScreensState extends State<VdpScreens> {
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(7),
                                     side: BorderSide(color: Colors.red)))),
-                        onPressed: () {
-                          print('gui lịch');
+                        onPressed: () async {
+                          await Api.addCommentRoom(item?.id,
+                              techMobile?.user?.id, commentController.text);
+
+                          setState(() {
+                            listComment.add(Review(
+                                reviewerId: techMobile?.user?.id,
+                                comment: commentController.text));
+                          });
+                          commentController.text = '';
                         },
-                      )
+                        child: Container(
+                          width: 100,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('Comment'),
+                              Icon(Icons.send_outlined),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
-                  ),
-                )),
+                  )),
+            ),
           );
         });
   }
