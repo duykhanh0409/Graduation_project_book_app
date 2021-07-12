@@ -39,7 +39,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     var techMobile = TechMobile.of(context);
-
+    var validInfor = "chưa có thông tin ";
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
@@ -103,38 +103,171 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ProfileInfor(
                       infor: 'Personal information',
                       icon: Icons.person_outline,
+                      onTab: (context) {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Dialog(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.0)),
+                                child: Container(
+                                  constraints: BoxConstraints(maxHeight: 250),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          height: 15,
+                                        ),
+                                        RichText(
+                                          text: TextSpan(
+                                            text: 'userName: ',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black),
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                text:
+                                                    '${techMobile?.user?.username ?? validInfor}',
+                                                style:
+                                                    DefaultTextStyle.of(context)
+                                                        .style,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        RichText(
+                                          text: TextSpan(
+                                            text: 'Password: ',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black),
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                text:
+                                                    '${techMobile?.user?.password ?? validInfor}',
+                                                style:
+                                                    DefaultTextStyle.of(context)
+                                                        .style,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        RichText(
+                                          text: TextSpan(
+                                            text: 'Số điện thoại: ',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black),
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                text:
+                                                    '${techMobile?.user?.phoneNumber ?? validInfor}',
+                                                style:
+                                                    DefaultTextStyle.of(context)
+                                                        .style,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        RichText(
+                                          text: TextSpan(
+                                            text: 'Email: ',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black),
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                text:
+                                                    '${techMobile?.user?.email ?? validInfor}',
+                                                style:
+                                                    DefaultTextStyle.of(context)
+                                                        .style,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            });
+                      },
                     ),
                     ProfileInfor(
                       infor: 'Lists your book',
                       icon: Icons.list_alt_outlined,
+                      onTab: (context) {},
                     ),
-                    ProfileInfor(
-                      infor: 'Notifications',
-                      icon: Icons.notifications_active_outlined,
-                    ),
+
                     ProfileInfor(
                       infor: 'Learn about user',
                       icon: Icons.home_outlined,
+                      onTab: (context) {},
                     ),
                     SizedBox(
                       height: 10,
                     ),
-                    Text('ABOUT HOST',
-                        style: Theme.of(context).textTheme.headline6.copyWith(
-                            color: Colors.black.withOpacity(0.8),
-                            fontSize: 20)),
-                    ProfileInfor(
-                        infor: 'Host Schedule', icon: Icons.list_alt_outlined),
-                    SizedBox(
-                      height: 5,
-                    ),
+                    // Text('ABOUT HOST',
+                    //     style: Theme.of(context).textTheme.headline6.copyWith(
+                    //         color: Colors.black.withOpacity(0.8),
+                    //         fontSize: 20)),
+                    // ProfileInfor(
+                    //     infor: 'Host Schedule', icon: Icons.list_alt_outlined),
+                    // SizedBox(
+                    //   height: 5,
+                    // ),
                     Text('LEGAL',
                         style: Theme.of(context).textTheme.headline6.copyWith(
                             color: Colors.black.withOpacity(0.8),
                             fontSize: 20)),
                     ProfileInfor(
-                        infor: 'Terms of Service',
-                        icon: Icons.list_alt_outlined),
+                      infor: 'App Information',
+                      icon: Icons.notifications_active_outlined,
+                      onTab: (context) {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Dialog(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.0)),
+                                child: Container(
+                                  constraints: BoxConstraints(maxHeight: 250),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text('Version 1.0'),
+                                        Text('Author : Nguyễn Ngọc Duy Khánh')
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            });
+                      },
+                    ),
+                    ProfileInfor(
+                      infor: 'Terms of Service',
+                      icon: Icons.list_alt_outlined,
+                      onTab: (context) {
+                        print('khanh');
+                      },
+                    ),
                     FlatButton(
                       onPressed: () => showDialog<String>(
                         context: context,
@@ -200,17 +333,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
 class ProfileInfor extends StatelessWidget {
   final String infor;
   final IconData icon;
+  final Function onTab;
   const ProfileInfor({
     Key key,
     this.infor,
     this.icon,
+    this.onTab,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return FlatButton(
       onPressed: () {
-        print('khanh');
+        onTab(context);
       },
       padding: EdgeInsets.zero,
       child: Container(
