@@ -212,6 +212,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         border: Border.all(
                                             width: 1, color: Colors.grey[200])),
                                     child: TextField(
+                                      obscureText: true,
                                       controller: passController,
                                       decoration: InputDecoration(
                                           errorBorder: passInval

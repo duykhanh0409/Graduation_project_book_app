@@ -182,18 +182,18 @@ class Price {
 }
 
 class Review {
-  Review({
-    this.comment,
-    this.reviewerId,
-  });
+  Review({this.comment, this.reviewerId, this.username, this.image});
 
   String comment;
   String reviewerId;
+  String username;
+  String image;
 
   factory Review.fromJson(Map<String, dynamic> json) => Review(
-        comment: json["comment"],
-        reviewerId: json["reviewerID"],
-      );
+      comment: json["comment"],
+      reviewerId: json["reviewerID"],
+      username: json["username"],
+      image: json["image"]);
 
   Map<String, dynamic> toJson() => {
         "comment": comment,

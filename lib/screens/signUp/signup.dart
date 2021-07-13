@@ -326,6 +326,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         border: Border.all(
                                             width: 1, color: Colors.grey[200])),
                                     child: TextField(
+                                      obscureText: true,
                                       controller: passController,
                                       decoration: InputDecoration(
                                         hintText: "Password",
@@ -357,6 +358,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         border: Border.all(
                                             width: 1, color: Colors.grey[200])),
                                     child: TextField(
+                                      obscureText: true,
                                       controller: rePassController,
                                       decoration: InputDecoration(
                                           hintText: "RePassword",

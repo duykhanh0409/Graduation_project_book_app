@@ -152,7 +152,9 @@ class _VdpScreensState extends State<VdpScreens> {
                                           decoration: BoxDecoration(
                                             shape: BoxShape.circle,
                                             image: DecorationImage(
-                                              image: NetworkImage(
+                                              image: NetworkImage(listComment[
+                                                          index]
+                                                      .image ??
                                                   'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png'),
                                               fit: BoxFit.cover,
                                             ),
@@ -164,7 +166,8 @@ class _VdpScreensState extends State<VdpScreens> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text('khanh'),
+                                            Text(listComment[index].username ??
+                                                'N/A'),
                                             SizedBox(
                                               height: 5,
                                             ),
@@ -348,13 +351,19 @@ class _VdpScreensState extends State<VdpScreens> {
                                     borderRadius: BorderRadius.circular(7),
                                     side: BorderSide(color: Colors.red)))),
                         onPressed: () async {
-                          await Api.addCommentRoom(item?.id,
-                              techMobile?.user?.id, commentController.text);
+                          await Api.addCommentRoom(
+                              item?.id,
+                              techMobile?.user?.id,
+                              commentController.text,
+                              techMobile?.user?.username,
+                              techMobile?.user?.avatar);
 
                           setState(() {
                             listComment.add(Review(
                                 reviewerId: techMobile?.user?.id,
-                                comment: commentController.text));
+                                comment: commentController.text,
+                                username: techMobile?.user?.username,
+                                image: techMobile?.user?.avatar));
                           });
                           commentController.text = '';
                         },

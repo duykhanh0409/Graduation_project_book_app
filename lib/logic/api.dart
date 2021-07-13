@@ -78,7 +78,8 @@ class Api {
     }
   }
 
-  static addCommentRoom(String productID, String userID, String comment) async {
+  static addCommentRoom(String productID, String userID, String comment,
+      String username, String image) async {
     String url = 'https://book-room-app.herokuapp.com/product/api/comment';
     final response = await http.post(Uri.parse(url),
         headers: <String, String>{
@@ -87,7 +88,9 @@ class Api {
         body: jsonEncode(<String, dynamic>{
           'productId': productID,
           'userId': userID,
-          'comment': comment
+          'comment': comment,
+          'username': username,
+          'image': image
         }));
     if (response.statusCode == 201) {
       Api.fetchData();
