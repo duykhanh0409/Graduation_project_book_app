@@ -55,28 +55,31 @@ class _FacilityTypeState extends State<FacilityType> {
       //tatusBarBrightness: Brightness.dark,
     ));
     return Scaffold(
+      appBar: AppBar(
+        elevation: 1,
+        centerTitle: true,
+        backgroundColor: Colors.blueGrey,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
+          ),
+        ),
+        title: Text(
+          "What facility will you offer",
+          style: TextStyle(
+              color: Colors.black, fontSize: 16, fontWeight: FontWeight.w600),
+        ),
+      ),
       body: Stack(children: [
         SingleChildScrollView(
           child: Column(
             children: [
-              Stack(
-                children: [
-                  Container(
-                    height: 150,
-                    color: Colors.blueGrey,
-                    alignment: Alignment.center,
-                    child: Text(
-                      "What facility will you offer",
-                      style: Theme.of(context).textTheme.subtitle1.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 22),
-                    ),
-                  ),
-                ],
-              ),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 30),
+                padding: EdgeInsets.symmetric(horizontal: 10),
                 child: SingleChildScrollView(
                   child: Column(
                     children: [

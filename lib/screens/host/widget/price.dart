@@ -34,26 +34,29 @@ class _PriceRoomState extends State<PriceRoom> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 1,
+        centerTitle: true,
+        backgroundColor:Colors.blueGrey,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
+          ),
+        ),
+        title: Text(
+          "Description Price Room",
+          style: TextStyle(
+              color: Colors.black, fontSize: 16, fontWeight: FontWeight.w600),
+        ),
+      ),
       body: Stack(children: [
         SingleChildScrollView(
           child: Column(
             children: [
-              Stack(
-                children: [
-                  Container(
-                    height: 150,
-                    color: Colors.blueGrey,
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Description Price Room",
-                      style: Theme.of(context).textTheme.subtitle1.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 22),
-                    ),
-                  ),
-                ],
-              ),
               SizedBox(
                 height: 30,
               ),
@@ -117,7 +120,7 @@ class PriceFiled extends StatelessWidget {
               child: TextField(
                 controller: controler,
                 keyboardType: TextInputType.number,
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(fontSize: 16),
                 decoration: InputDecoration(
                   hintText: priceField,
                 ),

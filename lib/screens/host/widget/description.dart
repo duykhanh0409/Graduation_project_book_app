@@ -21,21 +21,30 @@ class _DescriptionRoomState extends State<DescriptionRoom> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 1,
+        centerTitle: true,
+        backgroundColor: Colors.blueGrey,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
+          ),
+        ),
+        title: Text(
+          'Description Room',
+          style: TextStyle(
+              color: Colors.black, fontSize: 16, fontWeight: FontWeight.w600),
+        ),
+      ),
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
           child: Column(
             children: [
-              Text(
-                'Description Room',
-                style: TextStyle(
-                    fontSize: 24,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 30,
-              ),
               Container(
                 padding: EdgeInsets.only(top: 10),
                 decoration: BoxDecoration(
@@ -51,20 +60,22 @@ class _DescriptionRoomState extends State<DescriptionRoom> {
                             fontSize: 16,
                             color: Colors.black,
                             fontWeight: FontWeight.w300)),
-                    SizedBox(height: 10,),
-                    Text(
-                      'Description',
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle1
-                          .copyWith(fontWeight: FontWeight.w400, fontSize: 20),
+                    SizedBox(
+                      height: 30,
                     ),
                     Container(
-                        height: 30,
-                        child: TextField(
-                          controller: descriptionController,
-                          style: TextStyle(fontSize: 20),
-                        ))
+                      child: TextFormField(
+                        minLines:
+                            10, // any number you need (It works as the rows for the textarea)
+                        keyboardType: TextInputType.multiline,
+                        maxLines: null,
+                        controller: descriptionController,
+                        decoration: InputDecoration(
+                          hintText: "Mô tả chi tiết về phòng",
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                    )
                   ],
                 ),
               )

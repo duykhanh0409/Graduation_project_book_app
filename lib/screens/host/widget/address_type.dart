@@ -73,29 +73,34 @@ class _AddressTypeState extends State<AddressType> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        elevation: 1,
+        centerTitle: true,
+        backgroundColor: Colors.blueGrey,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
+          ),
+        ),
+        title: Text(
+          "Where's your place located?",
+          style: TextStyle(
+              color: Colors.black, fontSize: 16, fontWeight: FontWeight.w600),
+        ),
+      ),
       body: Stack(children: [
         SingleChildScrollView(
           child: Column(
             children: [
-              Stack(
-                children: [
-                  Container(
-                    height: 150,
-                    color: Colors.blueGrey,
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Where's your place located?",
-                      style: Theme.of(context).textTheme.subtitle1.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 22),
-                    ),
-                  ),
-                ],
-              ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 child: Text(
                   "Only confirmed guests will get your exact address after they book. We'll show everyone else an approximate location",
                   style: TextStyle(
@@ -191,18 +196,19 @@ class AddressField extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            addressField,
-            style: Theme.of(context)
-                .textTheme
-                .subtitle1
-                .copyWith(fontWeight: FontWeight.w400, fontSize: 20),
-          ),
+          // Text(
+          //   addressField,
+          //   style: Theme.of(context)
+          //       .textTheme
+          //       .subtitle1
+          //       .copyWith(fontWeight: FontWeight.w400, fontSize: 20),
+          // ),
           Container(
               height: 30,
               child: TextField(
                 controller: controler,
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(fontSize: 16),
+                decoration: InputDecoration(hintText: addressField),
               ))
         ],
       ),

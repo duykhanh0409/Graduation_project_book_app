@@ -34,26 +34,45 @@ class _RoomTypeState extends State<RoomType> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 1,
+        centerTitle: true,
+        backgroundColor: Colors.blueGrey,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
+          ),
+        ),
+        title: Text(
+          "What Type your room",
+          style: TextStyle(
+              color: Colors.black, fontSize: 16, fontWeight: FontWeight.w600),
+        ),
+      ),
       body: Stack(children: [
         SingleChildScrollView(
           child: Column(
             children: [
-              Stack(
-                children: [
-                  Container(
-                    height: 150,
-                    color: Colors.blueGrey,
-                    alignment: Alignment.center,
-                    child: Text(
-                      "What Type your room",
-                      style: Theme.of(context).textTheme.subtitle1.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 22),
-                    ),
-                  ),
-                ],
-              ),
+              // Stack(
+              //   children: [
+              //     Container(
+              //       height: 150,
+              //       color: Colors.blueGrey,
+              //       alignment: Alignment.center,
+              //       child: Text(
+              //         "What Type your room",
+              //         style: Theme.of(context).textTheme.subtitle1.copyWith(
+              //             color: Colors.white,
+              //             fontWeight: FontWeight.bold,
+              //             fontSize: 22),
+              //       ),
+              //     ),
+              //   ],
+              // ),
               SizedBox(
                 height: 50,
               ),

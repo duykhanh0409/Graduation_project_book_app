@@ -57,7 +57,6 @@ class _PhotoRoomState extends State<PhotoRoom> {
           useDetailsView: false,
           selectCircleStrokeColor: "#000000",
         ),
-        
       );
     } on Exception catch (e) {
       print(e.toString());
@@ -78,9 +77,10 @@ class _PhotoRoomState extends State<PhotoRoom> {
     var techMobile = TechMobile.of(context);
     if (images != null) {
       for (var i = 0; i < images.length; i++) {
-        int maxWidth=MediaQuery.of(context).size.width.round();
-        int maxHight=(MediaQuery.of(context).size.height/2).round();
-        ByteData byteData = await images[i].getThumbByteData(maxWidth, maxHight,quality: 80);
+        int maxWidth = MediaQuery.of(context).size.width.round();
+        int maxHight = (MediaQuery.of(context).size.height / 2).round();
+        ByteData byteData =
+            await images[i].getThumbByteData(maxWidth, maxHight, quality: 80);
         List<int> imageData = byteData.buffer.asInt8List();
         MultipartFile multipartFile = MultipartFile.fromBytes(
           imageData,
@@ -99,11 +99,37 @@ class _PhotoRoomState extends State<PhotoRoom> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.orange[900],
-          title: const Text('Photo Room'),
+          elevation: 1,
+          centerTitle: true,
+          backgroundColor: Colors.blueGrey,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.black,
+            ),
+          ),
+          title: Text(
+            'Room Image',
+            style: TextStyle(
+                color: Colors.black, fontSize: 16, fontWeight: FontWeight.w600),
+          ),
         ),
         body: Column(
           children: <Widget>[
+            SizedBox(
+              height: 20,
+            ),
+            Text('Upload ảnh về phòng',
+                style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w300)),
+            SizedBox(
+              height: 20,
+            ),
             ElevatedButton(
               child: Text("Pick images"),
               onPressed: loadAssets,

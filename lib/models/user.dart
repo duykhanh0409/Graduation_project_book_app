@@ -31,7 +31,9 @@ class User {
         avatar: json["avatar"],
         password: json["password"],
         phoneNumber: json["phoneNumber"],
-        favouriteList: List<dynamic>.from(json["favouriteList"].map((x) => x)),
+        favouriteList: json["favouriteList"] == null
+            ? null
+            : List<dynamic>.from(json["favouriteList"].map((x) => x)),
         email: json["email"],
         username: json["username"],
         id: json["id"],

@@ -1,10 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_project_book_app/bloc/searchBloc/search_bloc.dart';
-import 'package:graduation_project_book_app/bloc/searchBloc/search_state.dart';
 import 'package:graduation_project_book_app/logic/tech_mobile.dart';
-import 'package:graduation_project_book_app/models/user.dart';
+import 'package:graduation_project_book_app/screens/signIn/signin.dart';
+import 'package:graduation_project_book_app/widgets/SettingPage.dart';
+import 'package:graduation_project_book_app/widgets/appbar_normal.dart';
+import 'package:graduation_project_book_app/widgets/contactPage.dart';
+import 'package:graduation_project_book_app/widgets/personal_infor.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -12,361 +12,206 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  // TechMobileState techMobilea;
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-    // var techMobile = TechMobile.of(context);
-    // techMobile.getData();
-    //techMobilea = TechMobile.of(context);
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    Future.delayed(Duration(milliseconds: 3), () {
-      getData(context);
-    });
-  }
-
-  void getData(BuildContext context) {
-    var techMobile = TechMobile.of(context);
-    techMobile.getData();
-  }
-
+  List listSupport = [
+    {
+      'icon': Icons.star_outline_rounded,
+      'title': 'Đánh giá Dịch vụ',
+      'screen': SettingPage()
+    },
+    {
+      'icon': Icons.chat_bubble_outline,
+      'title': 'Liên hệ và góp ý',
+      'screen': ContactAndComment()
+    },
+  ];
+  List listAccount = [
+    {
+      'icon': Icons.person_outline_rounded,
+      'title': 'Thông tin cá nhân',
+      'screen': PersonalInfor()
+    },
+    {
+      'icon': Icons.sanitizer,
+      'title': 'Địa chỉ đã lưu',
+      'screen': SettingPage()
+    },
+    {
+      'icon': Icons.settings_outlined,
+      'title': 'Cài đặt',
+      'screen': SettingPage()
+    },
+    {
+      'icon': Icons.single_bed_outlined,
+      'title': 'Đăng nhập',
+      'screen': LoginScreen()
+    },
+  ];
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     var techMobile = TechMobile.of(context);
-    var validInfor = "chưa có thông tin ";
     return Scaffold(
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height: 100,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    // Image.asset('assets/images/host.jpg')
-                    Container(
-                      height: 60,
-                      width: 60,
-                      margin: EdgeInsets.only(left: 20, right: 10),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: NetworkImage(techMobile?.user?.avatar),
-                          fit: BoxFit.cover,
-                        ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 15,horizontal: 10),
+              decoration: BoxDecoration(
+                  border: Border(
+                      bottom: BorderSide(color: Colors.grey, width: 0.3))),
+              child: Row(
+                children: [
+                  Container(
+                    height: 60,
+                    width: 60,
+                    margin: EdgeInsets.only(left: 0, right: 10),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image: NetworkImage(techMobile?.user?.avatar),
+                        fit: BoxFit.cover,
                       ),
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(techMobile?.user?.username,
-                            style: Theme.of(context).textTheme.headline6),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Text('View profile',
-                            style: Theme.of(context)
-                                .textTheme
-                                .subtitle1
-                                .copyWith(color: Colors.lightGreen))
-                      ],
-                    ),
-                  ],
-                ),
+                  ),
+                  Text(techMobile?.user?.username,
+                      style: Theme.of(context).textTheme.headline6),
+                ],
               ),
-              Divider(thickness: 1, color: Colors.grey.withOpacity(0.4)),
-              Container(
-                padding: EdgeInsets.only(
-                  left: 20,
-                  top: 20,
-                  right: 20,
-                ),
+            ),
+            Container(
+              padding: EdgeInsets.all(size.width * 0.03),
+              child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('ACCOUNT SETTINGS',
-                        style: Theme.of(context).textTheme.headline6.copyWith(
-                            color: Colors.black.withOpacity(0.8),
-                            fontSize: 20)),
-                    SizedBox(
-                      height: 3,
-                    ),
-                    ProfileInfor(
-                      infor: 'Personal information',
-                      icon: Icons.person_outline,
-                      onTab: (context) {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return Dialog(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.0)),
-                                child: Container(
-                                  constraints: BoxConstraints(maxHeight: 250),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        SizedBox(
-                                          height: 15,
-                                        ),
-                                        RichText(
-                                          text: TextSpan(
-                                            text: 'userName: ',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black),
-                                            children: <TextSpan>[
-                                              TextSpan(
-                                                text:
-                                                    '${techMobile?.user?.username ?? validInfor}',
-                                                style:
-                                                    DefaultTextStyle.of(context)
-                                                        .style,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        RichText(
-                                          text: TextSpan(
-                                            text: 'Password: ',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black),
-                                            children: <TextSpan>[
-                                              TextSpan(
-                                                text:
-                                                    '${techMobile?.user?.password ?? validInfor}',
-                                                style:
-                                                    DefaultTextStyle.of(context)
-                                                        .style,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        RichText(
-                                          text: TextSpan(
-                                            text: 'Số điện thoại: ',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black),
-                                            children: <TextSpan>[
-                                              TextSpan(
-                                                text:
-                                                    '${techMobile?.user?.phoneNumber ?? validInfor}',
-                                                style:
-                                                    DefaultTextStyle.of(context)
-                                                        .style,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        RichText(
-                                          text: TextSpan(
-                                            text: 'Email: ',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black),
-                                            children: <TextSpan>[
-                                              TextSpan(
-                                                text:
-                                                    '${techMobile?.user?.email ?? validInfor}',
-                                                style:
-                                                    DefaultTextStyle.of(context)
-                                                        .style,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              );
-                            });
-                      },
-                    ),
-                    ProfileInfor(
-                      infor: 'Lists your book',
-                      icon: Icons.list_alt_outlined,
-                      onTab: (context) {},
-                    ),
-
-                    ProfileInfor(
-                      infor: 'Learn about user',
-                      icon: Icons.home_outlined,
-                      onTab: (context) {},
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    // Text('ABOUT HOST',
-                    //     style: Theme.of(context).textTheme.headline6.copyWith(
-                    //         color: Colors.black.withOpacity(0.8),
-                    //         fontSize: 20)),
-                    // ProfileInfor(
-                    //     infor: 'Host Schedule', icon: Icons.list_alt_outlined),
-                    // SizedBox(
-                    //   height: 5,
-                    // ),
-                    Text('LEGAL',
-                        style: Theme.of(context).textTheme.headline6.copyWith(
-                            color: Colors.black.withOpacity(0.8),
-                            fontSize: 20)),
-                    ProfileInfor(
-                      infor: 'App Information',
-                      icon: Icons.notifications_active_outlined,
-                      onTab: (context) {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return Dialog(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.0)),
-                                child: Container(
-                                  constraints: BoxConstraints(maxHeight: 250),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text('Version 1.0'),
-                                        Text('Author : Nguyễn Ngọc Duy Khánh')
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              );
-                            });
-                      },
-                    ),
-                    ProfileInfor(
-                      infor: 'Terms of Service',
-                      icon: Icons.list_alt_outlined,
-                      onTab: (context) {
-                        print('khanh');
-                      },
-                    ),
-                    FlatButton(
-                      onPressed: () => showDialog<String>(
-                        context: context,
-                        builder: (BuildContext context) => AlertDialog(
-                          title: const Text('Are you sure want to logout?'),
-                          //content: const Text('AlertDialog description'),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () => Navigator.pop(context, 'Cancel'),
-                              child: const Text('CANCEL'),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                techMobile.user = User(
-                                    username: null,
-                                    password: null,
-                                    avatar: null,
-                                    favouriteList: null,
-                                    email: null,
-                                    id: null,
-                                    phoneNumber: null);
-                                Navigator.of(context).pushNamed('/login');
-                              },
-                              child: const Text(
-                                'LOG OUT',
-                                style: TextStyle(color: Colors.red),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      padding: EdgeInsets.zero,
-                      child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 14),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Log Out',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle1
-                                  .copyWith(
-                                      //fontWeight: FontWeight.w300,
-                                      color: Colors.black,
-                                      fontSize: 19),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
+                    //service(size, context),
+                    support(context, size, listSupport),
+                    account(context, size, listAccount)
                   ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-class ProfileInfor extends StatelessWidget {
-  final String infor;
-  final IconData icon;
-  final Function onTab;
-  const ProfileInfor({
-    Key key,
-    this.infor,
-    this.icon,
-    this.onTab,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return FlatButton(
-      onPressed: () {
-        onTab(context);
-      },
-      padding: EdgeInsets.zero,
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: 14),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              infor,
-              style: Theme.of(context).textTheme.subtitle1.copyWith(
-                  //fontWeight: FontWeight.w300,
-                  color: Colors.black,
-                  fontSize: 19),
-            ),
-            Icon(
-              icon,
-              color: Colors.grey,
-            )
-          ],
-        ),
+Widget support(BuildContext context, Size size, List list) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      SizedBox(height: size.width * 0.03),
+      textTile('Hỗ trợ'),
+      SizedBox(
+        height: 5,
       ),
-    );
-  }
+      item(context, size, list)
+    ],
+  );
+}
+
+Widget account(BuildContext context, Size size, List list) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      SizedBox(height: size.width * 0.03),
+      textTile('Tài khoản'),
+      SizedBox(
+        height: 5,
+      ),
+      item(context, size, list)
+    ],
+  );
+}
+
+Widget item(BuildContext context, Size size, List list) {
+  return Card(
+    child: Container(
+      child: Column(
+          children: List.generate(
+              list.length,
+              (index) => InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => list[index]['screen']),
+                      );
+                    },
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(
+                        0,
+                        size.width * 0.05,
+                        size.width * 0.03,
+                        size.width * 0.05,
+                      ),
+                      margin: EdgeInsets.only(left: size.width * 0.03),
+                      decoration: BoxDecoration(
+                          border: Border(
+                              bottom: BorderSide(
+                                  color: Colors.grey,
+                                  width: index != list.length - 1 ? 0.2 : 0))),
+                      child: Row(
+                        children: [
+                          Icon(
+                            list[index]['icon'],
+                            color: Colors.black,
+                            size: 20,
+                          ),
+                          SizedBox(
+                            width: 7,
+                          ),
+                          Expanded(child: Text(list[index]['title'])),
+                          Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            color: Colors.black,
+                            size: 12,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ))),
+    ),
+  );
+}
+
+Widget card(String title, Icon icon, Size size, VoidCallback function) {
+  return Expanded(
+    child: Card(
+      child: InkWell(
+        splashColor: Colors.white,
+        focusColor: Colors.white,
+        hoverColor: Colors.white,
+        highlightColor: Colors.white,
+        onTap: function,
+        child: Container(
+            padding: EdgeInsets.all(size.width * 0.03),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                icon,
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  title,
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.w600),
+                )
+              ],
+            )),
+      ),
+    ),
+  );
+}
+
+Widget textTile(String title) {
+  return Text(
+    title,
+    style: TextStyle(
+        color: Colors.black, fontSize: 16, fontWeight: FontWeight.w600),
+  );
 }

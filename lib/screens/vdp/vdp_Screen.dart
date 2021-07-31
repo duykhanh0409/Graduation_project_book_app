@@ -255,23 +255,6 @@ class _VdpScreensState extends State<VdpScreens> {
                                       side: BorderSide(color: Colors.red)))),
                       onPressed: () =>
                           launch(('tel://${userHost?.phoneNumber}'))),
-                  // ElevatedButton(
-                  //   child: Text("Reservation".toUpperCase(),
-                  //       style: TextStyle(fontSize: 14)),
-                  //   style: ButtonStyle(
-                  //       foregroundColor:
-                  //           MaterialStateProperty.all<Color>(Colors.white),
-                  //       backgroundColor:
-                  //           MaterialStateProperty.all<Color>(Colors.red),
-                  //       shape:
-                  //           MaterialStateProperty.all<RoundedRectangleBorder>(
-                  //               RoundedRectangleBorder(
-                  //                   borderRadius: BorderRadius.circular(7),
-                  //                   side: BorderSide(color: Colors.red)))),
-                  //   onPressed: () {
-                  //     _modalBottomSheetMenu();
-                  //   },
-                  // )
                 ],
               ),
             ),
@@ -300,11 +283,6 @@ class _VdpScreensState extends State<VdpScreens> {
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                   child: Column(
                     children: [
-                      // Text(
-                      //   'Review Room',
-                      //   style: Theme.of(context).textTheme.subtitle1.copyWith(
-                      //       fontSize: 15, fontWeight: FontWeight.bold),
-                      // ),
                       Container(
                         height: 60,
                         width: 60,

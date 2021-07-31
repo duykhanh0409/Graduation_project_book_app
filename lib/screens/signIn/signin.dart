@@ -97,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     userController.text = 'khanhNguyen';
-    passController.text = '123456';
+    passController.text = '12345678';
     // TODO: implement initState
     super.initState();
   }

@@ -85,41 +85,60 @@ class _CreateNewRoomState extends State<CreateNewRoom> {
     print(techMobile?.listPhoto?.length);
 
     return Scaffold(
+      appBar: AppBar(
+        elevation: 1,
+        centerTitle: true,
+        backgroundColor: Colors.orange[900],
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
+          ),
+        ),
+        title: Text(
+          "Let's set up your listing",
+          style: TextStyle(
+              color: Colors.black, fontSize: 16, fontWeight: FontWeight.w600),
+        ),
+      ),
       body: Stack(
         children: [
           SingleChildScrollView(
             child: Column(
               children: [
-                Stack(
-                  children: [
-                    Container(
-                      height: 150,
-                      color: Colors.blueGrey,
-                      alignment: Alignment.center,
-                      child: Text(
-                        "Let's set up your listing",
-                        style: Theme.of(context).textTheme.subtitle1.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 28),
-                      ),
-                    ),
-                    Positioned(
-                      top: 65,
-                      left: 20,
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Icon(
-                          Icons.arrow_back,
-                          size: 20,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                // Stack(
+                //   children: [
+                //     Container(
+                //       height: 150,
+                //       color: Colors.blueGrey,
+                //       alignment: Alignment.center,
+                //       child: Text(
+                //         "Let's set up your listing",
+                //         style: Theme.of(context).textTheme.subtitle1.copyWith(
+                //             color: Colors.white,
+                //             fontWeight: FontWeight.bold,
+                //             fontSize: 28),
+                //       ),
+                //     ),
+                //     Positioned(
+                //       top: 65,
+                //       left: 20,
+                //       child: GestureDetector(
+                //         onTap: () {
+                //           Navigator.pop(context);
+                //         },
+                //         child: Icon(
+                //           Icons.arrow_back,
+                //           size: 20,
+                //           color: Colors.white,
+                //         ),
+                //       ),
+                //     ),
+                //   ],
+                // ),
                 SizedBox(
                   height: 20,
                 ),
@@ -245,8 +264,8 @@ class PropertyRoom extends StatelessWidget {
       padding: EdgeInsets.zero,
       child: Container(
         alignment: Alignment.centerLeft,
-        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        padding: EdgeInsets.only(bottom: 17),
+        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+        padding: EdgeInsets.only(bottom: 8,top: 8),
         decoration: BoxDecoration(
             border: Border(
                 bottom:

@@ -69,6 +69,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
 
   FirebaseAuth _auth = FirebaseAuth.instance;
   getMobileFormWidget(context) {
+    Size size = MediaQuery.of(context).size;
     return Column(
       children: [
         SizedBox(
@@ -78,14 +79,66 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           'assets/images/holding-phone.png',
           height: 150,
         ),
-        TextField(
-          controller: _phonecontroller,
-          decoration: InputDecoration(
-            hintText: "Phone Number",
-          ),
-        ),
+        // TextField(
+        //   controller: _phonecontroller,
+        //   decoration: InputDecoration(
+        //     hintText: "Phone Number",
+        //   ),
+        // ),
         SizedBox(
           height: 16,
+        ),
+        Container(
+          width: size.width,
+          height: 50,
+          child: TextFormField(
+            cursorColor: Color(0xffE67805),
+            controller: _phonecontroller,
+            // onChanged: (val) {
+            //   setState(() {
+            //     val.length >= 9
+            //         ? isCompleteNumber = true
+            //         : isCompleteNumber = false;
+            //   });
+            // },
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide: BorderSide(color: Color(0xffE67805), width: 1.0),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(color: Colors.grey, width: 1.0),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.red, width: 1.0),
+                ),
+                hintStyle: TextStyle(color: Colors.grey),
+                disabledBorder: InputBorder.none,
+                hintText: 'Nhập số điện thoại',
+                contentPadding: EdgeInsets.all(5),
+                prefixIcon: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset(
+                        'assets/icons/vietnam.png',
+                        width: 15,
+                        height: 15,
+                        fit: BoxFit.cover,
+                      ),
+                      Text(' +84   '),
+                      Container(
+                        height: 20,
+                        color: Colors.grey,
+                        width: 1,
+                      )
+                    ],
+                  ),
+                )),
+          ),
         ),
         FlatButton(
           onPressed: () async {
@@ -126,6 +179,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   }
 
   getOtpFormWidget(context) {
+    Size size = MediaQuery.of(context).size;
     return Column(
       children: [
         SizedBox(
@@ -140,6 +194,51 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           decoration: InputDecoration(
             hintText: "Enter OTP",
           ),
+        ),
+        Container(
+          width: size.width,
+          height: 50,
+          child: TextFormField(
+              controller: _otpcontroller,
+              cursorColor: Color(0xffE67805),
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide: BorderSide(color: Color(0xffE67805), width: 1.0),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(color: Colors.grey, width: 1.0),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.red, width: 1.0),
+                ),
+                hintStyle: TextStyle(color: Colors.grey),
+                disabledBorder: InputBorder.none,
+                hintText: 'Nhập mã otp',
+                contentPadding: EdgeInsets.all(5),
+                // prefixIcon: Container(
+                //   padding: EdgeInsets.symmetric(horizontal: 15),
+                //   child: Row(
+                //     mainAxisSize: MainAxisSize.min,
+                //     children: [
+                //       Image.asset(
+                //         'assets/icons/vietnam.png',
+                //         width: 15,
+                //         height: 15,
+                //         fit: BoxFit.cover,
+                //       ),
+                //       Text(' +84   '),
+                //       Container(
+                //         height: 20,
+                //         color: Colors.grey,
+                //         width: 1,
+                //       )
+                //     ],
+                //   ),
+                // )),
+              )),
         ),
         SizedBox(
           height: 16,
