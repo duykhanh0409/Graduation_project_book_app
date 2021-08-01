@@ -55,7 +55,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.symmetric(vertical: 15,horizontal: 10),
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
               decoration: BoxDecoration(
                   border: Border(
                       bottom: BorderSide(color: Colors.grey, width: 0.3))),
@@ -135,11 +135,17 @@ Widget item(BuildContext context, Size size, List list) {
               list.length,
               (index) => InkWell(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => list[index]['screen']),
-                      );
+                      index == 3
+                          ? Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => list[index]['screen']),
+                            )
+                          : Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => list[index]['screen']),
+                            );
                     },
                     child: Container(
                       padding: EdgeInsets.fromLTRB(

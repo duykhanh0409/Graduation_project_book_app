@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation_project_book_app/logic/api.dart';
+import 'package:graduation_project_book_app/models/user.dart';
 import 'package:graduation_project_book_app/models/vdp.dart';
 import 'package:intl/intl.dart';
 
@@ -16,6 +18,22 @@ class ItemCard extends StatefulWidget {
 
 class _ItemCardState extends State<ItemCard> {
   int _current = 0;
+  User userHost;
+  Future<User> getData() async {
+    var result = await Api.getUser(widget.item?.host?.hostId);
+    if (result != null)
+      setState(() {
+        userHost = result;
+      });
+    //return result;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +127,10 @@ class _ItemCardState extends State<ItemCard> {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
-                            image: AssetImage('assets/images/khanh.jpg'),
+                            image: userHost?.avatar != null
+                                ? NetworkImage(userHost.avatar)
+                                : NetworkImage(
+                                    'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png'),
                             fit: BoxFit.cover,
                           ),
                         )),

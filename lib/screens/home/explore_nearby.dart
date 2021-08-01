@@ -46,10 +46,10 @@ class ExploreNearby extends StatelessWidget {
         'long': '106.766493'
       },
       {
-        'title': 'Linh Đông',
+        'title': 'Bình Thọ',
         'time': '1.5',
-        'lat': '10.851457',
-        'long': '106.745018'
+        'lat': '10.846023',
+        'long': '106.769309'
       },
       {
         'title': 'Thảo Điền',

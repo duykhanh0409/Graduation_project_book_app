@@ -75,6 +75,7 @@ class _VerifyHostState extends State<VerifyHost> {
 
   FirebaseAuth _auth = FirebaseAuth.instance;
   getMobileFormWidget(context) {
+    Size size = MediaQuery.of(context).size;
     return Column(
       children: [
         SizedBox(
@@ -84,16 +85,74 @@ class _VerifyHostState extends State<VerifyHost> {
           'assets/images/holding-phone.png',
           height: 150,
         ),
-        TextField(
-          controller: _emailcontroller,
-          decoration: InputDecoration(
-            hintText: "Email",
-          ),
+        Container(
+          width: size.width,
+          height: 50,
+          child: TextFormField(
+              controller: _emailcontroller,
+              cursorColor: Color(0xffE67805),
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide: BorderSide(color: Color(0xffE67805), width: 1.0),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(color: Colors.grey, width: 1.0),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.red, width: 1.0),
+                ),
+                hintStyle: TextStyle(color: Colors.grey),
+                disabledBorder: InputBorder.none,
+                hintText: 'Email',
+                contentPadding: EdgeInsets.all(5),
+              )),
         ),
-        TextField(
-          controller: _phonecontroller,
-          decoration: InputDecoration(
-            hintText: "Phone Number",
+        Container(
+          width: size.width,
+          height: 50,
+          child: TextFormField(
+            cursorColor: Color(0xffE67805),
+            controller: _phonecontroller,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide: BorderSide(color: Color(0xffE67805), width: 1.0),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(color: Colors.grey, width: 1.0),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.red, width: 1.0),
+                ),
+                hintStyle: TextStyle(color: Colors.grey),
+                disabledBorder: InputBorder.none,
+                hintText: 'Nhập số điện thoại',
+                contentPadding: EdgeInsets.all(5),
+                prefixIcon: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset(
+                        'assets/icons/vietnam.png',
+                        width: 15,
+                        height: 15,
+                        fit: BoxFit.cover,
+                      ),
+                      Text(' +84   '),
+                      Container(
+                        height: 20,
+                        color: Colors.grey,
+                        width: 1,
+                      )
+                    ],
+                  ),
+                )),
           ),
         ),
         SizedBox(
@@ -138,6 +197,7 @@ class _VerifyHostState extends State<VerifyHost> {
   }
 
   getOtpFormWidget(context) {
+    Size size = MediaQuery.of(context).size;
     return Column(
       children: [
         SizedBox(
@@ -147,11 +207,30 @@ class _VerifyHostState extends State<VerifyHost> {
           'assets/images/holding-phone.png',
           height: 150,
         ),
-        TextField(
-          controller: _otpcontroller,
-          decoration: InputDecoration(
-            hintText: "Enter OTP",
-          ),
+        Container(
+          width: size.width,
+          height: 50,
+          child: TextFormField(
+              controller: _otpcontroller,
+              cursorColor: Color(0xffE67805),
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide: BorderSide(color: Color(0xffE67805), width: 1.0),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(color: Colors.grey, width: 1.0),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.red, width: 1.0),
+                ),
+                hintStyle: TextStyle(color: Colors.grey),
+                disabledBorder: InputBorder.none,
+                hintText: 'Nhập mã otp',
+                contentPadding: EdgeInsets.all(5),
+              )),
         ),
         SizedBox(
           height: 16,

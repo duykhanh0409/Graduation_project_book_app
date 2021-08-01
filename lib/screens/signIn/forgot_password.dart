@@ -94,13 +94,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           child: TextFormField(
             cursorColor: Color(0xffE67805),
             controller: _phonecontroller,
-            // onChanged: (val) {
-            //   setState(() {
-            //     val.length >= 9
-            //         ? isCompleteNumber = true
-            //         : isCompleteNumber = false;
-            //   });
-            // },
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
                 focusedBorder: OutlineInputBorder(
@@ -218,26 +211,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 disabledBorder: InputBorder.none,
                 hintText: 'Nhập mã otp',
                 contentPadding: EdgeInsets.all(5),
-                // prefixIcon: Container(
-                //   padding: EdgeInsets.symmetric(horizontal: 15),
-                //   child: Row(
-                //     mainAxisSize: MainAxisSize.min,
-                //     children: [
-                //       Image.asset(
-                //         'assets/icons/vietnam.png',
-                //         width: 15,
-                //         height: 15,
-                //         fit: BoxFit.cover,
-                //       ),
-                //       Text(' +84   '),
-                //       Container(
-                //         height: 20,
-                //         color: Colors.grey,
-                //         width: 1,
-                //       )
-                //     ],
-                //   ),
-                // )),
               )),
         ),
         SizedBox(
