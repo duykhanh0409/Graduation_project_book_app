@@ -107,7 +107,7 @@ class _VerifyHostState extends State<VerifyHost> {
                 hintStyle: TextStyle(color: Colors.grey),
                 disabledBorder: InputBorder.none,
                 hintText: 'Email',
-                contentPadding: EdgeInsets.all(5),
+                contentPadding: EdgeInsets.only(left: 10),
               )),
         ),
         Container(

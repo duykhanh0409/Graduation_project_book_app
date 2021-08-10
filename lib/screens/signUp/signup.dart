@@ -21,6 +21,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController userController = new TextEditingController();
   TextEditingController passController = new TextEditingController();
   TextEditingController rePassController = new TextEditingController();
+  bool isShowPassword = true;
   var userInval = '';
   var passInval = '';
   var rePassInval = '';
@@ -326,13 +327,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         border: Border.all(
                                             width: 1, color: Colors.grey[200])),
                                     child: TextField(
-                                      obscureText: true,
+                                      obscureText: isShowPassword,
                                       controller: passController,
                                       decoration: InputDecoration(
                                         hintText: "Password",
                                         hintStyle:
                                             TextStyle(color: Colors.grey),
                                         border: InputBorder.none,
+                                         suffixIcon: GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                isShowPassword =
+                                                    !isShowPassword;
+                                              });
+                                            },  
+                                            child: Padding(
+                                              padding:
+                                                  EdgeInsetsDirectional.only(
+                                                      end: 0, bottom: 5),
+                                              child: Icon(Icons.remove_red_eye),
+                                            ),
+                                          ),
                                       ),
                                     ),
                                   ),

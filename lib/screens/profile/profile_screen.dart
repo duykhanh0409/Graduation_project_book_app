@@ -42,7 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     },
     {
       'icon': Icons.single_bed_outlined,
-      'title': 'Đăng nhập',
+      'title': 'Đăng Xuất',
       'screen': LoginScreen()
     },
   ];

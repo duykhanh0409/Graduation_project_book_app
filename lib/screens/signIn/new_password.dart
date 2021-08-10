@@ -15,7 +15,7 @@ class _NewPasswordState extends State<NewPassword> {
   TextEditingController passController = new TextEditingController();
   TextEditingController rePassController = new TextEditingController();
   TextEditingController userController = new TextEditingController();
-
+  bool isShowPassword = true;
   var passInval = '';
   var userInval = '';
   var rePassInval = '';
@@ -157,13 +157,24 @@ class _NewPasswordState extends State<NewPassword> {
                           border:
                               Border.all(width: 1, color: Colors.grey[200])),
                       child: TextField(
-                         obscureText: true,
+                        obscureText: isShowPassword,
                         controller: passController,
                         decoration: InputDecoration(
                           hintText: "Password",
                           hintStyle: TextStyle(color: Colors.grey),
                           border: InputBorder.none,
-                          
+                          suffixIcon: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isShowPassword = !isShowPassword;
+                              });
+                            },
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.only(end: 0, bottom: 5),
+                              child: Icon(Icons.remove_red_eye),
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -187,7 +198,7 @@ class _NewPasswordState extends State<NewPassword> {
                           border:
                               Border.all(width: 1, color: Colors.grey[200])),
                       child: TextField(
-                         obscureText: true,
+                        obscureText: true,
                         controller: rePassController,
                         decoration: InputDecoration(
                             hintText: "RePassword",

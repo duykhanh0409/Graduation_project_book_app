@@ -18,6 +18,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController userController = new TextEditingController();
   TextEditingController passController = new TextEditingController();
+  bool isShowPassword = true;
   var userInval = false;
   var passInval = false;
   var isLoading = false;
@@ -214,7 +215,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         border: Border.all(
                                             width: 1, color: Colors.grey[200])),
                                     child: TextField(
-                                      obscureText: true,
+                                      obscureText: isShowPassword,
                                       controller: passController,
                                       decoration: InputDecoration(
                                           errorBorder: passInval
@@ -225,6 +226,20 @@ class _LoginScreenState extends State<LoginScreen> {
                                           hintText: "Password",
                                           hintStyle:
                                               TextStyle(color: Colors.grey),
+                                          suffixIcon: GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                isShowPassword =
+                                                    !isShowPassword;
+                                              });
+                                            },  
+                                            child: Padding(
+                                              padding:
+                                                  EdgeInsetsDirectional.only(
+                                                      end: 0, bottom: 5),
+                                              child: Icon(Icons.remove_red_eye),
+                                            ),
+                                          ),
                                           border: InputBorder.none),
                                     ),
                                   ),
