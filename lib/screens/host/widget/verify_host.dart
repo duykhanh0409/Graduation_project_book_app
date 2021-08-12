@@ -91,7 +91,6 @@ class _VerifyHostState extends State<VerifyHost> {
           child: TextFormField(
               controller: _emailcontroller,
               cursorColor: Color(0xffE67805),
-              keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(5),

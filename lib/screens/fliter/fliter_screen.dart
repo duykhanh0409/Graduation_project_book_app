@@ -176,7 +176,7 @@ class _FliterScreenState extends State<FliterScreen> {
                     selected: false,
                   ),
                   SizedBox(
-                    height: 100,
+                    height: 150,
                   )
                 ],
               ),
@@ -186,7 +186,7 @@ class _FliterScreenState extends State<FliterScreen> {
             bottom: 0,
             child: Container(
               width: MediaQuery.of(context).size.width,
-              height: 50,
+              
               decoration: BoxDecoration(
                 color: Colors.white,
                 boxShadow: [
@@ -199,9 +199,9 @@ class _FliterScreenState extends State<FliterScreen> {
                 ],
               ),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Clear all'),
+                 
                   Container(
                     width: 180,
                     child: ElevatedButton(
