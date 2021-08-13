@@ -41,45 +41,47 @@ class _DescriptionRoomState extends State<DescriptionRoom> {
         ),
       ),
       body: SafeArea(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-          child: Column(
-            children: [
-              Container(
-                padding: EdgeInsets.only(top: 10),
-                decoration: BoxDecoration(
-                    border: Border(
-                        bottom: BorderSide(
-                            width: 1, color: Colors.grey.withOpacity(0.1)))),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                        'Describe your room in detail in terms of location, space in the room or current costs, problems of the room',
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w300)),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Container(
-                      child: TextFormField(
-                        minLines:
-                            10, // any number you need (It works as the rows for the textarea)
-                        keyboardType: TextInputType.multiline,
-                        maxLines: null,
-                        controller: descriptionController,
-                        decoration: InputDecoration(
-                          hintText: "Mô tả chi tiết về phòng",
-                          border: OutlineInputBorder(),
-                        ),
+        child: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+            child: Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.only(top: 10),
+                  decoration: BoxDecoration(
+                      border: Border(
+                          bottom: BorderSide(
+                              width: 1, color: Colors.grey.withOpacity(0.1)))),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                          'Describe your room in detail in terms of location, space in the room or current costs, problems of the room',
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w300)),
+                      SizedBox(
+                        height: 30,
                       ),
-                    )
-                  ],
-                ),
-              )
-            ],
+                      Container(
+                        child: TextFormField(
+                          minLines:
+                              10, // any number you need (It works as the rows for the textarea)
+                          keyboardType: TextInputType.multiline,
+                          maxLines: null,
+                          controller: descriptionController,
+                          decoration: InputDecoration(
+                            hintText: "Mô tả chi tiết về phòng",
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

@@ -11,17 +11,17 @@ String vdpItemToJson(List<VdpItem> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class VdpItem {
-  VdpItem({
-    this.reviews,
-    this.image,
-    this.address,
-    this.type,
-    this.host,
-    this.facility,
-    this.description,
-    this.price,
-    this.id,
-  });
+  VdpItem(
+      {this.reviews,
+      this.image,
+      this.address,
+      this.type,
+      this.host,
+      this.facility,
+      this.description,
+      this.price,
+      this.id,
+      this.roomAvailable});
 
   List<Review> reviews;
   Image image;
@@ -32,21 +32,21 @@ class VdpItem {
   String description;
   Price price;
   String id;
+  var roomAvailable;
 
   factory VdpItem.fromJson(Map<String, dynamic> json) => VdpItem(
-        reviews: json["reviews"] == null
-            ? null
-            : List<Review>.from(
-                json["reviews"]?.map((x) => Review.fromJson(x))),
-        image: Image.fromJson(json["image"]),
-        address: Address.fromJson(json["address"]),
-        type: json["type"],
-        host: Host.fromJson(json["host"]),
-        facility: Facility.fromJson(json["facility"]),
-        description: json["description"],
-        price: Price.fromJson(json["price"]),
-        id: json["id"],
-      );
+      reviews: json["reviews"] == null
+          ? null
+          : List<Review>.from(json["reviews"]?.map((x) => Review.fromJson(x))),
+      image: Image.fromJson(json["image"]),
+      address: Address.fromJson(json["address"]),
+      type: json["type"],
+      host: Host.fromJson(json["host"]),
+      facility: Facility.fromJson(json["facility"]),
+      description: json["description"],
+      price: Price.fromJson(json["price"]),
+      id: json["id"],
+      roomAvailable: json["roomAvailable"] ?? null);
 
   Map<String, dynamic> toJson() => {
         "reviews": List<dynamic>.from(reviews.map((x) => x.toJson())),

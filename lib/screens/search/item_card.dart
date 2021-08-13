@@ -139,7 +139,7 @@ class _ItemCardState extends State<ItemCard> {
               )),
           Container(
               child: Padding(
-            padding: EdgeInsets.only(left: 20, bottom: 20),
+            padding: EdgeInsets.only(left: 20, bottom: 20, right: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -154,19 +154,33 @@ class _ItemCardState extends State<ItemCard> {
                 SizedBox(
                   height: 2,
                 ),
-                RichText(
-                  text: TextSpan(
-                    text:
-                        '${NumberFormat('#,###').format(int.parse(widget.item.price.room))}', //dùng number fortmat mà chưa dùng đc '${NumberFormat('#,###').format(widget.listingPrice)}'
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.black),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: ' VND/Month',
-                        style: DefaultTextStyle.of(context).style,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    RichText(
+                      text: TextSpan(
+                        text:
+                            '${NumberFormat('#,###').format(int.parse(widget.item.price.room))}', //dùng number fortmat mà chưa dùng đc '${NumberFormat('#,###').format(widget.listingPrice)}'
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.black),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: ' VND/Month',
+                            style: DefaultTextStyle.of(context).style,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                    Container(
+                        padding: EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          color: widget.item.roomAvailable == true?Colors.orange[500]:Colors.blue,
+                          borderRadius: BorderRadius.circular(8)
+                        ),
+                        child: Text(widget.item.roomAvailable == true
+                            ? "Available"
+                            : "out of room",style: TextStyle(fontSize: 8),))
+                  ],
                 ),
                 SizedBox(
                   height: 2,

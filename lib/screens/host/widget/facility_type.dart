@@ -15,6 +15,7 @@ class _FacilityTypeState extends State<FacilityType> {
   TextEditingController bathController = new TextEditingController();
   TextEditingController bedController = new TextEditingController();
   bool ischeckWifi = false;
+  bool ischeckAvailable = true;
 
   void fillFacility() {
     var techMobile = TechMobile.of(context);
@@ -41,6 +42,7 @@ class _FacilityTypeState extends State<FacilityType> {
         bathController.text != "" &&
         bedController.text != "" &&
         ischeckWifi != null) {
+      techMobile.roomAvailable = ischeckAvailable;
       techMobile.isShowFacility = true;
     }
   }
@@ -100,6 +102,18 @@ class _FacilityTypeState extends State<FacilityType> {
                         onChanged: (bool value) {
                           setState(() {
                             ischeckWifi = value;
+                          });
+                        },
+                      ),
+                      CheckboxListTile(
+                        title: const Text(
+                          'Room available',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        value: ischeckAvailable,
+                        onChanged: (bool value) {
+                          setState(() {
+                            ischeckAvailable = value;
                           });
                         },
                       ),

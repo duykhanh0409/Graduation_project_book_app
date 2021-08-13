@@ -128,4 +128,14 @@ class Api {
       print('new password succedd');
     }
   }
+
+  static updateStatusRoom(String productID) async {
+    String url = 'https://book-room-app.herokuapp.com/product/api/updateStatus/$productID';
+    var response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      print('thanh cong');
+    } else {
+      throw Exception(" Lỗi khi load Json");
+    }
+  }
 }

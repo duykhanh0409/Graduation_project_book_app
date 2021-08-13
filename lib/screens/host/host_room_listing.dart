@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:graduation_project_book_app/logic/api.dart';
 import 'package:graduation_project_book_app/logic/tech_mobile.dart';
 
 class HostRoomListing extends StatefulWidget {
@@ -9,6 +10,7 @@ class HostRoomListing extends StatefulWidget {
 }
 
 class _HostRoomListingState extends State<HostRoomListing> {
+  bool isNotify = true;
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -56,7 +58,6 @@ class _HostRoomListingState extends State<HostRoomListing> {
                   padding: EdgeInsets.zero,
                   itemBuilder: (context, index) {
                     return Container(
-                      height: 120,
                       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                       padding: EdgeInsets.symmetric(horizontal: 10),
                       decoration: BoxDecoration(
@@ -73,13 +74,50 @@ class _HostRoomListingState extends State<HostRoomListing> {
                       child: Row(
                         children: [
                           Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 5),
-                              child: Text(
-                                '${listHostRoom[index]?.address?.addressNumber},${listHostRoom[index]?.address?.ward},district ${listHostRoom[index]?.address?.district},${listHostRoom[index]?.address?.city}',
-                                softWrap: true,
-                                maxLines: 3,
-                              ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(4, 12, 4, 4),
+                                  child: Text(
+                                    '${listHostRoom[index]?.address?.addressNumber},${listHostRoom[index]?.address?.ward},district ${listHostRoom[index]?.address?.district},${listHostRoom[index]?.address?.city}',
+                                    softWrap: true,
+                                    maxLines: 3,
+                                  ),
+                                ),
+                                listHostRoom[index]?.roomAvailable != null
+                                    ? Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            4, 8, 8, 12),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text('Room available'),
+                                            CupertinoSwitch(
+                                                value: listHostRoom[index]
+                                                    ?.roomAvailable,
+                                                activeColor: Color(0xffE67805),
+                                                trackColor: Color(0xffFAFAFA),
+                                                onChanged: (val) {
+                                                  print(val);
+                                                  if (mounted) {
+                                                    setState(() {
+                                                      listHostRoom[index]
+                                                          ?.roomAvailable = val;
+                                                    });
+                                                  }
+                                                  Api.updateStatusRoom(listHostRoom[index]?.id);
+                                                }),
+                                          ],
+                                        ),
+                                      )
+                                    : SizedBox(
+                                        height: 0,
+                                      )
+                              ],
                             ),
                           ),
                           Container(

@@ -39,6 +39,7 @@ class TechMobileState extends State<TechMobile> {
   var gac = '';
   var square = '';
   var wifi = '';
+  bool roomAvailable=true;
   var bathRoom = '';
   var bedRoom = '';
   var listPhoto;
